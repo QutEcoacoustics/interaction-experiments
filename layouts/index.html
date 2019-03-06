@@ -1,0 +1,13 @@
+{{- define "main" -}}
+
+{{ $homepage := .Page.Title  | default "Home" }}
+{{ with .Site.Menus.nav }}
+  {{ range first 1 . }}
+    {{ $homepage = .Name }}
+  {{ end }}
+{{ end }}
+<h1>{{ $homepage }}</h1>
+{{ .Content }}
+{{ partial "post-list" . }}
+
+{{- end -}}

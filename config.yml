@@ -1,0 +1,6 @@
+baseURL: "http://example.org/"
+languageCode: "en-au"
+title: "QUT Ecoacoustics Interaction Experiments"
+theme: minimal-bootstrap-hugo-theme
+
+enableGitInfo: true
