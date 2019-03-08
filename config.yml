@@ -1,6 +1,47 @@
-baseURL: "http://example.org/"
+baseURL: "http://experiments.ecosounds.org/"
 languageCode: "en-au"
 title: "QUT Ecoacoustics Interaction Experiments"
 theme: minimal-bootstrap-hugo-theme
 
 enableGitInfo: true
+relativeURLs: true
+
+
+taxonomies:
+  tag: tags
+permalinks:
+  #post: '/:filename/'
+params:
+  description: QUT Ecoacoustics Interaction Experiments
+  contentBackgroundColor: '#fefefe'
+  contentTextColor: '#212529'
+  contentLinkColor: '#007bff'
+  contentLinkHoverColor: '#0056b3'
+  navbarBackgroundColor: '#212529'
+  navbarLinkColor: 'rgba(255, 255, 255, 0.75)'
+  navbarLinkHoverColor: 'rgba(255, 255, 255, 1)'
+  wrapperMaxWidth: 1800px
+  customDateFormat: '2019-03-08'
+  customCodeStyle: true
+  customBlockquoteStyle: true
+  showPostSummary: false
+  googleAnalytics: UA-48132665-6
+  cookieConsent: false
+  includeBootstrapJs: true
+  faviconSafariPinnedTabColor: '##00467F'
+  faviconMsApplicationTileColor: '##00467F'
+  faviconThemeColor: '#00467F'
+menu:
+  nav:
+    - name: Experiments
+      url: /experiments
+      weight: 1
+    # - name: Tags
+    #   url: /tags/
+    #   weight: 2
+    - name: About
+      url: /about/
+      weight: 3
+    # - name: RSS
+    #   url: /index.xml
+    #   weight: 4
