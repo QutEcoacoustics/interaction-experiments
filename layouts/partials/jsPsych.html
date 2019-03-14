@@ -1,0 +1,16 @@
+{{ $css := resources.Get "jsPsych/css/jspsych.css" }}
+{{ $style := $css | resources.Minify  | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $style.Permalink }}">
+
+{{ $scratch := newScratch }}
+{{ range $.Site.Data.assets.javascript }}
+    {{ $scratch.Add "javascripts" (slice ( resources.Get . )) }}
+{{ end}}
+
+{{ $jsBundle := $scratch.Get "javascripts" | resources.Concat "js/jsPsychBundle.js"  }}
+{{ if eq $.Hugo.Environment "production" }}
+    {{ $jsBundle = $jsBundle | resources.Minify }}
+{{ end }}
+{{ $secureJS := $jsBundle | resources.Fingerprint }}
+<script type="text/javascript" src="{{ $secureJS.Permalink }}" integrity="{{ $secureJS.Data.Integrity }}"></script>
+ 

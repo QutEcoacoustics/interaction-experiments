@@ -2,3 +2,4 @@
 *.css.map
 assets/jsPsych/examples/*
 public/*
+resources/*

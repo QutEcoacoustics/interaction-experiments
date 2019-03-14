@@ -1,0 +1,3 @@
+javascript:
+    - "/jsPsych/jsPsych.js"
+    - "/jsPsych/plugins/jspsych-call-function.js"

@@ -5,7 +5,7 @@ theme: minimal-bootstrap-hugo-theme
 
 enableGitInfo: true
 relativeURLs: true
-
+assetDir: /assets
 
 taxonomies:
   tag: tags
