@@ -6,6 +6,9 @@ theme: minimal-bootstrap-hugo-theme
 enableGitInfo: true
 relativeURLs: true
 assetDir: /assets
+mediaTypes:
+  application/javascript:
+    suffixes: [js, mjs]
 
 taxonomies:
   tag: tags

@@ -2,5 +2,4 @@
 title: Bristle Whistle
 ---
 
-
-Welcome to bristle whistle experiment
+This experiment is not active.

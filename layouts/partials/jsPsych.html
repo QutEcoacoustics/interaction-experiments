@@ -14,3 +14,5 @@
 {{ $secureJS := $jsBundle | resources.Fingerprint }}
 <script type="text/javascript" src="{{ $secureJS.Permalink }}" integrity="{{ $secureJS.Data.Integrity }}"></script>
  
+{{ $common := resources.Get "common.mjs" | resources.Fingerprint }}
+<script type="module"  src="{{ $common.Permalink }}" integrity="{{ $common.Data.Integrity }}"></script>

@@ -1,3 +1,4 @@
 javascript:
     - "/jsPsych/jsPsych.js"
     - "/jsPsych/plugins/jspsych-call-function.js"
+    - "/jsPsych/plugins/jspsych-html-keyboard-response.js"

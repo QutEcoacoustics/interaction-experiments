@@ -12,4 +12,14 @@
 </p>
 {{ .Content }}
 
+<div id="experimentBody">
+</div>
+
+
 {{- end -}}
+{{ define "tail"}}
+
+{{ $experimentJS := readFile  (path.Join .Dir `experiment.js`) | resources.FromString `experiment.js` | resources.Fingerprint }}
+<script type="module"  src="{{ $experimentJS.Permalink }}" integrity="{{ $experimentJS.Data.Integrity }}"></script>
+
+{{ end }}
