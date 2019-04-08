@@ -2,11 +2,15 @@
 
 <h1>{{ .Title | markdownify }}</h1>
 <h2>Experiment single</h2>
+{{ if .Draft }}
+<span class="badge badge-pill badge-secondary">Inactive</span>
+{{ end }}
 <p>
   <small class="text-secondary">
-  {{ $customDateFormat := "January 2, 2006" }}
+  {{ $customDateFormat := "2006-01-02" }}
   {{ with .Site.Params.customDateFormat }}{{ $customDateFormat = . }}{{ end }}
-  {{ .PublishDate.Format $customDateFormat }}{{ if gt .Lastmod .PublishDate }}, updated {{ .Lastmod.Format $customDateFormat }}{{ end }}
+  {{ .Date.Format $customDateFormat }}
+  {{ if gt .Lastmod .Date }}, updated {{ .Lastmod.Format $customDateFormat }}{{ end }}
   </small>
   {{ partial "tags" . }}
 </p>
@@ -19,7 +23,12 @@
 {{- end -}}
 {{ define "tail"}}
 
-{{ $experimentJS := readFile  (path.Join .Dir `experiment.js`) | resources.FromString `experiment.js` | resources.Fingerprint }}
-<script type="module"  src="{{ $experimentJS.Permalink }}" integrity="{{ $experimentJS.Data.Integrity }}"></script>
+{{ $experimentJS := readFile  (path.Join .Dir `experiment.js`) | resources.FromString `experiment.js` }}
+{{ if eq $.Hugo.Environment "production" }}
+  {{ $experimentJS = $experimentJS | resources.Fingerprint }}
+  <script src="{{ $experimentJS.Permalink }}" integrity="{{ $experimentJS.Data.Integrity }}"></script>
+{{ else }}
+  <script src="{{ $experimentJS.Permalink }}" ></script>
+{{ end }}
 
 {{ end }}

@@ -12,7 +12,12 @@
     <!-- Ranges through content/posts/*.md -->
     {{ range .Pages }}
         <li>
-            <a href="{{.Permalink}}">{{.Date.Format "2006-01-02"}} | {{.Title}}</a>
+            {{ if .Draft }}
+            <span class="badge badge-pill badge-secondary">Inactive</span>
+            {{ end }}
+            {{ $customDateFormat := "2006-01-02" }}
+            {{ with .Site.Params.customDateFormat }}{{ $customDateFormat = . }}{{ end }}
+            <a href="{{.Permalink}}">{{ .Date.Format $customDateFormat }} | {{.Title}}</a>
         </li>
     {{ end }}
     </ul>

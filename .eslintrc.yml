@@ -1,0 +1,31 @@
+env:
+  browser: true
+  es6: true
+extends: 'eslint:recommended'
+globals:
+  Atomics: readonly
+  SharedArrayBuffer: readonly
+  jsPsych: readonly
+  console: readonly
+parserOptions:
+  ecmaVersion: 2018
+rules:
+  indent:
+    - error
+    - 4
+  linebreak-style:
+    - error
+    - windows
+  quotes:
+    - error
+    - double
+  semi:
+    - error
+    - always
+  space-before-blocks:
+    - error
+    - always
+  space-before-function-paren:
+    - error
+    - never
+  no-console: 0

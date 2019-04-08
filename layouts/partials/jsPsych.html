@@ -8,11 +8,21 @@
 {{ end}}
 
 {{ $jsBundle := $scratch.Get "javascripts" | resources.Concat "js/jsPsychBundle.js"  }}
+{{ $common := resources.Get "common.js" }}
+
 {{ if eq $.Hugo.Environment "production" }}
     {{ $jsBundle = $jsBundle | resources.Minify }}
+
+    {{ $secureJS := $jsBundle | resources.Fingerprint }}
+    <script type="text/javascript" src="{{ $secureJS.Permalink }}" integrity="{{ $secureJS.Data.Integrity }}"></script>
+
+    {{ $common = $common | resources.Fingerprint }}
+    <script src="{{ $common.Permalink }}" integrity="{{ $common.Data.Integrity }}"></script>
+{{ else }}
+    <script type="text/javascript" src="{{ $jsBundle.Permalink }}" ></script>
+
+    <script src="{{ $common.Permalink }}" ></script>
 {{ end }}
-{{ $secureJS := $jsBundle | resources.Fingerprint }}
-<script type="text/javascript" src="{{ $secureJS.Permalink }}" integrity="{{ $secureJS.Data.Integrity }}"></script>
+
+
  
-{{ $common := resources.Get "common.mjs" | resources.Fingerprint }}
-<script type="module"  src="{{ $common.Permalink }}" integrity="{{ $common.Data.Integrity }}"></script>

@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"eslint.run": "onType",
+		"eslint.autoFixOnSave": true,
+	}
+}

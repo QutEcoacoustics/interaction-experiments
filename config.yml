@@ -24,7 +24,7 @@ params:
   navbarLinkColor: 'rgba(255, 255, 255, 0.75)'
   navbarLinkHoverColor: 'rgba(255, 255, 255, 1)'
   wrapperMaxWidth: 1800px
-  customDateFormat: '2019-03-08'
+  customDateFormat: '2006-01-02'
   customCodeStyle: true
   customBlockquoteStyle: true
   showPostSummary: false

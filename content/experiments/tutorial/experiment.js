@@ -9,11 +9,22 @@ function experimentInit() {
         stimulus: "Welcome to the experiment. Press any key to begin"
     });
 
-    var ethics = {
-        type: "external-html",
-        url: "ethics.html"
+    var instructions = {
+        type: "html-keyboard-response",
+        stimulus: "<p>In this experiment, a circle will appear in the center " +
+            "of the screen.</p><p>If the circle is <strong>blue</strong>, " +
+            "press the letter F on the keyboard as fast as you can.</p>" +
+            "<p>If the circle is <strong>orange</strong>, press the letter J " +
+            "as fast as you can.</p>" +
+            "<div style='width: 700px;'>"+
+            "<div style='float: left;'><img src='blue.png'></img>" +
+            "<p class='small'><strong>Press the F key</strong></p></div>" +
+            "<div class='float: right;'><img src='orange.png'></img>" +
+            "<p class='small'><strong>Press the J key</strong></p></div>" +
+            "</div>"+
+            "<p>Press any key to begin.</p>"
     };
-    timeline.push(ethics);
+    timeline.push(instructions);
 
     var test_stimuli = [
         { stimulus: "blue.png", data: {test_part: "test", correct_response: "f"}},
@@ -25,7 +36,7 @@ function experimentInit() {
         stimulus: "<div style=\"font-size:60px;\">+</div>",
         choices: jsPsych.NO_KEYS,
         trial_duration: function() {
-            return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];
+            return jsPsych.randomization.sampleWithoutReplacement([250, 500], 1)[0];
         }, 
         data: {test_part: "fixation"}
     }; 
@@ -70,5 +81,6 @@ function experimentInit() {
     return {
         timeline: timeline,
     };
+
 }
   
