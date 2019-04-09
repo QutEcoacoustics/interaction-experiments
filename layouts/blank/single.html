@@ -1,0 +1,8 @@
+{{- define "main" -}}
+
+<h1>{{ .Title | markdownify }}</h1>
+
+{{ .Content }}
+
+<button type="button" class="jspsych-btn" id="continue">Continue</button>
+{{- end -}}

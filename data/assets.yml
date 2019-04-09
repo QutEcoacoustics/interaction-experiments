@@ -4,3 +4,5 @@ javascript:
     - "/jsPsych/plugins/jspsych-html-keyboard-response.js"
     - "/jsPsych/plugins/jspsych-image-keyboard-response.js"
     - "/jsPsych/plugins/jspsych-external-html.js"
+    - "/jsPsych/plugins/jspsych-survey-text.js"
+    - "/jsPsych/plugins/jspsych-instructions.js"

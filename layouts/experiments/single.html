@@ -23,7 +23,7 @@
 {{- end -}}
 {{ define "tail"}}
 
-{{ $experimentJS := readFile  (path.Join .Dir `experiment.js`) | resources.FromString `experiment.js` }}
+{{ $experimentJS := .Resources.GetMatch `experiment.js` }}
 {{ if eq $.Hugo.Environment "production" }}
   {{ $experimentJS = $experimentJS | resources.Fingerprint }}
   <script src="{{ $experimentJS.Permalink }}" integrity="{{ $experimentJS.Data.Integrity }}"></script>

@@ -1,70 +1,63 @@
 // test
 /* exported experimentInit */
 function experimentInit() {
+    const enterKeyPress = 13;
+
+    // other stuff
+
+    // if a subject has given consent to participate.
+    var checkConsent = function(elem) {
+        if (elem.querySelector('#consentCheckbox').checked) {
+            return true;
+        }
+        else {
+            alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
+            return false;
+        }
+        return false;
+    };
+
+    // timeline
+
     var timeline = [];
 
-
-    timeline.push({
-        type: "html-keyboard-response",
-        stimulus: "Welcome to the experiment. Press any key to begin"
-    });
+    var welcome = {
+        type: "external-html",
+        url: "welcome/index.html",
+        cont_key: enterKeyPress,
+        cont_btn: "continue"
+    };
+    timeline.push(welcome);
 
     var ethics = {
         type: "external-html",
-        url: "ethics.html"
+        url: "ethics/index.html",
+        cont_key: enterKeyPress,
+        cont_btn: "continue",
+        check_fn: checkConsent
     };
     timeline.push(ethics);
 
-    var test_stimuli = [
-        { stimulus: "blue.png", data: {test_part: "test", correct_response: "f"}},
-        { stimulus: "orange.png", data: {test_part: "test", correct_response: "j"}}
-    ];
-
-    var fixation = {
-        type: "html-keyboard-response",
-        stimulus: "<div style=\"font-size:60px;\">+</div>",
-        choices: jsPsych.NO_KEYS,
-        trial_duration: function() {
-            return jsPsych.randomization.sampleWithoutReplacement([250, 500, 750, 1000, 1250, 1500, 1750, 2000], 1)[0];
-        }, 
-        data: {test_part: "fixation"}
-    }; 
-
-    var test = {
-        type: "image-keyboard-response",
-        stimulus: jsPsych.timelineVariable("stimulus"),
-        choices: ["f", "j"],
-        data: jsPsych.timelineVariable("data"),
-        on_finish: function(data) {
-            data.correct = data.key_press == jsPsych.pluginAPI.convertKeyCharacterToKeyCode(data.correct_response);
-        }
+    var survey = {
+        type: "survey-text",
+        questions:[
+            "Placeholder"
+        ],
+        preamble: "Proabably need to use a more fleshed out tool https://github.com/surveyjs/survey-library"
     };
+    timeline.push(survey);
 
-    var test_procedure = {
-        timeline: [fixation, test],
-        timeline_variables: test_stimuli,
-        randomize_order: true,
-        repetitions: 2
-    };
-    timeline.push(test_procedure);
+    var instructions = {
+        type: 'instructions',
+        pages: [
+            'Welcome to the experiment. Click next to begin.',
+            'This is the second page of instructions.',
+            'This is the final page.'
+        ],
+        show_clickable_nav: true
+    }
+    timeline.push(instructions);
 
-    var debrief_block = {
-        type: "html-keyboard-response",
-        stimulus: function() {
-    
-            var trials = jsPsych.data.get().filter({test_part: "test"});
-            var correct_trials = trials.filter({correct: true});
-            var accuracy = Math.round(correct_trials.count() / trials.count() * 100);
-            var rt = Math.round(correct_trials.select("rt").mean());
-    
-            return "<p>You responded correctly on "+accuracy+"% of the trials.</p>"+
-              "<p>Your average response time was "+rt+"ms.</p>"+
-              "<p>Press any key to complete the experiment. Thank you!</p>";
-    
-        }
-    };
-    
-    timeline.push(debrief_block);
 
 
     return {
