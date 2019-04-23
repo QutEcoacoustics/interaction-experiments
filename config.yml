@@ -1,4 +1,4 @@
-baseURL: "http://experiments.ecosounds.org/"
+baseURL: "https://experiments.ecosounds.org/"
 languageCode: "en-au"
 title: "QUT Ecoacoustics Interaction Experiments"
 theme: ~
