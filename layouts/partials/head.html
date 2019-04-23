@@ -1,8 +1,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  {{ .Hugo.Generator }}
-  <meta name="environment" content="{{ .Hugo.Environment }}">
+  {{ $.Hugo.Generator }}
+  <meta name="environment" content="{{ $.Hugo.Environment }}">
 
   {{ with .Site.Params.description }}
   <meta name="description" content="{{ . }}">

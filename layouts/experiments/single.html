@@ -22,13 +22,12 @@
 
 {{- end -}}
 {{ define "tail"}}
-
-{{ $experimentJS := .Resources.GetMatch `experiment.js` }}
-{{ if eq $.Hugo.Environment "production" }}
-  {{ $experimentJS = $experimentJS | resources.Fingerprint }}
-  <script src="{{ $experimentJS.Permalink }}" integrity="{{ $experimentJS.Data.Integrity }}"></script>
-{{ else }}
-  <script src="{{ $experimentJS.Permalink }}" ></script>
-{{ end }}
+  {{ $experimentJS := .Resources.GetMatch `experiment.js` }}
+  {{ if eq $.Hugo.Environment "production" }}
+    {{ $experimentJS = $experimentJS | resources.Fingerprint }}
+    <script src="{{ $experimentJS.Permalink }}" integrity="{{ $experimentJS.Data.Integrity }}"></script>
+  {{ else }}
+    <script src="{{ $experimentJS.Permalink }}" ></script>
+  {{ end }}
 
 {{ end }}

@@ -1,11 +1,10 @@
 baseURL: "http://experiments.ecosounds.org/"
 languageCode: "en-au"
 title: "QUT Ecoacoustics Interaction Experiments"
-theme: minimal-bootstrap-hugo-theme
+theme: ~
 
 enableGitInfo: true
 relativeURLs: true
-assetDir: /assets
 mediaTypes:
   application/javascript:
     suffixes: [js, mjs]
