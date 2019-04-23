@@ -1,5 +1,7 @@
 # interaction-experiments
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/accae919-9963-4757-9d8c-fd0c8da7d139/deploy-status)](https://app.netlify.com/sites/qut-ecoacoustics-interaction-experiments/deploys)
+
 This repo contains a set of interaction experiments the QUT Ecoacoustics lab
 runs to test new ideas.
 
