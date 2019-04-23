@@ -7,14 +7,13 @@ function experimentInit() {
 
     // if a subject has given consent to participate.
     var checkConsent = function(elem) {
-        if (elem.querySelector('#consentCheckbox').checked) {
+        if (elem.querySelector("#consentCheckbox").checked) {
             return true;
         }
         else {
             alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
             return false;
         }
-        return false;
     };
 
     // timeline
@@ -43,19 +42,19 @@ function experimentInit() {
         questions:[
             "Placeholder"
         ],
-        preamble: "Proabably need to use a more fleshed out tool https://github.com/surveyjs/survey-library"
+        preamble: "Probably need to use a more fleshed out tool https://github.com/surveyjs/survey-library"
     };
     timeline.push(survey);
 
     var instructions = {
-        type: 'instructions',
+        type: "instructions",
         pages: [
-            'Welcome to the experiment. Click next to begin.',
-            'This is the second page of instructions.',
-            'This is the final page.'
+            "Welcome to the experiment. Click next to begin.",
+            "This is the second page of instructions.",
+            "This is the final page."
         ],
         show_clickable_nav: true
-    }
+    };
     timeline.push(instructions);
 
 
