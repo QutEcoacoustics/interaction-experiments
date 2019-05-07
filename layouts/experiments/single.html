@@ -27,7 +27,7 @@
     {{ $experimentJS = $experimentJS | resources.Fingerprint }}
     <script src="{{ $experimentJS.Permalink }}" integrity="{{ $experimentJS.Data.Integrity }}"></script>
   {{ else }}
-    <script src="{{ $experimentJS.Permalink }}" ></script>
+    <script src="{{ $experimentJS }}" ></script>
   {{ end }}
 
 {{ end }}
