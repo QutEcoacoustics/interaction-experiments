@@ -6,3 +6,4 @@ javascript:
     - "/jsPsych/plugins/jspsych-external-html.js"
     - "/jsPsych/plugins/jspsych-survey-text.js"
     - "/jsPsych/plugins/jspsych-instructions.js"
+    - "/jsPsych/plugins/jspsych-audio-image.js"

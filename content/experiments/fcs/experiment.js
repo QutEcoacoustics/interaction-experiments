@@ -46,6 +46,13 @@ function experimentInit() {
     };
     timeline.push(survey);
 
+    var audioImage = {
+        type: "audio-image",
+        image: "./audio-image-spectrogram.png",
+        audio: "./audio-image-audio.wav",
+    }
+    timeline.push(audioImage);
+
     var instructions = {
         type: "instructions",
         pages: [
