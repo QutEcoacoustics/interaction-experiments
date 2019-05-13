@@ -48,8 +48,8 @@ function experimentInit() {
 
     var audioImage = {
         type: "audio-image",
-        image: "./audio-image-spectrogram.png",
-        audio: "./audio-image-audio.wav",
+        image: "./wavform_Liz_cropped.png",
+        audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav",
     }
     timeline.push(audioImage);
 

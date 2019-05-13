@@ -20,6 +20,7 @@ You are invited to participate in this research project because you are aged 18 
 Participation will involve completing several tasks to the best of your ability and answering questions about your experience. It should take you between 30-40 minutes to complete. 
 
 Example questions include:
+
 * Can you tell us what you learned from completing this task?
 * Can you tell us what characteristics of the visualization made you choose sounds of interest?
 
@@ -56,23 +57,23 @@ If you have any questions or require further information please contact one of t
 QUT is committed to research integrity and the ethical conduct of research projects.  If you wish to discuss the study with someone not directly involved, particularly in relation to matters concerning policies, information or complaints about the conduct of the study or your rights as a participant, you may contact the QUT Research Ethics Advisory Team on +61 7 3138 5123 or email humanethics@qut.edu.au.
 
 **Statement of consent**<br>
-By clicking ‘Next’, you are indicating that you:<br>
+By clicking ‘Next’, you are indicating that you:
+
 * Have read and understood the information document regarding this research project.
 * Have had any questions answered to your satisfaction.
 * Understand that if you have any additional questions you can contact the research team.
 * Understand that you are free to withdraw without comment or penalty.
-* Understand that if you have concerns about the ethical conduct of the research project you can contact the Research Ethics Advisory Team on +61 7 3138 5123 or email humanethics@qut.edu.au.
+* Understand that if you have concerns about the ethical conduct of the research project you can contact the Research Ethics Advisory Team on +61 7 3138 5123 or email [humanethics@qut.edu.au](mailto:humanethics@qut.edu.au).
 * Agree to participate in the research project.
-<p>
-Thank you for helping with this research project.  <br>Please print this page for your information.<p>
-Please click 'Next' if you consent to taking part in this research.</ul>
 
- <p>
+Thank you for helping with this research project.
+
+Please print this page for your information.
+
+Please check the box below if you consent to taking part in this research.
+
+ <label >
     <input type="checkbox" id="consentCheckbox" />
-    NEXT - delete this unless some other issue
-</p>
+    I consent to participting in this research
+</label>
 
-
-
-# **[NEXT](C:\Backup\Ecosounds\GitHub\interaction-experiments\content\experiments\fcs\introQs.md)**
-  </div>
