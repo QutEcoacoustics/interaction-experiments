@@ -6,7 +6,7 @@
 {{ $style := $css | resources.Minify  | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $style.Permalink }}">
 
-{{ $mediaElement := resources.Get "mediaElement/mediaElement.js" }}
+{{ $mediaElement := resources.Get "mediaElement/mediaelement.js" }}
 {{ $mediaElement = $mediaElement | resources.Fingerprint }}
 <script src="{{ $mediaElement.Permalink }}" integrity="{{ $mediaElement.Data.Integrity }}"></script>
 
