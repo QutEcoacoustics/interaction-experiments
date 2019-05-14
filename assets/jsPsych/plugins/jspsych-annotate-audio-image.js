@@ -24,12 +24,12 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         default: undefined,
         description: "Audio element to display control panel for and play"
       },
-      width: {
+      max_width: {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: "Image Width",
         default: null,
         description:
-          "Width of the image element. This does not work with percentage values."
+          "Maximum width of the audio element. Image element will be 239px smaller than the audio element."
       },
       autoplay: {
         type: jsPsych.plugins.parameterType.BOOL,
@@ -86,18 +86,16 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
       });
     }
 
-    var wait = ms => new Promise((r, j) => setTimeout(r, ms));
-
     /**
      * Create the audio player
      */
     let makePlayer = () => {
-      const END_OFFSET = 239;
+      console.log("makePlayer");
+      var checkAudio = setInterval(function() {
+        console.log("Building Audio");
 
-      //TODO Change to onload function
-      //Lazy workaround to image taking too long to delay. Will fix later
-      let prom = wait(500);
-      prom.then(() => {
+        const END_OFFSET = 239;
+
         let image_width = document.getElementById("jspsych-audio-image")
           .offsetWidth;
         width = parseInt(image_width + END_OFFSET) + "px";
@@ -114,14 +112,19 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         var player = new MediaElementPlayer("player", {
           success: function(mediaElement, originalNode, instance) {}
         });
-      });
+
+        clearInterval(checkAudio);
+      }, 50); //Wait 50ms for image to load
     };
 
     /**
      * Enable image annotations
      */
     let makeAnnotatable = () => {
+      console.log("makeAnnotatable")
       var checkImage = setInterval(function() {
+        console.log("Annotating Image")
+
         //Image has loaded, make it annotatable
         if (display_element.querySelector("#jspsych-audio-image")) {
           anno.makeAnnotatable(document.getElementById("jspsych-audio-image"));
@@ -139,18 +142,24 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
       }, 50); //Wait 50ms for image to load
     };
 
-    let table = document.createElement("table");
+    let image_container = `<div style="display: flex; flex-direction: row">
+        <div style="width: 92px; flex-shrink: 0;"></div>
+        <img
+          src="${trial.image}"
+          id="jspsych-audio-image"
+          class="annotatable"
+          style="flex: 1;"
+        />
+        <div style="width: 147px; flex-shrink: 0;"></div>
+      </div>`;
 
-    //Create image and audio
-    let image_html = `<tr><td><img src="${
-      trial.image
-    }" id="jspsych-audio-image" class="annotatable" style="margin-left: -58px;${
-      trial.width ? ` width: ${trial.width};` : ""
-    }"></img></tr></td>`;
+    let audio = `<div id="player-container" class="media-wrapper" style="flex: 1; flex-shrink: 0;"></div>`;
 
-    let audio_html = `<tr><td><div id="player-container" class="media-wrapper"></div></tr></td>`;
+    let container = `<div style="display: flex; flex-direction: column;${
+      trial.max_width ? `max-width: ${trial.max_width};` : ""
+    }">${image_container}${audio}</div>`;
 
-    table.innerHTML = image_html + audio_html;
+    let disableAnnotatableIcon = `<style>.annotorious-hint { display: none }<style>`;
 
     //Create submit button
     let button = document.createElement("button");
@@ -164,7 +173,8 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
     button_div.appendChild(button);
 
     //Add elements to document
-    display_element.appendChild(table);
+    display_element.innerHTML = container;
+    display_element.innerHTML += disableAnnotatableIcon;
     display_element.appendChild(button_div);
 
     makePlayer();
