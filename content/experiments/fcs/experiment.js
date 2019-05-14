@@ -47,7 +47,7 @@ function experimentInit() {
     timeline.push(survey);
 
     var audioImage = {
-        type: "audio-image",
+        type: "annotate-audio-image",
         image: "./wavform_Liz_cropped.png",
         audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav",
     }
