@@ -103,7 +103,8 @@ function experimentInit() {
             "This is the second page of instructions.",
             "This is the final page."
         ],
-        show_clickable_nav: true
+        show_clickable_nav: true,
+        
     };
 
     var audioImage = {
