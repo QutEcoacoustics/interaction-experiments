@@ -1,6 +1,7 @@
 javascript:
     - "/jsPsych/jspsych.js"
     - "/jsPsych/plugins/jspsych-call-function.js"
+    - "/jsPsych/plugins/jspsych-html-button-response.js"
     - "/jsPsych/plugins/jspsych-html-keyboard-response.js"
     - "/jsPsych/plugins/jspsych-image-keyboard-response.js"
     - "/jsPsych/plugins/jspsych-external-html.js"

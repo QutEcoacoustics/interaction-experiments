@@ -2,6 +2,14 @@
 {{ $style := $css | resources.Minify  | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $style.Permalink }}">
 
+{{ $css := resources.Get "mediaElement/mediaelementplayer.css" }}
+{{ $style := $css | resources.Minify  | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $style.Permalink }}">
+
+{{ $mediaElement := resources.Get "mediaElement/mediaelement.js" }}
+{{ $mediaElement = $mediaElement | resources.Fingerprint }}
+<script src="{{ $mediaElement.Permalink }}" integrity="{{ $mediaElement.Data.Integrity }}"></script>
+
 {{ $scratch := newScratch }}
 {{ range $.Site.Data.assets.javascript }}
     {{ $scratch.Add "javascripts" (slice ( resources.Get . )) }}
