@@ -2,11 +2,19 @@
 {{ $style := $css | resources.Minify  | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $style.Permalink }}">
 
-{{ $css := resources.Get "mediaElement/mediaelementplayer.css" }}
+{{ $css := resources.Get "mediaElement/mediaelementplayer.min.css" }}
 {{ $style := $css | resources.Minify  | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $style.Permalink }}">
 
-{{ $mediaElement := resources.Get "mediaElement/mediaelement.js" }}
+{{ $css := resources.Get "annotorious/css/annotorious.css" }}
+{{ $style := $css | resources.Minify  | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $style.Permalink }}">
+
+{{ $mediaElement := resources.Get "mediaElement/mediaelement-and-player.min.js" }}
+{{ $mediaElement = $mediaElement | resources.Fingerprint }}
+<script src="{{ $mediaElement.Permalink }}" integrity="{{ $mediaElement.Data.Integrity }}"></script>
+
+{{ $mediaElement := resources.Get "annotorious/annotorious.min.js" }}
 {{ $mediaElement = $mediaElement | resources.Fingerprint }}
 <script src="{{ $mediaElement.Permalink }}" integrity="{{ $mediaElement.Data.Integrity }}"></script>
 

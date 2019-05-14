@@ -88,7 +88,7 @@ function experimentInit() {
         audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav",
     }
     timeline.push(audioImage);
-    
+
     // for testing, remove later
     var debug = {
         type: "html-button-response",
@@ -114,8 +114,8 @@ function experimentInit() {
         
     };
 
-    var audioImage = {
-        type: "audio-image",
+    /*var audioImage = {
+        type: "annotate-audio-image",
         image: null, // set in our on_start function just below
         audio: null, // set in our on_start function just below
         on_start: function(trial) {
@@ -124,7 +124,7 @@ function experimentInit() {
             trial["image"] = data.images[visualization];
             trial["audio"] = data.audio;
         }
-    };
+    };*/
 
     var mainExperiment = {
         timeline: [

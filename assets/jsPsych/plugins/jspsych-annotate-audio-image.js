@@ -86,28 +86,34 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
       });
     }
 
+    var wait = ms => new Promise((r, j) => setTimeout(r, ms));
+
     /**
      * Create the audio player
      */
     let makePlayer = () => {
       const END_OFFSET = 239;
-      let image_width = document.getElementById("jspsych-audio-image")
-        .offsetWidth;
-      width = parseInt(image_width + END_OFFSET) + "px";
 
-      let audio = `<audio id="player" preload="none" controls width='${width}' ${
-        trial.loop ? "loop" : null
-      } ${trial.autoplay ? "autoplay" : null}><source src="${
-        trial.audio
-      }" type="audio/${getFileExtension(trial.audio)}"/></audio>`;
+      //TODO Change to onload function
+      //Lazy workaround to image taking too long to delay. Will fix later
+      let prom = wait(500);
+      prom.then(() => {
+        let image_width = document.getElementById("jspsych-audio-image")
+          .offsetWidth;
+        width = parseInt(image_width + END_OFFSET) + "px";
 
-      console.log(audio);
+        let audio = `<audio id="player" preload="none" controls width='${width}' ${
+          trial.loop ? "loop" : ""
+        } ${trial.autoplay ? "autoplay" : ""}><source src="${
+          trial.audio
+        }" type="audio/${getFileExtension(trial.audio)}"/></audio>`;
 
-      //Create audio element with the following additional options: loop, autoplay
-      document.getElementById("player-container").innerHTML = audio;
+        //Create audio element with the following additional options: loop, autoplay
+        document.getElementById("player-container").innerHTML = audio;
 
-      var player = new MediaElementPlayer("player", {
-        success: function(mediaElement, originalNode, instance) {}
+        var player = new MediaElementPlayer("player", {
+          success: function(mediaElement, originalNode, instance) {}
+        });
       });
     };
 
@@ -133,7 +139,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
       }, 50); //Wait 50ms for image to load
     };
 
-    let table = document.createElement('table');
+    let table = document.createElement("table");
 
     //Create image and audio
     let image_html = `<tr><td><img src="${
@@ -161,8 +167,8 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
     display_element.appendChild(table);
     display_element.appendChild(button_div);
 
-    makeAnnotatable();
     makePlayer();
+    makeAnnotatable();
   };
 
   return plugin;
