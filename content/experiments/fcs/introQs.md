@@ -6,7 +6,6 @@ type: blank
 # Tell us about yourself
 
 
-
  <form action="">
 
 1. What is your **age**? 
