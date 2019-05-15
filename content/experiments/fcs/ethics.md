@@ -2,6 +2,7 @@
 title: Ethics & Consent
 type: blank
 ---
+<form>
 
 # Visualising Long-Duration Environmental Recordings
 
@@ -70,10 +71,9 @@ Thank you for helping with this research project.
 
 Please print this page for your information.
 
-Please check the box below if you consent to taking part in this research.
 
  <label >
-    <input type="checkbox" id="consentCheckbox" />
-    I consent to participting in this research
+    <button type="button" id="consentNext">NEXT </button>
 </label>
+</form>
 
