@@ -7,7 +7,7 @@ function experimentInit() {
   // other stuff
 
   // if a subject has given consent to participate.
-  var checkConsent = function(elem) {
+  var checkConsent = function (elem) {
     if (elem.querySelector("#consentCheckbox").checked) {
       return true;
     } else {
@@ -29,7 +29,7 @@ function experimentInit() {
         fcs: "./images/FCS_Liz.PNG",
         spectrogram: "./images/greyscale_Liz.PNG",
         waveform: "./images/wavform_Liz.png",
-        audioOnly: "blueblock.png"
+        audioOnly: "./images/blueblock.png"
       },
       audio:
         "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
@@ -40,7 +40,7 @@ function experimentInit() {
         fcs: "./images/FCS_Sheryn.PNG",
         spectrogram: "./images/greyscale_Sheryn.PNG",
         waveform: "./images/waveform_Sheryn.PNG",
-        audioOnly: "blueblock.png"
+        audioOnly: "./images/blueblock.png"
       },
       audio:
         "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
@@ -51,7 +51,7 @@ function experimentInit() {
         fcs: "./images/FCS_Inala.png",
         spectrogram: "./images/greyscale_Inala.PNG",
         waveform: "./images/waveform.Inala.PNG",
-        audioOnly: "blueblock.png"
+        audioOnly: "./images/blueblock.png"
       },
       audio:
         "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
@@ -66,6 +66,7 @@ function experimentInit() {
     type: "external-html",
     url: "welcome/index.html",
     cont_key: enterKeyPress,
+    cont_btn: "continue",
     button_label_next: true
   };
   timeline.push(welcome);
@@ -73,20 +74,9 @@ function experimentInit() {
   var ethics = {
     type: "external-html",
     url: "ethics/index.html",
-    cont_btn: "consentNext"
+    cont_btn: "continue"
   };
   timeline.push(ethics);
-
-  timeline.push({
-    type: "fullscreen",
-    fullscreen_mode: true
-  });
-
-  timeline.push({
-    type: "html-keyboard-response",
-    stimulus:
-      "This experiment will be in fullscreen mode unless you are using Safari."
-  });
 
   //survey qs pre-test
 
@@ -171,12 +161,6 @@ function experimentInit() {
     ]
   };
 
-  var survey1 = {
-    // how do I collate the above q's on the one page in this order?
-  };
-
-  timeline.push(survey1);
-
   //tutorial and experimental task
 
   var tasks1 = {
@@ -220,7 +204,7 @@ function experimentInit() {
   var debug = {
     type: "html-button-response",
     choices: ["OK"],
-    stimulus: function() {
+    stimulus: function () {
       var data = {
         site: jsPsych.timelineVariable("sites")(),
         visualizationStyles: jsPsych.timelineVariable("visualizationStyles")()
@@ -232,12 +216,12 @@ function experimentInit() {
 
   var audioImage = {
     type: "annotate-audio-image",
-    image: function() {
+    image: function () {
       var data = jsPsych.timelineVariable("sites")();
       var visualization = jsPsych.timelineVariable("visualizationStyles")();
       return data.images[visualization];
     },
-    audio: function() {
+    audio: function () {
       var data = jsPsych.timelineVariable("sites")();
       return data.audio;
     }
@@ -251,12 +235,12 @@ function experimentInit() {
   var tute = {
     timeline: [
       debug,
-      instructions, //tasks1
+      tasks1, //tasks1
       audioImage
     ],
     timeline_variables: jsPsych.randomization.factorial(
       {
-        sites: Inala,
+        sites: sites,
         visualizationStyles: visualizationStyles
       },
       1,
@@ -274,12 +258,12 @@ function experimentInit() {
   var mainExperiment = {
     timeline: [
       debug,
-      instructions, //tasks2
+      tasks2, //tasks2
       audioImage
     ],
     timeline_variables: jsPsych.randomization.factorial(
       {
-        sites: Sheryn,
+        sites: sites,
         visualizationStyles: visualizationStyles
       },
       1,
