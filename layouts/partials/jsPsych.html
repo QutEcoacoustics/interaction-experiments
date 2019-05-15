@@ -3,6 +3,10 @@
 {{ $style := $css | resources.Minify  | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $style.Permalink }}">
 
+{{ $cssCustom := resources.Get "custom.css" }}
+{{ $styleCustom := $cssCustom  | resources.Fingerprint }}
+<link rel="stylesheet" href="{{ $styleCustom.Permalink }}">
+
 {{ $css := resources.Get "mediaElement/mediaelementplayer.css" }}
 {{ $style := $css | resources.Minify  | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $style.Permalink }}">
