@@ -1,8 +1,9 @@
+
 {{ $css := resources.Get "jsPsych/css/jspsych.css" }}
 {{ $style := $css | resources.Minify  | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $style.Permalink }}">
 
-{{ $css := resources.Get "mediaElement/mediaelementplayer.min.css" }}
+{{ $css := resources.Get "mediaElement/mediaelementplayer.css" }}
 {{ $style := $css | resources.Minify  | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $style.Permalink }}">
 
@@ -10,7 +11,7 @@
 {{ $style := $css | resources.Minify  | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $style.Permalink }}">
 
-{{ $mediaElement := resources.Get "mediaElement/mediaelement-and-player.min.js" }}
+{{ $mediaElement := resources.Get "mediaElement/mediaelement-and-player.js" }}
 {{ $mediaElement = $mediaElement | resources.Fingerprint }}
 <script src="{{ $mediaElement.Permalink }}" integrity="{{ $mediaElement.Data.Integrity }}"></script>
 

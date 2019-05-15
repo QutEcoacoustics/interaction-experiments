@@ -82,12 +82,14 @@ function experimentInit() {
     };
     timeline.push(survey);
 
+    /* for testing
     var audioImage = {
         type: "annotate-audio-image",
         image: "./wavform_Liz_cropped.png",
         audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav",
-    }
+    };
     timeline.push(audioImage);
+    */
 
     // for testing, remove later
     var debug = {
@@ -114,17 +116,18 @@ function experimentInit() {
         
     };
 
-    /*var audioImage = {
+    var audioImage = {
         type: "annotate-audio-image",
-        image: null, // set in our on_start function just below
-        audio: null, // set in our on_start function just below
-        on_start: function(trial) {
+        image: function() {
             var data =  jsPsych.timelineVariable("sites")();
             var visualization = jsPsych.timelineVariable("visualizationStyles")();
-            trial["image"] = data.images[visualization];
-            trial["audio"] = data.audio;
+            return data.images[visualization];
+        }, 
+        audio: function() {
+            var data =  jsPsych.timelineVariable("sites")();
+            return data.audio;
         }
-    };*/
+    };
 
     var mainExperiment = {
         timeline: [
