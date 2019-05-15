@@ -7,6 +7,8 @@ globals:
   SharedArrayBuffer: readonly
   jsPsych: readonly
   console: readonly
+  annotorius: readonly
+  mediaElement: readonly
 parserOptions:
   ecmaVersion: 2018
 rules:
