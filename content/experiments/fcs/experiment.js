@@ -231,14 +231,15 @@ function experimentInit() {
   };
 
   var audioImage = {
-    type: "audio-image",
-    image: null, // set in our on_start function just below
-    audio: null, // set in our on_start function just below
-    on_start: function(trial) {
+    type: "annotate-audio-image",
+    image: function() {
       var data = jsPsych.timelineVariable("sites")();
       var visualization = jsPsych.timelineVariable("visualizationStyles")();
-      trial["image"] = data.images[visualization];
-      trial["audio"] = data.audio;
+      return data.images[visualization];
+    },
+    audio: function() {
+      var data = jsPsych.timelineVariable("sites")();
+      return data.audio;
     }
   };
 
