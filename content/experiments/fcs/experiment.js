@@ -31,8 +31,7 @@ function experimentInit() {
                 waveform: "./images/wavform_Liz.png",
                 audioOnly: "./images/blueblock.png"
             },
-            audio:
-        "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
+            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
         },
         {
             name: "Sheryn",
@@ -42,8 +41,7 @@ function experimentInit() {
                 waveform: "./images/waveform_Sheryn.PNG",
                 audioOnly: "./images/blueblock.png"
             },
-            audio:
-        "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
+            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
         },
         {
             name: "Inala",
@@ -53,8 +51,7 @@ function experimentInit() {
                 waveform: "./images/waveform.Inala.PNG",
                 audioOnly: "./images/blueblock.png"
             },
-            audio:
-        "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
+            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
         }
     ];
 
@@ -231,7 +228,9 @@ function experimentInit() {
     //site and mainExperiment, Sheryn's site.
     //Q: if tute and mainExperiment both randomise visualizationStyles
     //does this mean they may not show the same type of image?
+    // AT: see below
 
+    // AT: this should not exist, merge the steps into mainExperiment below
     var tute = {
         timeline: [
             debug,
@@ -253,7 +252,15 @@ function experimentInit() {
     };
     timeline.push(tute);
 
-    //Or can the sites be linked to a set of instructions and the visualisationStyle kept constant in one variable?
+    // Or can the sites be linked to a set of instructions and the visualisationStyle kept constant in one variable?
+    // AT: yes, pick one of the following
+    // same visualizationStyle
+    var visualisationStyle = jsPsych.randomization.sampleWithoutReplacement(visualizationStyles, 1);
+    // always inala followed by random
+    var tuteSite = sites.find(current => current.name === "Inala");
+    var studySite = jsPsych.randomization.sampleWithoutReplacement(sites.filter(current => current.name !== "Inala"), 1);
+    // or two random sites
+    tuteSite, studySite = jsPsych.randomization.sampleWithoutReplacement(sites, 2);
 
     var mainExperiment = {
         timeline: [
@@ -261,18 +268,17 @@ function experimentInit() {
             tasks2, //tasks2
             audioImage
         ],
-        timeline_variables: jsPsych.randomization.factorial(
+        timeline_variables: [
             {
-                sites: sites,
-                visualizationStyles: visualizationStyles
+                tuteSite: tuteSite,
+                sites: studySite,
+                visualizationStyles: visualizationStyle
             },
-            1,
-            false
-        ),
-        sample: {
-            type: "without-replacement",
-            size: 1
-        }
+        ],
+        // sample: {
+        //     type: "without-replacement",
+        //     size: 1
+        // }
     };
     timeline.push(mainExperiment);
 
@@ -310,18 +316,15 @@ function experimentInit() {
         type: "survey-multi-choice",
         questions: [
             {
-                prompt:
-          "Would you like to be informed of the results of our study at a later date?",
+                prompt: "Would you like to be informed of the results of our study at a later date?",
                 options: ["Yes", "No"]
             },
             {
-                prompt:
-          "Would you like to take part in future research conducted by QUT's EcoAcoustics Group?",
+                prompt: "Would you like to take part in future research conducted by QUT's EcoAcoustics Group?",
                 options: ["Yes", "No"]
             },
             {
-                prompt:
-          "Would you like to take part in a prize draw to win a AU$100 Amazon voucher? If you win, you may choose to nominate that we donate AU$100 to the environmental conservation charity of your choice.",
+                prompt: "Would you like to take part in a prize draw to win a AU$100 Amazon voucher? If you win, you may choose to nominate that we donate AU$100 to the environmental conservation charity of your choice.",
                 options: ["Yes", "No"]
             }
         ]
