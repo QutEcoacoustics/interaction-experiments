@@ -2,9 +2,6 @@
 title: Welcome
 type: blank
 ---
-<head>
-<link rel="stylesheet" href="styles.css">
-</head>
 
 
 <span style ="font-size: 2em">
@@ -14,6 +11,5 @@ We recommend viewing on a laptop or PC as images will not load correctly on a sm
 Click Next if you are ready to proceed. </span>
 
 
-
-**[NEXT](C:\Backup\Ecosounds\GitHub\interaction-experiments\content\experiments\fcs\ethics.md)**
+Click Next if you are ready to proceed. 
 
