@@ -6,7 +6,6 @@ type: blank
 # Tell us about yourself
 
 
-
  <form action="">
 
 1. What is your **age**? 
@@ -41,7 +40,7 @@ Please enter whole numbers. <p>
 
 6. How experienced are you with using environmental recordings? <p id = q6><ul>
       <input type="radio" name="q6" value="1">
-        <label>1. Not at all knowledgeable</label><br>
+        <label>1. Not at all experienced</label><br>
         <input type="radio" name="q6" value="2">
         <label>2.</label><br>
         <input type="radio" name="q6" value="3">
@@ -49,7 +48,7 @@ Please enter whole numbers. <p>
         <input type="radio" name="q6" value="4">
         <label>4. </label><br>
         <input type="radio" name="q6" value="5">
-        <label>5. Very knowledgeable</label>
+        <label>5. Very experienced</label>
 </ul></p>
 
 7. How experienced are you with using any kind of acoustic visualisation (e.g. waveforms, spectrograms)? <p id = q7>

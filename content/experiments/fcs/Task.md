@@ -16,12 +16,17 @@ Find, box, & label one example of these 5 things as quickly as possible. They ma
 * Airplane
 * Frogs
 
-Click NEXT when you are done.
+Click START when you are ready to begin.<br>
+Click NEXT to end the timer. 
+<p>
+
+**<span style ="font-size: 2em; color: #3498db">
+START </span>**(Start loads image below)
 
 <img src="Sheryn_waveform.PNG" alt="waveform" width="100%"/>
 
 
-# **[NEXT]()**
+**<span style ="font-size: 2em">[NEXT]()</span>**
   </div>
 
 <progress id="bar" max="100" value="80" style = "width:100%;margin:0px; height:10px; position: relative; bottom:20px;"> </progress><br>
