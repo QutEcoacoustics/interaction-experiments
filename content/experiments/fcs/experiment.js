@@ -22,6 +22,8 @@ function experimentInit() {
     // site visualization combos
     // TODO: need to add correct resources... but for now proves the point
     //images are updated - needs correct audio
+    //participants need unique IDs assoc'd with their data (same ID across any collector if not all from jspsych or linkable)
+
     var visualizationStyles = ["fcs", "spectrogram", "waveform", "audioOnly"];
     var sites = [
         {
@@ -29,7 +31,7 @@ function experimentInit() {
             images: {
                 fcs: "./images/FCS_Liz.PNG",
                 spectrogram: "./images/greyscale_Liz.PNG",
-                waveform: "./images/wavform_Liz.png",
+                waveform: "./images/waveform_Liz.png",
                 audioOnly: "./images/blueblock.png"
             },
             audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
@@ -75,10 +77,11 @@ function experimentInit() {
     };
     timeline.push(ethics);
 
-    //survey qs pre-test
+    //survey qs pre-test - how to get s1q1-s1q7 on the one page
 
-    var scale1 = ["Not at all knowledgeable", "", "", "", "Very knowledgeable"];
-    var scale2 = ["Not at all experienced", "", "", "", "Very experienced"];
+    var scale1 = ["1. Not at all knowledgeable", "2", "3", "4", "5", "6", "7. Very knowledgeable"];
+    var scale2 = ["1. Not at all experienced", "2", "3", "4", "5", "6", "7. Very experienced"];
+    var scale3 = ["1. Not at all true", "2", "3", "4. Somewhat true", "5", "6", "7. Very true"];
 
     var s1q1 = {
         type: "survey-text",
@@ -146,6 +149,7 @@ function experimentInit() {
         }
     };
 
+
     // a yes response to the folowing Q would pipe this participant to
     // the grey scale or audio-only condition)
     var s1q8 = {
@@ -165,34 +169,34 @@ function experimentInit() {
         pages: [
             "In the following tasks you will be presented with a series of different long-duration environmental recordings, or soundscapes. \n They will appear in the space below.",
             "You have three tools you can use to manipulate the soundscape below.\n Click anywhere on audio bar above the soundscape to play the 30sec of audio.\n Try it now. When you are happy that you understand how to use it, click Next.",
-            "If you hover your cursor over the soundscape you will see it change to +. You can use this to draw a box anywhere on the soundscape to indicate what you think is interesting using the select tool. \n Try it now. Draw as many boxes as you like. \n They can be any size. They can overlap. You can also click and drag to move them. You can also delete them. \n When you are happy that you understand how to use it, click Next.",
-            "Please hover your cursor over any of the boxes in the soundscape, and right click. \n You should see a small drop down list  pop out from the side. Try selecting one of the options. \n When you are happy that you can do so, please click Next.",
-            "Try using all of the tools you have just learned to find, box and label one example of a bird call. \n When you have done so, click Next.",
-            "You have completed the tutorial. \n  On the next page you will be shown a new soundscape. \n You will need to find one example of each of the sounds listed above it as **quickly** as possible. You will be timed. \n Click Next if you are ready to begin."
+            "If you hover your cursor over the soundscape you will see it change to +. You can use this to draw a box anywhere on the soundscape to indicate what you think is interesting using the select tool. \n Try it now. Draw as many boxes as you like. \n They can be any size. They can overlap. You can also click and drag to move them. You can also delete them. \n When you are happy that you understand how to use it, click Continue.",
+            "Please hover your cursor over any of the boxes in the soundscape, and right click. \n You should see a small drop down list  pop out from the side. Try selecting one of the options. \n When you are happy that you can do so, please click Continue.",
+            "Try using all of the tools you have just learned to find, box and label one example of a bird call. \n When you have done so, click Continue.",
+            "You have completed the tutorial. \n  On the next page you will be shown a new soundscape. \n You will need to find one example of each of the sounds listed above it as **quickly** as possible. You will be timed. \n Click Continue if you are ready to begin."
         ],
-        show_clickable_nav: true
+        cont_btn: "continue"
     };
 
     var mainExperimentPrompt = {
         type: "instructions",
         pages: [
-            "Find, box, & label one example of these 5 things as quickly as possible. They may not all be present in the soundscape. \n",
+            "Find, box, & label one example of these 5 things as quickly as possible.  \n",
             "* Bird call \n",
             "* Dawn chorus \n",
             "* Crickets \n",
             "* Airplane \n",
             "* Frogs \n",
             "Click START when you are ready to begin. \n",
-            "Click NEXT to end the timer.",
+            "Click STOP when you have completed the task.",
 
-            "Find, box, & label one example of these 5 things as quickly as possible. They may not all be present in the soundscape. \n",
+            "Find, box, & label one example of these 5 things as quickly as possible.  \n",
             "* Bird call \n",
             "* Dawn chorus \n",
             "* Crickets \n",
             "* Airplane \n",
             "* Frogs \n",
             "* Your time has begun \n",
-            "Click NEXT to end the timer."
+            "Click STOP when you have completed the task."
         ]
     };
 
@@ -262,13 +266,25 @@ function experimentInit() {
 
     //survey qs - post test - also is not splitting the q's across separate var's
     //going to return them without an indentifier?
+    // Needs preamble: "For each of the following statements, please indicate how true it is for you, using the following scale:",
+    // need to randomise survey2 and survey3 questions each on their own screen
+    //
 
     var survey2 = {
-        type: "survey-text",
-        questions: {
-
-        }
+        type: "survey-likert",
+        questions:
+            [
+                "I would describe the task as very enjoyable",
+                "Doing the task was fun",
+                "I thought the task was very boring.",
+                "I found the task very interesting.",
+                "I enjoyed doing the task very much.",
+                "While I was working on the task, I was thinking about how much I enjoyed it.",
+                "I thought the task was very interesting"],
+        labels: scale3
     };
+
+    //timeline.push(survey2);
 
 
     var survey3 = {
@@ -290,6 +306,9 @@ function experimentInit() {
                 columns: 40
             }]
     };
+
+    timeline.push(survey3);
+
     var colourblind = {
         type: "survey-multi-choice",
         questions: [
@@ -307,7 +326,7 @@ function experimentInit() {
         //button_label_next: true
     };
 
-    timeline.push(survey3);
+    //timeline.push(colourblind);
 
     // contact details
 
@@ -323,7 +342,7 @@ function experimentInit() {
                 options: ["Yes", "No"]
             },
             {
-                prompt: "Would you like to take part in a prize draw to win a AU$100 Amazon voucher? If you win, you may choose to nominate that we donate AU$100 to the environmental conservation charity of your choice.",
+                prompt: "Would you like to take part in a prize draw to win a AU$100 Amazon voucher? /n If you win, you may choose to nominate that we donate AU$100 to the environmental conservation charity of your choice.",
                 options: ["Yes", "No"]
             }
         ]
