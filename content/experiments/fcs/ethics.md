@@ -58,7 +58,7 @@ If you have any questions or require further information please contact one of t
 QUT is committed to research integrity and the ethical conduct of research projects.  If you wish to discuss the study with someone not directly involved, particularly in relation to matters concerning policies, information or complaints about the conduct of the study or your rights as a participant, you may contact the QUT Research Ethics Advisory Team on +61 7 3138 5123 or email humanethics@qut.edu.au.
 
 **Statement of consent**<br>
-By clicking ‘Next’, you are indicating that you:
+By clicking 'Continue', you are indicating that you:
 
 * Have read and understood the information document regarding this research project.
 * Have had any questions answered to your satisfaction.

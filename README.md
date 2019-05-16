@@ -27,11 +27,21 @@ but will be prevented from storing any of the collected data.
 4. Commit and and Push your changes
 5. Wait about 30 seconds and they will be live in production
 
-## Working with the theme
+## Editing code
 
-Docs: https://github.com/zwbetz-gh/minimal-bootstrap-hugo-theme
+Please use Visual Studio Code to make changes to these files.
+Open this folder as a workspace and it will automatically suggest extensions to install.
 
-To update the theme:
-```
-git submodule update --remote --merge
-```
+**Most importantly**: do not mass format a file because you do not like how it is formatted.
+This can produce confusing diffs and unnecessarily large commits.
+
+See `.editorConfig` and `.eslintrc.yml` for established style rules.
+
+You don't need _eslint_ installed. The files in the solution are already formatted well,
+so just try to maintain the style you see.
+
+However, if you want  to use the eslint extension, then:
+
+1. Ensure you have a revent version of _node_ installed
+2. Install _eslint_ with `npm install -g eslint`
+3. If your workspace is open, you will need to re-open it

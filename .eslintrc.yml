@@ -7,9 +7,17 @@ globals:
   SharedArrayBuffer: readonly
   jsPsych: readonly
   console: readonly
+  annotorius: readonly
+  mediaElement: readonly
 parserOptions:
   ecmaVersion: 2018
 rules:
+  max-len:
+    - warn
+    - code: 120
+      ignoreComments: true
+      ignoreUrls: true
+      ignoreStrings: true
   indent:
     - error
     - 4
