@@ -1,18 +1,20 @@
 {{- define "main" -}}
 
+<!--
 <h1>{{ .Title | markdownify }}</h1>
 <h2>Experiment single</h2>
 {{ if .Draft }}
 <span class="badge badge-pill badge-secondary">Inactive</span>
 {{ end }}
+-->
 <p>
-  <small class="text-secondary">
-  {{ $customDateFormat := "2006-01-02" }}
-  {{ with .Site.Params.customDateFormat }}{{ $customDateFormat = . }}{{ end }}
-  {{ .Date.Format $customDateFormat }}
-  {{ if gt .Lastmod .Date }}, updated {{ .Lastmod.Format $customDateFormat }}{{ end }}
-  </small>
-  {{ partial "tags" . }}
+    <small class="text-secondary">
+        {{ $customDateFormat := "2006-01-02" }}
+        {{ with .Site.Params.customDateFormat }}{{ $customDateFormat = . }}{{ end }}
+        {{ .Date.Format $customDateFormat }}
+        {{ if gt .Lastmod .Date }}, updated {{ .Lastmod.Format $customDateFormat }}{{ end }}
+    </small>
+    {{ partial "tags" . }}
 </p>
 {{ .Content }}
 
@@ -22,13 +24,13 @@
 
 {{- end -}}
 {{ define "tail"}}
-  {{ $experimentJS := .Resources.GetMatch `experiment.js` }}
-  {{ if eq $.Hugo.Environment "production" }}
-    {{ $experimentJS = $experimentJS | resources.Fingerprint }}
-    <script src="{{ $experimentJS.Permalink }}" integrity="{{ $experimentJS.Data.Integrity }}"></script>
-  {{ else }}
-  <test></test>
-    <script src="{{ $experimentJS.Permalink }}" ></script>
-  {{ end }}
+{{ $experimentJS := .Resources.GetMatch `experiment.js` }}
+{{ if eq $.Hugo.Environment "production" }}
+{{ $experimentJS = $experimentJS | resources.Fingerprint }}
+<script src="{{ $experimentJS.Permalink }}" integrity="{{ $experimentJS.Data.Integrity }}"></script>
+{{ else }}
+<test></test>
+<script src="{{ $experimentJS.Permalink }}"></script>
+{{ end }}
 
 {{ end }}

@@ -4,6 +4,7 @@
 function experimentInit() {
     const enterKeyPress = 13;
 
+
     // other stuff
 
     // if a subject has given consent to participate.
@@ -63,8 +64,7 @@ function experimentInit() {
         type: "external-html",
         url: "welcome/index.html",
         cont_key: enterKeyPress,
-        cont_btn: "continue",
-        button_label_next: true
+        cont_btn: "continue"
     };
     timeline.push(welcome);
 
@@ -114,7 +114,7 @@ function experimentInit() {
         type: "survey-text",
         questions: {
             prompt:
-        "If you answered casual or professional interest, can you tell us more about it here?",
+                "If you answered casual or professional interest, can you tell us more about it here?",
             rows: 5,
             columns: 40
         }
@@ -124,7 +124,7 @@ function experimentInit() {
         type: "survey-likert",
         questions: {
             prompt:
-        "How knowledgeable are you about any kind of soundscape ecology, ecoacoustics, or bioacoustics?",
+                "How knowledgeable are you about any kind of soundscape ecology, ecoacoustics, or bioacoustics?",
             labels: scale1
         }
     };
@@ -141,7 +141,7 @@ function experimentInit() {
         type: "survey-likert",
         questions: {
             prompt:
-        "How experience are you with using any kind of acoustic visualisation? (e.g. waveforms, spectrograms)",
+                "How experience are you with using any kind of acoustic visualisation? (e.g. waveforms, spectrograms)",
             labels: scale2
         }
     };
@@ -160,7 +160,7 @@ function experimentInit() {
 
     //tutorial and experimental task
 
-    var tasks1 = {
+    var tutorialInstructions = {
         type: "instructions",
         pages: [
             "In the following tasks you will be presented with a series of different long-duration environmental recordings, or soundscapes. \n They will appear in the space below.",
@@ -173,7 +173,7 @@ function experimentInit() {
         show_clickable_nav: true
     };
 
-    var tasks2 = {
+    var mainExperimentPrompt = {
         type: "instructions",
         pages: [
             "Find, box, & label one example of these 5 things as quickly as possible. They may not all be present in the soundscape. \n",
@@ -182,7 +182,7 @@ function experimentInit() {
             "* Crickets \n",
             "* Airplane \n",
             "* Frogs \n",
-            "Click START when you are ready to begin. 'n",
+            "Click START when you are ready to begin. \n",
             "Click NEXT to end the timer.",
 
             "Find, box, & label one example of these 5 things as quickly as possible. They may not all be present in the soundscape. \n",
@@ -193,8 +193,7 @@ function experimentInit() {
             "* Frogs \n",
             "* Your time has begun \n",
             "Click NEXT to end the timer."
-        ],
-        button_label_next: true
+        ]
     };
 
     // for testing, remove later
@@ -203,6 +202,7 @@ function experimentInit() {
         choices: ["OK"],
         stimulus: function() {
             var data = {
+                tuteSite: jsPsych.timelineVariable("tuteSite")(),
                 site: jsPsych.timelineVariable("sites")(),
                 visualizationStyles: jsPsych.timelineVariable("visualizationStyles")()
             };
@@ -211,7 +211,20 @@ function experimentInit() {
         }
     };
 
-    var audioImage = {
+    var tutorialAnnotation = {
+        type: "annotate-audio-image",
+        image: function() {
+            var data = jsPsych.timelineVariable("tuteSite")();
+            var visualization = jsPsych.timelineVariable("visualizationStyles")();
+            return data.images[visualization];
+        },
+        audio: function() {
+            var data = jsPsych.timelineVariable("tuteSite")();
+            return data.audio;
+        }
+    };
+
+    var experimentAnnotation = {
         type: "annotate-audio-image",
         image: function() {
             var data = jsPsych.timelineVariable("sites")();
@@ -224,56 +237,21 @@ function experimentInit() {
         }
     };
 
-    //K's notes: added in var for tutel as it will make use of the Inala
-    //site and mainExperiment, Sheryn's site.
-    //Q: if tute and mainExperiment both randomise visualizationStyles
-    //does this mean they may not show the same type of image?
-    // AT: see below
-
-    // AT: this should not exist, merge the steps into mainExperiment below
-    var tute = {
-        timeline: [
-            debug,
-            tasks1, //tasks1
-            audioImage
-        ],
-        timeline_variables: jsPsych.randomization.factorial(
-            {
-                sites: sites,
-                visualizationStyles: visualizationStyles
-            },
-            1,
-            false
-        ),
-        sample: {
-            type: "without-replacement",
-            size: 1
-        }
-    };
-    timeline.push(tute);
-
-    // Or can the sites be linked to a set of instructions and the visualisationStyle kept constant in one variable?
-    // AT: yes, pick one of the following
-    // same visualizationStyle
-    var visualisationStyle = jsPsych.randomization.sampleWithoutReplacement(visualizationStyles, 1);
-    // always inala followed by random
-    var tuteSite = sites.find(current => current.name === "Inala");
-    var studySite = jsPsych.randomization.sampleWithoutReplacement(sites.filter(current => current.name !== "Inala"), 1);
-    // or two random sites
-    tuteSite, studySite = jsPsych.randomization.sampleWithoutReplacement(sites, 2);
+    var visualizationStyle = jsPsych.randomization.sampleWithoutReplacement(visualizationStyles, 1);
+    var [tuteSite, studySite] = jsPsych.randomization.sampleWithoutReplacement(sites, 2);
 
     var mainExperiment = {
         timeline: [
             debug,
-            tasks2, //tasks2
-            audioImage
+            tutorialAnnotation,
+            experimentAnnotation
         ],
         timeline_variables: [
             {
                 tuteSite: tuteSite,
                 sites: studySite,
                 visualizationStyles: visualizationStyle
-            },
+            }
         ],
         // sample: {
         //     type: "without-replacement",
@@ -287,6 +265,14 @@ function experimentInit() {
 
     var survey2 = {
         type: "survey-text",
+        questions: {
+
+        }
+    };
+
+
+    var survey3 = {
+        type: "survey-text",
         questions: [
             {
                 prompt: "Please tell us what you thought of this task:",
@@ -294,8 +280,7 @@ function experimentInit() {
                 columns: 40
             },
             {
-                prompt:
-          "Please tell us what characteristics of the soundscape drew your attention to it:",
+                prompt: "Please tell us what characteristics of the soundscape drew your attention to it:",
                 rows: 5,
                 columns: 40
             },
@@ -303,16 +288,30 @@ function experimentInit() {
                 prompt: "Do you have any other thoughts you'd like to share?",
                 rows: 5,
                 columns: 40
+            }]
+    };
+    var colourblind = {
+        type: "survey-multi-choice",
+        questions: [
+            {
+                prompt: "Are you colour blind?",
+                options: ["Yes", "No"],
+            },
+            {
+                prompt: "If you are colour blind, can you provide details?",
+                rows: 5,
+                columns: 40
             }
-        ],
-        button_label_next: true
+        ]
+
+        //button_label_next: true
     };
 
-    timeline.push(survey2);
+    timeline.push(survey3);
 
     // contact details
 
-    var survey3 = {
+    var survey4 = {
         type: "survey-multi-choice",
         questions: [
             {
@@ -329,25 +328,30 @@ function experimentInit() {
             }
         ]
     };
-    timeline.push(survey3);
+    timeline.push(survey4);
 
     // need to have contact details collected only if 'yes' is checked at least once in survey3
 
     var contact = {
         type: "survey-text",
-        questions: {
-            prompt: " Please supply your email address:",
-            rows: 1,
-            columns: 40
-        }
+        questions: [
+            {
+                prompt: " Please supply your email address:",
+                rows: 1,
+                columns: 40
+            }
+        ]
     };
 
     timeline.push(contact);
 
     var end = {
-        type: "instructions",
-        pages: ["Thank you for taking part in our experiment."]
+        type: "external-html",
+        url: "the_end/index.html",
+        cont_key: enterKeyPress,
+        cont_btn: "continue"
     };
+
     timeline.push(end);
 
     return {

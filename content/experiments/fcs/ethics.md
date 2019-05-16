@@ -2,7 +2,7 @@
 title: Ethics & Consent
 type: blank
 ---
-<form>
+
 
 # Visualising Long-Duration Environmental Recordings
 
@@ -54,10 +54,12 @@ If you have any questions or require further information please contact one of t
 *Kellie Vella*	<br>kellie.vella@qut.edu.au  
 *Anthony Truskinger*	<br>a.truskinger@qut.edu.au <br>	+61 7 3138 9381 
 
-**What if I have a concern or complaint regarding the conduct of the research project?**<br>
+**What if I have a concern or complaint regarding the conduct of the research project?**
+
 QUT is committed to research integrity and the ethical conduct of research projects.  If you wish to discuss the study with someone not directly involved, particularly in relation to matters concerning policies, information or complaints about the conduct of the study or your rights as a participant, you may contact the QUT Research Ethics Advisory Team on +61 7 3138 5123 or email humanethics@qut.edu.au.
 
-**Statement of consent**<br>
+**Statement of consent**
+
 By clicking 'Continue', you are indicating that you:
 
 * Have read and understood the information document regarding this research project.
@@ -70,10 +72,3 @@ By clicking 'Continue', you are indicating that you:
 Thank you for helping with this research project.
 
 Please print this page for your information.
-
-
- <label >
-    <button type="button" id="consentNext">NEXT </button>
-</label>
-</form>
-
