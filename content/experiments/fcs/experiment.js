@@ -77,7 +77,8 @@ function experimentInit() {
     };
     timeline.push(ethics);
 
-    //survey qs pre-test - how to get s1q1-s1q7 on the one page
+    //survey qs pre-test - how to get s1q1-s1q7 on the one page:
+    //https://github.com/jspsych/jsPsych/blob/40d50e89a20bd0b0677be4d64999fac9b429690a/plugins/jspsych-survey-html-form.js
 
     var scale1 = ["1. Not at all knowledgeable", "2", "3", "4", "5", "6", "7. Very knowledgeable"];
     var scale2 = ["1. Not at all experienced", "2", "3", "4", "5", "6", "7. Very experienced"];
@@ -123,7 +124,7 @@ function experimentInit() {
         }
     };
 
-    var s1q5 = {
+    var s1q4 = {
         type: "survey-likert",
         questions: {
             prompt:
@@ -132,7 +133,7 @@ function experimentInit() {
         }
     };
 
-    var s1q6 = {
+    var s1q5 = {
         type: "survey-likert",
         questions: {
             prompt: "How experience are you with using environmental recordings?",
@@ -140,7 +141,7 @@ function experimentInit() {
         }
     };
 
-    var s1q7 = {
+    var s1q6 = {
         type: "survey-likert",
         questions: {
             prompt:
@@ -149,18 +150,16 @@ function experimentInit() {
         }
     };
 
+    //trying to get all the items on the same page - currently not working
 
-    // a yes response to the folowing Q would pipe this participant to
-    // the grey scale or audio-only condition)
-    var s1q8 = {
-        type: "survey-multi-choice",
-        questions: [
-            {
-                prompt: "To your knowledge, do you have any kind of colour blindness?",
-                options: ["Yes", "No"]
-            }
-        ]
+    var survey1 = {
+        type: "survey-html-form",
+        questions: [s1q1, s1q2, s1q2text, s1q3, s1q3text, s1q4, s1q5, s1q6]
     };
+
+    // timeline.push(survey1);
+
+
 
     //tutorial and experimental task
 
@@ -313,11 +312,11 @@ function experimentInit() {
         type: "survey-multi-choice",
         questions: [
             {
-                prompt: "Are you colour blind?",
+                prompt: "To your knowledge, do you have any kind of colour blindness??",
                 options: ["Yes", "No"],
             },
             {
-                prompt: "If you are colour blind, can you provide details?",
+                prompt: "If you answered 'yes', can you provide details?",
                 rows: 5,
                 columns: 40
             }

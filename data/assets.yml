@@ -10,3 +10,4 @@ javascript:
   - "/jsPsych/plugins/jspsych-survey-likert.js"
   - "/jsPsych/plugins/jspsych-instructions.js"
   - "/jsPsych/plugins/jspsych-annotate-audio-image.js"
+  - "/jsPsych/plugins/jspsych-survey-html-form.js"
