@@ -24,13 +24,15 @@ function experimentInit() {
     //images are updated - needs correct audio
     //participants need unique IDs assoc'd with their data (same ID across any collector if not all from jspsych or linkable)
 
+
+
     var visualizationStyles = ["fcs", "spectrogram", "waveform", "audioOnly"];
     var sites = [
         {
             name: "Liz Tasmania",
             images: {
                 fcs: "./images/FCS_Liz.PNG",
-                spectrogram: "./images/greyscale_Liz.PNG",
+                spectrogram: "./images/greyscale_Liz.png",
                 waveform: "./images/waveform_Liz.png",
                 audioOnly: "./images/blueblock.png"
             },
@@ -40,7 +42,7 @@ function experimentInit() {
             name: "Sheryn",
             images: {
                 fcs: "./images/FCS_Sheryn.PNG",
-                spectrogram: "./images/greyscale_Sheryn.PNG",
+                spectrogram: "./images/greyscale_Sheryn.png",
                 waveform: "./images/waveform_Sheryn.PNG",
                 audioOnly: "./images/blueblock.png"
             },
@@ -50,7 +52,7 @@ function experimentInit() {
             name: "Inala",
             images: {
                 fcs: "./images/FCS_Inala.png",
-                spectrogram: "./images/greyscale_Inala.PNG",
+                spectrogram: "./images/greyscale_Inala.png",
                 waveform: "./images/waveform.Inala.PNG",
                 audioOnly: "./images/blueblock.png"
             },
@@ -80,9 +82,9 @@ function experimentInit() {
     //survey qs pre-test - how to get s1q1-s1q7 on the one page:
     //https://github.com/jspsych/jsPsych/blob/40d50e89a20bd0b0677be4d64999fac9b429690a/plugins/jspsych-survey-html-form.js
 
-    var scale1 = ["1. Not at all knowledgeable", "2", "3", "4", "5", "6", "7. Very knowledgeable"];
-    var scale2 = ["1. Not at all experienced", "2", "3", "4", "5", "6", "7. Very experienced"];
-    var scale3 = ["1. Not at all true", "2", "3", "4. Somewhat true", "5", "6", "7. Very true"];
+    var scale1 = ["Not at all knowledgeable", "", "", "", "", "", "Very knowledgeable"];
+    var scale2 = ["Not at all experienced", "", "", "", "", "", "Very experienced"];
+    var scale3 = ["Not at all true", "", "", "Somewhat true", "", "", "Very true"];
 
     var s1q1 = {
         type: "survey-text",
@@ -240,6 +242,8 @@ function experimentInit() {
         }
     };
 
+
+
     var visualizationStyle = jsPsych.randomization.sampleWithoutReplacement(visualizationStyles, 1);
     var [tuteSite, studySite] = jsPsych.randomization.sampleWithoutReplacement(sites, 2);
 
@@ -263,27 +267,43 @@ function experimentInit() {
     };
     timeline.push(mainExperiment);
 
+    //adding a subjectID tied to condition
+
+    var subject_id = jsPsych.randomization.randomID(5);
+
+    jsPsych.data.addProperties({
+        subject: subject_id,
+        condition: visualizationStyle
+    });
+
     //survey qs - post test - also is not splitting the q's across separate var's
     //going to return them without an indentifier?
-    // Needs preamble: "For each of the following statements, please indicate how true it is for you, using the following scale:",
     // need to randomise survey2 and survey3 questions each on their own screen
-    //
+
 
     var survey2 = {
         type: "survey-likert",
         questions:
             [
-                "I would describe the task as very enjoyable",
-                "Doing the task was fun",
-                "I thought the task was very boring.",
-                "I found the task very interesting.",
-                "I enjoyed doing the task very much.",
-                "While I was working on the task, I was thinking about how much I enjoyed it.",
-                "I thought the task was very interesting"],
-        labels: scale3
+                { prompt: "I would describe the task as very enjoyable", labels: scale3 },
+                { prompt: "Doing the task was fun", labels: scale3 },
+                { prompt: "I thought the task was very boring.", labels: scale3 },
+                { prompt: "I found the task very interesting.", labels: scale3 },
+                { prompt: "I enjoyed doing the task very much.", labels: scale3 },
+                { prompt: "While I was working on the task, I was thinking about how much I enjoyed it.", labels: scale3 },
+                { prompt: "I thought the task was very interesting.", labels: scale3 },
+            ],
+        preamble: "For each of the following statements, please indicate how true it is for you, using the following scale:"
     };
 
-    //timeline.push(survey2);
+    timeline.push(survey2);
+
+    // trying to randomise the survey2 items
+
+    //var IMI = ["I would describe the task as very enjoyable", "Doing the task was fun", "I thought the task was very boring.", "I found the task very interesting.", "I enjoyed doing the task very much.", "While I was working on the task, I was thinking about how much I enjoyed it.", "I thought the task was very interesting."];
+    //var randomIMI = jsPsych.randomization.repeat(IMI, 1);
+
+    //.. but then don't know how to integrate with the survey-likert format
 
 
     var survey3 = {
@@ -341,20 +361,18 @@ function experimentInit() {
                 options: ["Yes", "No"]
             },
             {
-                prompt: "Would you like to take part in a prize draw to win a AU$100 Amazon voucher? /n If you win, you may choose to nominate that we donate AU$100 to the environmental conservation charity of your choice.",
+                prompt: "Would you like to take part in a prize draw to win a AU$100 Amazon voucher? \n If you win, you may choose to nominate that we donate AU$100 to the environmental conservation charity of your choice.",
                 options: ["Yes", "No"]
-            }
-        ]
+            },
+        ],
     };
     timeline.push(survey4);
-
-    // need to have contact details collected only if 'yes' is checked at least once in survey3
 
     var contact = {
         type: "survey-text",
         questions: [
             {
-                prompt: " Please supply your email address:",
+                prompt: " If you checked 'yes', please supply your email address in the space below:",
                 rows: 1,
                 columns: 40
             }
