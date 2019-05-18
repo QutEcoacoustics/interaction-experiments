@@ -22,7 +22,6 @@ function experimentInit() {
     // site visualization combos
     // TODO: need to add correct resources... but for now proves the point
     //images are updated - needs correct audio
-    //participants need unique IDs assoc'd with their data (same ID across any collector if not all from jspsych or linkable)
 
 
 
@@ -31,7 +30,7 @@ function experimentInit() {
         {
             name: "Liz Tasmania",
             images: {
-                fcs: "./images/FCS_Liz.PNG",
+                fcs: "./images/FCS_Liz.png",
                 spectrogram: "./images/greyscale_Liz.png",
                 waveform: "./images/waveform_Liz.png",
                 audioOnly: "./images/blueblock.png"
@@ -41,9 +40,9 @@ function experimentInit() {
         {
             name: "Sheryn",
             images: {
-                fcs: "./images/FCS_Sheryn.PNG",
+                fcs: "./images/FCS_Sheryn.png",
                 spectrogram: "./images/greyscale_Sheryn.png",
-                waveform: "./images/waveform_Sheryn.PNG",
+                waveform: "./images/waveform_Sheryn.png",
                 audioOnly: "./images/blueblock.png"
             },
             audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
@@ -53,7 +52,7 @@ function experimentInit() {
             images: {
                 fcs: "./images/FCS_Inala.png",
                 spectrogram: "./images/greyscale_Inala.png",
-                waveform: "./images/waveform.Inala.PNG",
+                waveform: "./images/waveform.Inala.png",
                 audioOnly: "./images/blueblock.png"
             },
             audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
@@ -281,7 +280,7 @@ function experimentInit() {
     // need to randomise survey2 and survey3 questions each on their own screen
 
 
-    var survey2 = {
+    var IMI = {
         type: "survey-likert",
         questions:
             [
@@ -296,9 +295,20 @@ function experimentInit() {
         preamble: "For each of the following statements, please indicate how true it is for you, using the following scale:"
     };
 
-    timeline.push(survey2);
+
 
     // trying to randomise the survey2 items
+
+    //var myArray = [ trial1, trial2, trial3 ];
+    //var shuffledArray = jsPsych.randomization.repeat(myArray, 2);
+
+    //var myArray = [1,2,3,4,5];
+    //var shuffledArray = jsPsych.randomization.shuffle(myArray);
+
+    var myArray = IMI.questions;
+    var shuffledArray = jsPsych.randomization.shuffle(myArray);
+    IMI.questions = shuffledArray;
+    timeline.push(IMI);
 
     //var IMI = ["I would describe the task as very enjoyable", "Doing the task was fun", "I thought the task was very boring.", "I found the task very interesting.", "I enjoyed doing the task very much.", "While I was working on the task, I was thinking about how much I enjoyed it.", "I thought the task was very interesting."];
     //var randomIMI = jsPsych.randomization.repeat(IMI, 1);
