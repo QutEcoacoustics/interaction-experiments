@@ -59,6 +59,13 @@ function experimentInit() {
         }
     ];
 
+    //  scales for likert questions
+
+    var scale1 = ["Not at all knowledgeable", "", "", "", "", "", "Very knowledgeable"];
+    var scale2 = ["Not at all experienced", "", "", "", "", "", "Very experienced"];
+    var scale3 = ["Not at all true", "", "", "Somewhat true", "", "", "Very true"];
+
+
     // timeline
 
     var timeline = [];
@@ -81,9 +88,6 @@ function experimentInit() {
     //survey qs pre-test - how to get s1q1-s1q7 on the one page:
     //https://github.com/jspsych/jsPsych/blob/40d50e89a20bd0b0677be4d64999fac9b429690a/plugins/jspsych-survey-html-form.js
 
-    var scale1 = ["Not at all knowledgeable", "", "", "", "", "", "Very knowledgeable"];
-    var scale2 = ["Not at all experienced", "", "", "", "", "", "Very experienced"];
-    var scale3 = ["Not at all true", "", "", "Somewhat true", "", "", "Very true"];
 
     var s1q1 = {
         type: "survey-text",
@@ -151,14 +155,15 @@ function experimentInit() {
         }
     };
 
+
     //trying to get all the items on the same page - currently not working
 
-    var survey1 = {
-        type: "survey-html-form",
-        questions: [s1q1, s1q2, s1q2text, s1q3, s1q3text, s1q4, s1q5, s1q6]
-    };
+    /* var survey1 = {
+         type: "survey-html-form",
+         url: "introQs/indexed.html"
+         preamble: "Tell us about yourself"
 
-    // timeline.push(survey1);
+     timeline.push(survey1); */
 
 
 
@@ -204,7 +209,7 @@ function experimentInit() {
     var debug = {
         type: "html-button-response",
         choices: ["OK"],
-        stimulus: function() {
+        stimulus: function () {
             var data = {
                 tuteSite: jsPsych.timelineVariable("tuteSite")(),
                 site: jsPsych.timelineVariable("sites")(),
@@ -217,12 +222,12 @@ function experimentInit() {
 
     var tutorialAnnotation = {
         type: "annotate-audio-image",
-        image: function() {
+        image: function () {
             var data = jsPsych.timelineVariable("tuteSite")();
             var visualization = jsPsych.timelineVariable("visualizationStyles")();
             return data.images[visualization];
         },
-        audio: function() {
+        audio: function () {
             var data = jsPsych.timelineVariable("tuteSite")();
             return data.audio;
         }
@@ -230,12 +235,12 @@ function experimentInit() {
 
     var experimentAnnotation = {
         type: "annotate-audio-image",
-        image: function() {
+        image: function () {
             var data = jsPsych.timelineVariable("sites")();
             var visualization = jsPsych.timelineVariable("visualizationStyles")();
             return data.images[visualization];
         },
-        audio: function() {
+        audio: function () {
             var data = jsPsych.timelineVariable("sites")();
             return data.audio;
         }
