@@ -1,22 +1,26 @@
 ---
-title: Qual questions
+title: A few last questions...
 type: blank
 ---
 
-# A few questions:
+<div align = "left">
+1. Please tell us what you thought of this task:<p>
+<textarea id="qual1" name="ql1" class="element textarea medium" rows = "5" cols = "60"></textarea><p>
 
-
-1. Can you tell us what you thought about while completing this task?<p>
-<textarea id="Q4" name="Q4" class="element textarea medium" rows = "5" cols = "60"></textarea> 
-
-2. Can you tell us what characteristics of the visualisation led you to believe a sound was present? <p><textarea id="Q4" name="Q4" class="element textarea medium" rows = "5" cols = "60"></textarea> 
-
+2. Please tell us what characteristics of the soundscape drew your attention to it: <p>
+<textarea id="qual2" name="ql2" class="element textarea medium" rows = "5" cols = "60"></textarea><p>
 
 3. Do you have any other thoughts you’d like to share? <p>
-<textarea id="Q4" name="Q4" class="element textarea medium" rows = "5" cols = "60"></textarea> <p>
+<textarea id="qual3" name="ql3" class="element textarea medium" rows = "5" cols = "60"></textarea> <p>
 
-<div style = "align:centre;">
+4. To your knowledge, do you have any kind of colour blindness? <p id = sight><ul>
+<input type = "radio" name = "colourblind" value = "1">
+<label>No </label><br>
+<input type = "radio" name = "colourblind" value = "2">
+<label>Yes </label>
+</ul>
 
-# **[NEXT](C:\Backup\Ecosounds\GitHub\interaction-experiments\content\experiments\fcs\The_end.md)**
-  </div>
-<progress id="bar" max="100" value="90" style = "width:100%;margin:0px; height:10px; position: relative; bottom:20px;"> </progress><br>
+5. If you answered yes to the previous question, can you please provide details? </label>
+<textarea id="sight_details" name="sight_details" class="element textarea small" rows = "1" cols = "40"></textarea> <p>
+
+</div>

@@ -1,31 +1,34 @@
 ---
-title: Demographics
+title: Tell us about yourself
 type: blank
 hideJsPsychContinueButton: true
 ---
 
-# Tell us about yourself
-
-1. What is your **age**?
-Please enter whole numbers. <p>
+<div align = "left">
+1. What is your age?
+Please enter whole numbers. <p id = q1>
 <input type="text" name="Q1age"/><p>
 
-2. What is your **gender**? <p><ul>
-<input type = "checkbox" name = "Q2male"> Male <br>
-<input type = "checkbox" name = "Q2female"> Female <br>
-<input type = "checkbox" name = "Q2othergender"> Not listed, please state: <input type="text" name="othergender_text"/><p></ul>
+2. What is your gender? <p id = q2><ul>
+<input type = "radio" name = "Q2" value = "1">
+<label>Male </label><br>
+<input type = "radio" name = "Q2" value = "2">
+<label>Female </label><br>
+<input type = "radio" name = "Q2" value = "3">
+<label>Not listed, please state: </label>
+<input type="text" name="othergender_text"/></ul><p>
 
-3. What is your interest in **ecology**? <p><ul>
-<input type = "checkbox" name = "Q3casualinterest"> Casual interest <br>
-<input type = "checkbox" name = "Q3prointerest"> Professional interest <br>
-<input type = "checkbox" name = "Q3nointerest"> No interest<p></ul>
+3. What is your interest in ecology? <p id = q3><ul>
+<input type = "radio" name = "Q3" value = "1"> Casual interest <br>
+<input type = "radio" name = "Q3" value = "2"> Professional interest <br>
+<input type = "radio" name = "Q3" value = "3"> No interest</ul><p>
 
-4. If you answered **casual** or **professional interest** can you tell us more about it here: <p>
+4. If you answered casual or professional interest can you tell us more about it here: <p id = q4>
 <textarea id="Q4" name="Q4" class="element textarea medium" rows = "5" cols = "50"></textarea> <p>
 
-5. How **knowledgeable** are you about any kind of **soundscape ecology, ecoacoustics or bioacoustics**? <p id = q5><ul>
+5. How knowledgeable are you about any kind of soundscape ecology, ecoacoustics or bioacoustics?<p id="q5"> <ul>
         <input type="radio" name="q5" value="1">
-        <label>1. Not at all knowledgeable</label><br>
+        <label>1.Not at all knowledgeable</label><br>
      <input type="radio" name="q5" value="2">
         <label>2.</label><br>
       <input type="radio" name="q5" value="3">
@@ -34,9 +37,9 @@ Please enter whole numbers. <p>
         <label>4. </label><br>
      <input type="radio" name="q5" value="5">
         <label>5. Very knowledgeable</label>
-</ul></p>
+</ul><p>
 
-6. How experienced are you with using environmental recordings? <p id = q6><ul>
+6. How experienced are you with using environmental recordings?<p id = q6><ul>
       <input type="radio" name="q6" value="1">
         <label>1. Not at all experienced</label><br>
         <input type="radio" name="q6" value="2">
@@ -49,7 +52,8 @@ Please enter whole numbers. <p>
         <label>5. Very experienced</label>
 </ul></p>
 
-7. How experienced are you with using any kind of acoustic visualisation (e.g. waveforms, spectrograms)? <p id = q7><ul>
+
+7. How experienced are you with using any kind of acoustic visualisation (e.g. waveforms, spectrograms)?<p id = q7><ul>
         <input type="radio" name="q7" value="1">
         <label>1. Not at all experienced</label><br>
         <input type="radio" name="q7" value="2">
@@ -61,4 +65,4 @@ Please enter whole numbers. <p>
         <input type="radio" name="q7" value="5">
         <label>5. Very experienced</label>
 </ul></p>
-
+</div>
