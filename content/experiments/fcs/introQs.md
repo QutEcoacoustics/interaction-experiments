@@ -5,7 +5,6 @@ type: blank
 
 # Tell us about yourself
 
-<form>
 1. What is your **age**?
 Please enter whole numbers. <p>
 <input type="text" name="Q1age"/><p>
@@ -61,5 +60,4 @@ Please enter whole numbers. <p>
         <input type="radio" name="q7" value="5">
         <label>5. Very experienced</label>
 </ul></p>
-</form>
 

@@ -87,7 +87,7 @@ function experimentInit() {
 
     var s1q = {
         type: "survey-html-form",
-        html: '<input type="radio" name="q5" value="1"><label>1. Not at all knowledgeable</label><br><input type="radio" name="q5" value="2"><label>2.</label><br>',
+        url: "introQs/index.html",
         button_label: "continue"
     }
     timeline.push(s1q);
