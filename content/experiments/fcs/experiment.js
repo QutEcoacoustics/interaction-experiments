@@ -85,9 +85,15 @@ function experimentInit() {
     };
     timeline.push(ethics);
 
+    var s1q = {
+        type: "survey-html-form",
+        html: '<input type="radio" name="q5" value="1"><label>1. Not at all knowledgeable</label><br><input type="radio" name="q5" value="2"><label>2.</label><br>',
+        button_label: "continue"
+    }
+    timeline.push(s1q);
+
     //survey qs pre-test - how to get s1q1-s1q7 on the one page:
     //https://github.com/jspsych/jsPsych/blob/40d50e89a20bd0b0677be4d64999fac9b429690a/plugins/jspsych-survey-html-form.js
-
 
     var s1q1 = {
         type: "survey-text",
