@@ -4,5 +4,7 @@
 
 {{ .Content }}
 
+{{ if not .Params.hideJsPsychContinueButton }}
 <button type="button" class="jspsych-btn" id="continue">Continue</button>
+{{ end }}
 {{- end -}}

@@ -88,8 +88,8 @@ function experimentInit() {
     var s1q = {
         type: "survey-html-form",
         url: "introQs/index.html",
-        button_label: "continue"
-    }
+        button_label: "Continue"
+    };
     timeline.push(s1q);
 
     //survey qs pre-test - how to get s1q1-s1q7 on the one page:
@@ -215,7 +215,7 @@ function experimentInit() {
     var debug = {
         type: "html-button-response",
         choices: ["OK"],
-        stimulus: function () {
+        stimulus: function() {
             var data = {
                 tuteSite: jsPsych.timelineVariable("tuteSite")(),
                 site: jsPsych.timelineVariable("sites")(),
@@ -228,12 +228,12 @@ function experimentInit() {
 
     var tutorialAnnotation = {
         type: "annotate-audio-image",
-        image: function () {
+        image: function() {
             var data = jsPsych.timelineVariable("tuteSite")();
             var visualization = jsPsych.timelineVariable("visualizationStyles")();
             return data.images[visualization];
         },
-        audio: function () {
+        audio: function() {
             var data = jsPsych.timelineVariable("tuteSite")();
             return data.audio;
         }
@@ -241,12 +241,12 @@ function experimentInit() {
 
     var experimentAnnotation = {
         type: "annotate-audio-image",
-        image: function () {
+        image: function() {
             var data = jsPsych.timelineVariable("sites")();
             var visualization = jsPsych.timelineVariable("visualizationStyles")();
             return data.images[visualization];
         },
-        audio: function () {
+        audio: function() {
             var data = jsPsych.timelineVariable("sites")();
             return data.audio;
         }

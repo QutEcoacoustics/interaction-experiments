@@ -1,6 +1,7 @@
 ---
 title: Demographics
 type: blank
+hideJsPsychContinueButton: true
 ---
 
 # Tell us about yourself
