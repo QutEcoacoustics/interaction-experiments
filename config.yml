@@ -12,6 +12,7 @@ staticDir:
 
 enableGitInfo: true
 relativeURLs: true
+disablePathToLower: true
 
 taxonomies:
   tag: tags
