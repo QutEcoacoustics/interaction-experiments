@@ -1,0 +1,43 @@
+<div id="carousel" class="carousel slide mx-auto">
+    <ol class="carousel-indicators">
+    </ol>
+    <div class="carousel-inner">
+        {{ .Inner | markdownify }}
+    </div>
+    <div class="">
+      <button class="left jspsych-btn" href="#carousel" role="button" data-slide="prev">
+
+          <i class="fas fa-chevron-left" aria-hidden="true"></i>
+        Previous
+      </a>
+      <button class="right jspsych-btn" href="#carousel" role="button" data-slide="next">
+        Next
+        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+      </a>
+   </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  var sections = $(".carousel-inner").children("h1");
+  var indicators =$(".carousel-indicators");
+  sections.each(function (index, $el) {
+    var active = index === 0 ? "active" : "";
+    var $this = $(this)
+    $this.nextUntil("h1").addBack().wrapAll(`<div class="carousel-item ${active}"></div>`) 
+
+    indicators.append(`<li data-target="#carousel" data-slide-to="${index}" class="${active}"></li>`)
+  });
+
+  $(".carousel").carousel({
+    interval: false,
+    keyboard: true,
+    wrap: false,
+    touch: true
+  }).on("slide.bs.carousel", function(event) {
+    var $this = $(this);
+
+  });
+  
+});
+</script>

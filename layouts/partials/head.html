@@ -26,9 +26,7 @@
   <meta name="msapplication-TileColor" content="{{ .Site.Params.faviconMsApplicationTileColor }}">
 
   <meta name="theme-color" content="{{ .Site.Params.faviconThemeColor }}">
-
-  {{ $bootstrapCss := "css/bootstrap.min.css" }}
-  <link rel="stylesheet" href="{{ $bootstrapCss | absURL }}" />
+  {{ partial "bootstrap-js.html" . }}
 
   {{ if .IsHome }}
   {{ $homepage := "Home" }}
