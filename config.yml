@@ -4,10 +4,6 @@ title: "QUT Ecoacoustics Interaction Experiments"
 theme: ~
 
 staticDir:
-  # this hack ensures all files in assets get copied to static
-  # we're doing this because hugo pipes does allow wildcard matches of images
-  # which is silly :-(
-  - assets
   - static
 
 enableGitInfo: true
