@@ -3,7 +3,7 @@ title: Contact details
 type: blank
 ---
 
-<div id = "consent">
+<div id = "consent", style = "left-align">
 
 1. Would you like to be informed of the results of our study at a later date? <p>
 <input type = "checkbox" id = "yes"> Yes <br>

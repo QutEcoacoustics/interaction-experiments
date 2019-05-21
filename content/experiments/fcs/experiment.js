@@ -60,7 +60,8 @@ function experimentInit() {
     ];
 
     //  scales for likert questions
-
+    var scale1 = ["Very Low", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Very High"];
+    var scale2 = ["Perfect", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Failure"];
     var scale3 = ["Not at all true", "", "", "Somewhat true", "", "", "Very true"];
 
 
@@ -94,17 +95,17 @@ function experimentInit() {
 
 
     //tutorial and experimental task
-
+    var tutorial_pages = [
+        "In the following tasks you will be presented with a series of different long-duration environmental recordings, or soundscapes. \n They will appear in the space below.",
+        "You have three tools you can use to manipulate the soundscape below.\n Click anywhere on audio bar above the soundscape to play the 30sec of audio.\n Try it now. When you are happy that you understand how to use it, click Next.",
+        "If you hover your cursor over the soundscape you will see it change to +. You can use this to draw a box anywhere on the soundscape to indicate what you think is interesting using the select tool. \n Try it now. Draw as many boxes as you like. \n They can be any size. They can overlap. You can also click and drag to move them. You can also delete them. \n When you are happy that you understand how to use it, click Continue.",
+        "Please hover your cursor over any of the boxes in the soundscape, and right click. \n You should see a small drop down list  pop out from the side. Try selecting one of the options. \n When you are happy that you can do so, please click Continue.",
+        "Try using all of the tools you have just learned to find, box and label one example of a bird call. \n When you have done so, click Continue.",
+        "You have completed the tutorial. \n  On the next page you will be shown a new soundscape. \n You will need to find one example of each of the sounds listed above it as **quickly** as possible. You will be timed. \n Click Continue if you are ready to begin."
+    ];
     var tutorialInstructions = {
         type: "instructions",
-        pages: [
-            "In the following tasks you will be presented with a series of different long-duration environmental recordings, or soundscapes. \n They will appear in the space below.",
-            "You have three tools you can use to manipulate the soundscape below.\n Click anywhere on audio bar above the soundscape to play the 30sec of audio.\n Try it now. When you are happy that you understand how to use it, click Next.",
-            "If you hover your cursor over the soundscape you will see it change to +. You can use this to draw a box anywhere on the soundscape to indicate what you think is interesting using the select tool. \n Try it now. Draw as many boxes as you like. \n They can be any size. They can overlap. You can also click and drag to move them. You can also delete them. \n When you are happy that you understand how to use it, click Continue.",
-            "Please hover your cursor over any of the boxes in the soundscape, and right click. \n You should see a small drop down list  pop out from the side. Try selecting one of the options. \n When you are happy that you can do so, please click Continue.",
-            "Try using all of the tools you have just learned to find, box and label one example of a bird call. \n When you have done so, click Continue.",
-            "You have completed the tutorial. \n  On the next page you will be shown a new soundscape. \n You will need to find one example of each of the sounds listed above it as **quickly** as possible. You will be timed. \n Click Continue if you are ready to begin."
-        ],
+        pages: tutorial_pages,
         cont_btn: "continue"
     };
 
@@ -223,16 +224,34 @@ function experimentInit() {
                 { prompt: "While I was working on the task, I was thinking about how much I enjoyed it.", labels: scale3 },
                 { prompt: "I thought the task was very interesting.", labels: scale3 },
             ],
-        preamble: "For each of the following statements, please indicate how true it is for you, using the following scale:"
+        preamble: "For each of the following statements, please indicate how true it is for you, using the following scale:",
+        randomise_order: true
     };
 
-
-
-    var myArray = IMI.questions;
-    var shuffledArray = jsPsych.randomization.shuffle(myArray);
+    var IMIArray = IMI.questions;
+    var shuffledArray = jsPsych.randomization.shuffle(IMIArray);
     IMI.questions = shuffledArray;
     timeline.push(IMI);
 
+    var NASATLX = {
+        type: "survey-likert",
+        questions:
+            [
+                { prompt: "How mentally demanding was the task?", labels: scale1 },
+                { prompt: "How physically demanding was the task?", labels: scale1 },
+                { prompt: "How hurried or rushed was the pace of the task?", labels: scale1 },
+                { prompt: "How sucessful were you in accomplishing what you were asked to do?", labels: scale2 },
+                { prompt: "How hard did you have to work to accomplish your level of performance?", labels: scale1 },
+                { prompt: "How insecure, discouraged, irritated, stressed, and annoyed were you?", labels: scale1 },
+            ],
+        preamble: "Please answer the following questions regarding the task you just performed.",
+        randomise_order: true
+    };
+
+    var NASAArray = NASATLX.questions;
+    var shuffledArray = jsPsych.randomization.shuffle(NASAArray);
+    NASATLX.questions = shuffledArray;
+    timeline.push(NASATLX);
 
     var survey2 = {
         type: "survey-html-form",
