@@ -87,7 +87,7 @@ function experimentInit() {
     var survey1 = {
         type: "survey-html-form",
         url: "introQs/index.html",
-        button_label: "Continue"
+        button_label: "continue"
     };
     timeline.push(survey1);
 
@@ -95,48 +95,19 @@ function experimentInit() {
 
 
     //tutorial and experimental task
-    var tutorial_pages = [
-        "In the following tasks you will be presented with a series of different long-duration environmental recordings, or soundscapes. \n They will appear in the space below.",
-        "You have three tools you can use to manipulate the soundscape below.\n Click anywhere on audio bar above the soundscape to play the 30sec of audio.\n Try it now. When you are happy that you understand how to use it, click Next.",
-        "If you hover your cursor over the soundscape you will see it change to +. You can use this to draw a box anywhere on the soundscape to indicate what you think is interesting using the select tool. \n Try it now. Draw as many boxes as you like. \n They can be any size. They can overlap. You can also click and drag to move them. You can also delete them. \n When you are happy that you understand how to use it, click Continue.",
-        "Please hover your cursor over any of the boxes in the soundscape, and right click. \n You should see a small drop down list  pop out from the side. Try selecting one of the options. \n When you are happy that you can do so, please click Continue.",
-        "Try using all of the tools you have just learned to find, box and label one example of a bird call. \n When you have done so, click Continue.",
-        "You have completed the tutorial. \n  On the next page you will be shown a new soundscape. \n You will need to find one example of each of the sounds listed above it as **quickly** as possible. You will be timed. \n Click Continue if you are ready to begin."
-    ];
+    var tutorial_pages = "Tutorial/index.html",
+
     var tutorialInstructions = {
         type: "instructions",
         pages: tutorial_pages,
         cont_btn: "continue"
     };
 
-    var mainExperimentPrompt = {
-        type: "instructions",
-        pages: [
-            "Find, box, & label one example of these 5 things as quickly as possible.  \n",
-            "* Bird call \n",
-            "* Dawn chorus \n",
-            "* Crickets \n",
-            "* Airplane \n",
-            "* Frogs \n",
-            "Click START when you are ready to begin. \n",
-            "Click STOP when you have completed the task.",
-
-            "Find, box, & label one example of these 5 things as quickly as possible.  \n",
-            "* Bird call \n",
-            "* Dawn chorus \n",
-            "* Crickets \n",
-            "* Airplane \n",
-            "* Frogs \n",
-            "* Your time has begun \n",
-            "Click STOP when you have completed the task."
-        ]
-    };
-
     // for testing, remove later
     var debug = {
         type: "html-button-response",
         choices: ["OK"],
-        stimulus: function() {
+        stimulus: function () {
             var data = {
                 tuteSite: jsPsych.timelineVariable("tuteSite")(),
                 site: jsPsych.timelineVariable("sites")(),
@@ -149,13 +120,13 @@ function experimentInit() {
 
     var tutorialAnnotation = {
         type: "annotate-audio-image",
-        externalHtmlPreamble: "Tute1/index.html",
-        image: function() {
+        externalHtmlPreamble: "Tutorial/index.html",
+        image: function () {
             var data = jsPsych.timelineVariable("tuteSite")();
             var visualization = jsPsych.timelineVariable("visualizationStyles")();
             return data.images[visualization];
         },
-        audio: function() {
+        audio: function () {
             var data = jsPsych.timelineVariable("tuteSite")();
             return data.audio;
         }
@@ -163,33 +134,45 @@ function experimentInit() {
 
     var experimentAnnotation = {
         type: "annotate-audio-image",
-        image: function() {
+        externalHtmlPreamble: "Task/index.html",
+        image: function () {
             var data = jsPsych.timelineVariable("sites")();
             var visualization = jsPsych.timelineVariable("visualizationStyles")();
             return data.images[visualization];
         },
-        audio: function() {
+        audio: function () {
             var data = jsPsych.timelineVariable("sites")();
             return data.audio;
         }
     };
 
 
-
     var visualizationStyle = jsPsych.randomization.sampleWithoutReplacement(visualizationStyles, 1);
     var [tuteSite, studySite] = jsPsych.randomization.sampleWithoutReplacement(sites, 2);
+
+    // adding taskinstructions here and in mainExperiment
+    //currently not working but timeline should grab content from Tutorial.md, then taskinstructions, then Task.md
+
+    var taskinstructions = {
+        type: "survey-html-form",
+        url: "Task_instructions/index.html",
+        button_label: "continue"
+    }
+
 
     var mainExperiment = {
         timeline: [
             debug,
             tutorialAnnotation,
+            taskinstructions,
             experimentAnnotation
         ],
         timeline_variables: [
             {
                 tuteSite: tuteSite,
                 sites: studySite,
-                visualizationStyles: visualizationStyle
+                visualizationStyles: visualizationStyle,
+                tutePages: tutorial_pages
             }
         ],
         // sample: {
@@ -208,9 +191,8 @@ function experimentInit() {
         condition: visualizationStyle
     });
 
-    //survey qs - post test - also is not splitting the q's across separate var's
-    //going to return them without an indentifier?
-    // need to randomise survey2 and survey3 questions each on their own screen
+
+    // ideally randomise the two screens dealing with IMI and NASATLX - hence randomise-order:true which doesn't seem to be working
 
 
     var IMI = {
@@ -261,39 +243,13 @@ function experimentInit() {
     };
     timeline.push(survey2);
 
-
-    // contact details
-
-    var survey4 = {
-        type: "survey-multi-choice",
-        questions: [
-            {
-                prompt: "Would you like to be informed of the results of our study at a later date?",
-                options: ["Yes", "No"]
-            },
-            {
-                prompt: "Would you like to take part in future research conducted by QUT's EcoAcoustics Group?",
-                options: ["Yes", "No"]
-            },
-            {
-                prompt: "Would you like to take part in a prize draw to win a AU$100 Amazon voucher? \n If you win, you may choose to nominate that we donate AU$100 to the environmental conservation charity of your choice.",
-                options: ["Yes", "No"]
-            },
-        ],
-    };
-    timeline.push(survey4);
+    //
 
     var contact = {
-        type: "survey-text",
-        questions: [
-            {
-                prompt: " If you checked 'yes', please supply your email address in the space below:",
-                rows: 1,
-                columns: 40
-            }
-        ]
+        type: "survey-html-form",
+        url: "contact/index.html",
+        button_label: "Continue"
     };
-
     timeline.push(contact);
 
     var end = {
