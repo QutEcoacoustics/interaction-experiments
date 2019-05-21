@@ -10,7 +10,7 @@ type: blank
 
  Please hover your cursor over any of the boxes in the soundscape, and right click.
 
-You should see a small drop down list  pop out from the side. Try selecting one of the options.
+You should see a text box appear. Enter text or numbers into the field.
 
-When you are happy that you can do so, please click Next.
+When you are happy that you can do so, please click Continue.
 

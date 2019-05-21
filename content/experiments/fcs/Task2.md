@@ -16,12 +16,10 @@ Find, box, & label one example of these 5 things as quickly as possible.
 * Airplane
 * Frogs
 
-Click START when you are ready to begin.<br>
-Click STOP when you have completed the task.
+
+Click CONTINUE when you have completed the task.
 <p>
 
-**<span style ="font-size: 2em; color: #3498db">
-START </span>**(Start loads image below)
 
 
 

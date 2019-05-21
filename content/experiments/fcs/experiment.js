@@ -52,7 +52,7 @@ function experimentInit() {
             images: {
                 fcs: "./images/FCS_Inala.png",
                 spectrogram: "./images/greyscale_Inala.png",
-                waveform: "./images/waveform.Inala.png",
+                waveform: "./images/waveform_Inala.png",
                 audioOnly: "./images/blueblock.png"
             },
             audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
@@ -60,9 +60,8 @@ function experimentInit() {
     ];
 
     //  scales for likert questions
-
-    var scale1 = ["Not at all knowledgeable", "", "", "", "", "", "Very knowledgeable"];
-    var scale2 = ["Not at all experienced", "", "", "", "", "", "Very experienced"];
+    var scale1 = ["Very Low", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Very High"];
+    var scale2 = ["Perfect", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Failure"];
     var scale3 = ["Not at all true", "", "", "Somewhat true", "", "", "Very true"];
 
 
@@ -85,106 +84,28 @@ function experimentInit() {
     };
     timeline.push(ethics);
 
-    var s1q = {
+    var survey1 = {
         type: "survey-html-form",
         url: "introQs/index.html",
         button_label: "Continue"
     };
-    timeline.push(s1q);
+    timeline.push(survey1);
 
-    //survey qs pre-test - how to get s1q1-s1q7 on the one page:
-    //https://github.com/jspsych/jsPsych/blob/40d50e89a20bd0b0677be4d64999fac9b429690a/plugins/jspsych-survey-html-form.js
-
-    var s1q1 = {
-        type: "survey-text",
-        questions: { prompt: "What is your age?", rows: 1, columns: 5 }
-    };
-
-    var s1q2 = {
-        type: "survey-multi-choice",
-        questions: {
-            prompt: "what is your gender?",
-            options: ["Male", "Female", "Please list"]
-        }
-    };
-
-    var s1q2text = {
-        type: "survey-text",
-        questions: {
-            prompt: "if you indicated 'not listed', please state:",
-            rows: 1,
-            columns: 40
-        }
-    };
-
-    var s1q3 = {
-        type: "survey-multi-choice",
-        questions: {
-            prompt: "What is your interest in ecology?",
-            options: ["Casual interest", "Professional interest", "No interest"]
-        }
-    };
-
-    var s1q3text = {
-        type: "survey-text",
-        questions: {
-            prompt:
-                "If you answered casual or professional interest, can you tell us more about it here?",
-            rows: 5,
-            columns: 40
-        }
-    };
-
-    var s1q4 = {
-        type: "survey-likert",
-        questions: {
-            prompt:
-                "How knowledgeable are you about any kind of soundscape ecology, ecoacoustics, or bioacoustics?",
-            labels: scale1
-        }
-    };
-
-    var s1q5 = {
-        type: "survey-likert",
-        questions: {
-            prompt: "How experience are you with using environmental recordings?",
-            labels: scale2
-        }
-    };
-
-    var s1q6 = {
-        type: "survey-likert",
-        questions: {
-            prompt:
-                "How experience are you with using any kind of acoustic visualisation? (e.g. waveforms, spectrograms)",
-            labels: scale2
-        }
-    };
-
-
-    //trying to get all the items on the same page - currently not working
-
-    /* var survey1 = {
-         type: "survey-html-form",
-         url: "introQs/indexed.html"
-         preamble: "Tell us about yourself"
-
-     timeline.push(survey1); */
 
 
 
     //tutorial and experimental task
-
+    var tutorial_pages = [
+        "In the following tasks you will be presented with a series of different long-duration environmental recordings, or soundscapes. \n They will appear in the space below.",
+        "You have three tools you can use to manipulate the soundscape below.\n Click anywhere on audio bar above the soundscape to play the 30sec of audio.\n Try it now. When you are happy that you understand how to use it, click Next.",
+        "If you hover your cursor over the soundscape you will see it change to +. You can use this to draw a box anywhere on the soundscape to indicate what you think is interesting using the select tool. \n Try it now. Draw as many boxes as you like. \n They can be any size. They can overlap. You can also click and drag to move them. You can also delete them. \n When you are happy that you understand how to use it, click Continue.",
+        "Please hover your cursor over any of the boxes in the soundscape, and right click. \n You should see a small drop down list  pop out from the side. Try selecting one of the options. \n When you are happy that you can do so, please click Continue.",
+        "Try using all of the tools you have just learned to find, box and label one example of a bird call. \n When you have done so, click Continue.",
+        "You have completed the tutorial. \n  On the next page you will be shown a new soundscape. \n You will need to find one example of each of the sounds listed above it as **quickly** as possible. You will be timed. \n Click Continue if you are ready to begin."
+    ];
     var tutorialInstructions = {
         type: "instructions",
-        pages: [
-            "In the following tasks you will be presented with a series of different long-duration environmental recordings, or soundscapes. \n They will appear in the space below.",
-            "You have three tools you can use to manipulate the soundscape below.\n Click anywhere on audio bar above the soundscape to play the 30sec of audio.\n Try it now. When you are happy that you understand how to use it, click Next.",
-            "If you hover your cursor over the soundscape you will see it change to +. You can use this to draw a box anywhere on the soundscape to indicate what you think is interesting using the select tool. \n Try it now. Draw as many boxes as you like. \n They can be any size. They can overlap. You can also click and drag to move them. You can also delete them. \n When you are happy that you understand how to use it, click Continue.",
-            "Please hover your cursor over any of the boxes in the soundscape, and right click. \n You should see a small drop down list  pop out from the side. Try selecting one of the options. \n When you are happy that you can do so, please click Continue.",
-            "Try using all of the tools you have just learned to find, box and label one example of a bird call. \n When you have done so, click Continue.",
-            "You have completed the tutorial. \n  On the next page you will be shown a new soundscape. \n You will need to find one example of each of the sounds listed above it as **quickly** as possible. You will be timed. \n Click Continue if you are ready to begin."
-        ],
+        pages: tutorial_pages,
         cont_btn: "continue"
     };
 
@@ -228,6 +149,7 @@ function experimentInit() {
 
     var tutorialAnnotation = {
         type: "annotate-audio-image",
+        externalHtmlPreamble: "Tute1/index.html",
         image: function() {
             var data = jsPsych.timelineVariable("tuteSite")();
             var visualization = jsPsych.timelineVariable("visualizationStyles")();
@@ -277,7 +199,7 @@ function experimentInit() {
     };
     timeline.push(mainExperiment);
 
-    //adding a subjectID tied to condition
+    //adding a subjectID tied to condition - is this in the right place?
 
     var subject_id = jsPsych.randomization.randomID(5);
 
@@ -303,70 +225,42 @@ function experimentInit() {
                 { prompt: "While I was working on the task, I was thinking about how much I enjoyed it.", labels: scale3 },
                 { prompt: "I thought the task was very interesting.", labels: scale3 },
             ],
-        preamble: "For each of the following statements, please indicate how true it is for you, using the following scale:"
+        preamble: "For each of the following statements, please indicate how true it is for you, using the following scale:",
+        randomise_order: true
     };
 
-
-
-    // trying to randomise the survey2 items
-
-    //var myArray = [ trial1, trial2, trial3 ];
-    //var shuffledArray = jsPsych.randomization.repeat(myArray, 2);
-
-    //var myArray = [1,2,3,4,5];
-    //var shuffledArray = jsPsych.randomization.shuffle(myArray);
-
-    var myArray = IMI.questions;
-    var shuffledArray = jsPsych.randomization.shuffle(myArray);
+    var IMIArray = IMI.questions;
+    var shuffledArray = jsPsych.randomization.shuffle(IMIArray);
     IMI.questions = shuffledArray;
     timeline.push(IMI);
 
-    //var IMI = ["I would describe the task as very enjoyable", "Doing the task was fun", "I thought the task was very boring.", "I found the task very interesting.", "I enjoyed doing the task very much.", "While I was working on the task, I was thinking about how much I enjoyed it.", "I thought the task was very interesting."];
-    //var randomIMI = jsPsych.randomization.repeat(IMI, 1);
-
-    //.. but then don't know how to integrate with the survey-likert format
-
-
-    var survey3 = {
-        type: "survey-text",
-        questions: [
-            {
-                prompt: "Please tell us what you thought of this task:",
-                rows: 5,
-                columns: 40
-            },
-            {
-                prompt: "Please tell us what characteristics of the soundscape drew your attention to it:",
-                rows: 5,
-                columns: 40
-            },
-            {
-                prompt: "Do you have any other thoughts you'd like to share?",
-                rows: 5,
-                columns: 40
-            }]
+    var NASATLX = {
+        type: "survey-likert",
+        questions:
+            [
+                { prompt: "How mentally demanding was the task?", labels: scale1 },
+                { prompt: "How physically demanding was the task?", labels: scale1 },
+                { prompt: "How hurried or rushed was the pace of the task?", labels: scale1 },
+                { prompt: "How sucessful were you in accomplishing what you were asked to do?", labels: scale2 },
+                { prompt: "How hard did you have to work to accomplish your level of performance?", labels: scale1 },
+                { prompt: "How insecure, discouraged, irritated, stressed, and annoyed were you?", labels: scale1 },
+            ],
+        preamble: "Please answer the following questions regarding the task you just performed.",
+        randomise_order: true
     };
 
-    timeline.push(survey3);
+    var NASAArray = NASATLX.questions;
+    var shuffledArray = jsPsych.randomization.shuffle(NASAArray);
+    NASATLX.questions = shuffledArray;
+    timeline.push(NASATLX);
 
-    var colourblind = {
-        type: "survey-multi-choice",
-        questions: [
-            {
-                prompt: "To your knowledge, do you have any kind of colour blindness??",
-                options: ["Yes", "No"],
-            },
-            {
-                prompt: "If you answered 'yes', can you provide details?",
-                rows: 5,
-                columns: 40
-            }
-        ]
-
-        //button_label_next: true
+    var survey2 = {
+        type: "survey-html-form",
+        url: "lastQs/index.html",
+        button_label: "Continue"
     };
+    timeline.push(survey2);
 
-    //timeline.push(colourblind);
 
     // contact details
 
