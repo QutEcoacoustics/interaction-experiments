@@ -8,6 +8,6 @@ type: blank
 
 # Tutorial
 
-Try using all of the tools you have just learned to find, box and label one example of a bird call.
+Try using all of the tools you have just learned to find and box one example of a bird call. Label it '1'.
 
-When you have done so, click Next.
+When you have done so, click Continue.

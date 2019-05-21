@@ -4,7 +4,7 @@ type: blank
 hideJsPsychContinueButton: true
 ---
 
-<div align = "left" class = "wrap">
+<div style = "left-align" class = "wrap">
 1. What is your age?
 Please enter whole numbers. <p id = q1>
 <input type="text" name="Q1age"/><p>

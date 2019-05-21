@@ -15,4 +15,4 @@ If you hover your cursor over the soundscape you will see it change to +. You ca
 Try it now. Draw as many boxes as you like.
 They can be any size. They can overlap. You can also click and drag to move them. You can also delete them.
 
-When you are happy that you understand how to use it, click Next.
+When you are happy that you understand how to use it, click Continue.
