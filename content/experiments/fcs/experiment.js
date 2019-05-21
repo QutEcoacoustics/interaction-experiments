@@ -149,6 +149,7 @@ function experimentInit() {
 
     var tutorialAnnotation = {
         type: "annotate-audio-image",
+        externalHtmlPreamble: "Tute1/index.html",
         image: function() {
             var data = jsPsych.timelineVariable("tuteSite")();
             var visualization = jsPsych.timelineVariable("visualizationStyles")();

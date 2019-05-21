@@ -24,6 +24,12 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         default: undefined,
         description: "Audio element to display control panel for and play"
       },
+      externalHtmlPreamble: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: "External HTML Preamble",
+        default: null,
+        description: "URI address of an external HTML file."
+      },
       max_width: {
         type: jsPsych.plugins.parameterType.INT,
         pretty_name: "Image Width",
@@ -89,11 +95,8 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
     /**
      * Create the audio player
      */
-    let makePlayer = () => {
-      console.log("makePlayer");
+    function makePlayer() {
       var checkAudio = setInterval(function() {
-        console.log("Building Audio");
-
         const END_OFFSET = 239;
 
         let image_width = document.getElementById("jspsych-audio-image")
@@ -120,11 +123,8 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
     /**
      * Enable image annotations
      */
-    let makeAnnotatable = () => {
-      console.log("makeAnnotatable")
+    function makeAnnotatable() {
       var checkImage = setInterval(function() {
-        console.log("Annotating Image")
-
         //Image has loaded, make it annotatable
         if (display_element.querySelector("#jspsych-audio-image")) {
           anno.makeAnnotatable(document.getElementById("jspsych-audio-image"));
@@ -142,44 +142,65 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
       }, 50); //Wait 50ms for image to load
     };
 
-    let image_container = `<div style="display: flex; flex-direction: row">
-        <div style="width: 92px; flex-shrink: 0;"></div>
-        <img
-          src="${trial.image}"
-          id="jspsych-audio-image"
-          class="annotatable"
-          style="flex: 1;"
-        />
-        <div style="width: 147px; flex-shrink: 0;"></div>
-      </div>`;
+    function generatePage(preamble) {
+      let image_container = `<div style="display: flex; flex-direction: row">
+          <div style="width: 92px; flex-shrink: 0;"></div>
+          <img
+            src="${trial.image}"
+            id="jspsych-audio-image"
+            class="annotatable"
+            style="flex: 1;"
+          />
+          <div style="width: 147px; flex-shrink: 0;"></div>
+        </div>`;
 
-    let audio = `<div id="player-container" class="media-wrapper" style="flex: 1; flex-shrink: 0;"></div>`;
+      let audio = `<div id="player-container" class="media-wrapper" style="flex: 1; flex-shrink: 0;"></div>`;
 
-    let container = `<div style="display: flex; flex-direction: column;${
-      trial.max_width ? `max-width: ${trial.max_width};` : ""
-    }">${image_container}${audio}</div>`;
+      let container = `${preamble ? preamble : ''}<div style="display: flex; flex-direction: column;${
+        trial.max_width ? `max-width: ${trial.max_width};` : ""
+      }">${image_container}${audio}</div>`;
 
-    let disableAnnotatableIcon = `<style>.annotorious-hint { display: none }<style>`;
+      let disableAnnotatableIcon = `<style>.annotorious-hint { display: none }<style>`;
 
-    //Create submit button
-    let button = document.createElement("button");
-    button.innerHTML = "Next";
-    button.style.position = "absolute";
-    button.style.right = "10%";
-    button.onclick = end_trial;
+      //Create submit button
+      let button = document.createElement("button");
+      button.innerHTML = "Next";
+      button.style.position = "absolute";
+      button.style.right = "10%";
+      button.onclick = end_trial;
 
-    let button_div = document.createElement("div");
-    button_div.style.width = "100%";
-    button_div.appendChild(button);
+      let button_div = document.createElement("div");
+      button_div.style.width = "100%";
+      button_div.appendChild(button);
 
-    //Add elements to document
-    display_element.innerHTML = container;
-    display_element.innerHTML += disableAnnotatableIcon;
-    display_element.appendChild(button_div);
+      //Add elements to document
+      display_element.innerHTML = container;
+      display_element.innerHTML += disableAnnotatableIcon;
+      display_element.appendChild(button_div);
 
-    makePlayer();
-    makeAnnotatable();
-  };
+      makePlayer();
+      makeAnnotatable();
+    };
+
+    if (trial.externalHtmlPreamble) {
+      var xmlhttp;
+      if (window.XMLHttpRequest) { // code for IE7+, Firefox, Chrome, Opera, Safari
+          xmlhttp = new XMLHttpRequest();
+      }
+      else { // code for IE6, IE5
+          xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+      }
+      xmlhttp.onreadystatechange = function() {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+              generatePage(xmlhttp.responseText);
+          }
+      }
+      xmlhttp.open("GET", trial.externalHtmlPreamble, true);
+      xmlhttp.send();
+    } else {
+      generatePage();
+    }
+  }
 
   return plugin;
 })();
