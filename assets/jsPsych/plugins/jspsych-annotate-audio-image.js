@@ -114,6 +114,8 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 var player = new MediaElementPlayer("player", {
                     success: function() {}
                 });
+                
+                setAudioVolume();
 
                 clearInterval(checkAudio);
             }, 50); //Wait 50ms for image to load
@@ -125,8 +127,9 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         function makeAnnotatable() {
             var checkImage = setInterval(function() {
                 //Image has loaded, make it annotatable
-                if (display_element.querySelector("#jspsych-audio-image")) {
-                    anno.makeAnnotatable(document.getElementById("jspsych-audio-image"));
+                let image = display_element.querySelector("#jspsych-audio-image");
+                if (image && image.width > 0) {
+                    anno.makeAnnotatable(image);
                     anno.addHandler("onAnnotationCreated", function(annotation) {
                         pushAction("AnnotationCreated", annotation);
                     });
@@ -136,6 +139,10 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                     anno.addHandler("onAnnotationRemoved", function(annotation) {
                         pushAction("AnnotationRemoved", annotation);
                     });
+
+                    //Fix z-index of editor panel (value is too low)
+                    display_element.querySelector(".annotorious-editor").style.zIndex = "10";
+
                     clearInterval(checkImage);
                 }
             }, 50); //Wait 50ms for image to load
@@ -180,7 +187,6 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             let style = `<style>${stylesToDisable.map(
                 classItem => `.${classItem}`
             )}, .annotorious-hint { display: none }<style>`;
-            console.log(style);
 
             //Create submit button
             let button = document.createElement("button");
@@ -212,7 +218,6 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             }
 
             makePlayer();
-            setAudioVolume();
             makeAnnotatable();
         }
 
