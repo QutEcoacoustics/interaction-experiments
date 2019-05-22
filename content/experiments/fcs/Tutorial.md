@@ -1,7 +1,6 @@
 ---
 title: Tutorial
 type: blank
-hideJsPsychContinueButton: true
 ---
 
 #1.
@@ -52,4 +51,4 @@ You will need to find one example of each of the sounds listed above it as **qui
 
 Click Next if you are ready to begin.
 
-
+{{% /carousel-maker %}}

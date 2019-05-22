@@ -1,7 +1,6 @@
 ---
 title: Tell us about yourself
 type: blank
-hideJsPsychContinueButton: true
 ---
 
 1. What is your age?

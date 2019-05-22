@@ -1,27 +1,35 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"eslint.run": "onType",
-		"eslint.autoFixOnSave": true,
-		"workbench.colorCustomizations": {
-			"activityBar.background": "#d35851",
-			"activityBar.foreground": "#e7e7e7",
-			"activityBar.inactiveForeground": "#e7e7e799",
-			"activityBarBadge.background": "#4dd254",
-			"activityBarBadge.foreground": "#15202b",
-			"statusBar.background": "#c03831",
-			"statusBarItem.hoverBackground": "#d35851",
-			"statusBar.foreground": "#e7e7e7"
-		},
-	},
-	"extensions": {
-		"recommendations": [
-			"EditorConfig.EditorConfig",
-			"dbaeumer.vscode-eslint"
-		]
-	}
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "eslint.run": "onType",
+        "eslint.autoFixOnSave": true,
+        "eslint.workingDirectories": [
+            "content",
+            
+        ],
+        "workbench.colorCustomizations": {
+            "activityBar.background": "#d35851",
+            "activityBar.foreground": "#e7e7e7",
+            "activityBar.inactiveForeground": "#e7e7e799",
+            "activityBarBadge.background": "#4dd254",
+            "activityBarBadge.foreground": "#15202b",
+            "statusBar.background": "#c03831",
+            "statusBarItem.hoverBackground": "#d35851",
+            "statusBar.foreground": "#e7e7e7"
+        },
+        // Enable per-language
+        "[css]": {
+            "editor.formatOnSave": true
+        }
+    },
+    "extensions": {
+        "recommendations": [
+            "EditorConfig.EditorConfig",
+            "dbaeumer.vscode-eslint"
+        ]
+    }
 }

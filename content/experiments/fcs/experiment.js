@@ -87,7 +87,7 @@ function experimentInit() {
     var survey1 = {
         type: "survey-html-form",
         url: "introQs/index.html",
-        button_label: "continue"
+        button_label: "Continue"
     };
     timeline.push(survey1);
 
@@ -95,7 +95,7 @@ function experimentInit() {
 
 
     //tutorial and experimental task
-    var tutorial_pages = "Tutorial/index.html",
+    var tutorial_pages = "Tutorial/index.html";
 
     var tutorialInstructions = {
         type: "instructions",
@@ -107,7 +107,7 @@ function experimentInit() {
     var debug = {
         type: "html-button-response",
         choices: ["OK"],
-        stimulus: function () {
+        stimulus: function() {
             var data = {
                 tuteSite: jsPsych.timelineVariable("tuteSite")(),
                 site: jsPsych.timelineVariable("sites")(),
@@ -121,12 +121,12 @@ function experimentInit() {
     var tutorialAnnotation = {
         type: "annotate-audio-image",
         externalHtmlPreamble: "Tutorial/index.html",
-        image: function () {
+        image: function() {
             var data = jsPsych.timelineVariable("tuteSite")();
             var visualization = jsPsych.timelineVariable("visualizationStyles")();
             return data.images[visualization];
         },
-        audio: function () {
+        audio: function() {
             var data = jsPsych.timelineVariable("tuteSite")();
             return data.audio;
         }
@@ -135,12 +135,12 @@ function experimentInit() {
     var experimentAnnotation = {
         type: "annotate-audio-image",
         externalHtmlPreamble: "Task/index.html",
-        image: function () {
+        image: function() {
             var data = jsPsych.timelineVariable("sites")();
             var visualization = jsPsych.timelineVariable("visualizationStyles")();
             return data.images[visualization];
         },
-        audio: function () {
+        audio: function() {
             var data = jsPsych.timelineVariable("sites")();
             return data.audio;
         }
@@ -157,7 +157,7 @@ function experimentInit() {
         type: "survey-html-form",
         url: "Task_instructions/index.html",
         button_label: "continue"
-    }
+    };
 
 
     var mainExperiment = {

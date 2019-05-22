@@ -1,46 +1,71 @@
 body {
-        text-align: left;
-    }
+}
 
-    .likert {
-        list-style:none;
-        width:100%;
-        margin:0;
-        padding:0 0 35px;
-        display:block;
-    }
-    .likert li {
-        display:inline-block;
-        width:19%;
-        text-align:center;
-        vertical-align: top;
-      }
-     .likert li input[type=radio] {
-        display:block;
-        position:relative;
-        top:0;
-        left:50%;
-        margin-left:-6px;
-      }
+.likert {
+    display: block;
+    margin: 0;
+    padding: 0 0 35px;
+    width: 100%;
+    list-style: none;
+}
+.likert li {
+    display: inline-block;
+    width: 19%;
+    vertical-align: top;
 
-    .likert li label {width:100%;}
+    text-align: center;
+}
+.likert li input[type="radio"] {
+    position: relative;
+    top: 0;
+    left: 50%;
+    display: block;
+    margin-left: -6px;
+}
 
-    .statement {
-        display:block;
-        font-size: 14px;
-        font-weight: bold;
-        padding: 30px 0 0 4.25%;
-        margin-bottom:10px;
-    }
+.likert li label {
+    width: 100%;
+}
 
-    table {
-        border: 1px solid black;
-        width: 80%;
-    }
+.statement {
+    display: block;
+    margin-bottom: 10px;
+    padding: 30px 0 0 4.25%;
 
-    th {
-        padding: 15px;
-        text-align:center;
-    }
+    font-weight: bold;
 
+    font-size: 14px;
+}
 
+table {
+    width: 80%;
+    border: 1px solid black;
+}
+
+th {
+    padding: 15px;
+    text-align: center;
+}
+
+.ie-isolated-content {
+    text-align: left;
+    font-size: 120%;
+    line-height: 120%;
+}
+
+.ie-carousel .carousel-indicators {
+    position: unset;
+}
+.ie-carousel .carousel-indicators li {
+    background-color: #222;
+}
+
+.ie-carousel .carousel-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.ie-carousel .carousel-controls > * {
+    margin-left: 1em;
+    margin-right: 1em;
+}
