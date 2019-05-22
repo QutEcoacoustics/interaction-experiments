@@ -1,10 +1,10 @@
 <div id="carousel" class="carousel slide mx-auto ie-carousel">
-    {{ $sections := split .Inner "<hr />" }}
+    {{ $sections := split .Inner "---" }}
     <div class="carousel-inner">
 
         {{ range $index, $element := $sections }}
         <div class="carousel-item {{ cond (eq $index 0) `active` ``}}">
-            {{ . | safeHTML }}
+            {{ . | markdownify  }}
         </div>
         {{ end }}
     </div>

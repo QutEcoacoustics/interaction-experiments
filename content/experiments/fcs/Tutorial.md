@@ -3,7 +3,7 @@ title: Tutorial
 type: blank
 ---
 
-{{% carousel-maker %}} 
+{{< carousel-maker >}} 
 
 # 1.
 
@@ -48,7 +48,7 @@ When you are happy that you can do so, please click Next.
 
 # 5.
 
-Try using all of the tools you have just learned to find and box one example of a bird call. Label it with the number '1'.
+Try using all of the tools you have just learned to find and box one example of a bird call. Label it with the number `1`.
 
 When you have done so, click Next.
 
@@ -64,4 +64,4 @@ You will need to find one example of each of the sounds listed above it as **qui
 
 Click Next if you are ready to begin.
 
-{{% /carousel-maker %}}
+{{< /carousel-maker >}}
