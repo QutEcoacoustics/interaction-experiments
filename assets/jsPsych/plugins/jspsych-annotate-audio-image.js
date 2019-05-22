@@ -22,8 +22,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 type: jsPsych.plugins.parameterType.AUDIO,
                 pretty_name: "Audio",
                 default: undefined,
-                description:
-                    "Audio element to display control panel for and play"
+                description: "Audio element to display control panel for and play"
             },
             externalHtmlPreamble: {
                 type: jsPsych.plugins.parameterType.STRING,
@@ -104,23 +103,16 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          */
         function makePlayer() {
             var checkAudio = setInterval(function() {
-                const END_OFFSET = 239;
-
-                let image_width = document.getElementById("jspsych-audio-image")
-                    .offsetWidth;
-                let width = parseInt(image_width + END_OFFSET) + "px";
-
-                let audio = `<audio id="player" preload="none" controls width='${width}' ${
-                    trial.loop ? "loop" : ""
-                } ${trial.autoplay ? "autoplay" : ""}><source src="${
-                    trial.audio
-                }" type="audio/${getFileExtension(trial.audio)}"/></audio>`;
+                let audio = `<audio id="player" preload="none" style="width: 100%; height: 100%;"
+    controls width="100%" height="100%" controls ${trial.loop ? "loop" : ""} ${
+        trial.autoplay ? "autoplay" : ""
+    }><source src="${trial.audio}" type="audio/${getFileExtension(trial.audio)}"/></audio>`;
 
                 //Create audio element with the following additional options: loop, autoplay
                 document.getElementById("player-container").innerHTML = audio;
 
                 var player = new MediaElementPlayer("player", {
-                    success: function(mediaElement, originalNode, instance) {}
+                    success: function() {}
                 });
 
                 clearInterval(checkAudio);
@@ -134,22 +126,14 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             var checkImage = setInterval(function() {
                 //Image has loaded, make it annotatable
                 if (display_element.querySelector("#jspsych-audio-image")) {
-                    anno.makeAnnotatable(
-                        document.getElementById("jspsych-audio-image")
-                    );
-                    anno.addHandler("onAnnotationCreated", function(
-                        annotation
-                    ) {
+                    anno.makeAnnotatable(document.getElementById("jspsych-audio-image"));
+                    anno.addHandler("onAnnotationCreated", function(annotation) {
                         pushAction("AnnotationCreated", annotation);
                     });
-                    anno.addHandler("onAnnotationUpdated", function(
-                        annotation
-                    ) {
+                    anno.addHandler("onAnnotationUpdated", function(annotation) {
                         pushAction("AnnotationUpdated", annotation);
                     });
-                    anno.addHandler("onAnnotationRemoved", function(
-                        annotation
-                    ) {
+                    anno.addHandler("onAnnotationRemoved", function(annotation) {
                         pushAction("AnnotationRemoved", annotation);
                     });
                     clearInterval(checkImage);
@@ -169,7 +153,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
           <div style="width: 147px; flex-shrink: 0;"></div>
         </div>`;
 
-            let audio = "<div id=\"player-container\" class=\"media-wrapper\" style=\"flex: 1; flex-shrink: 0;\"></div>";
+            let audio = "<div id='player-container' class='media-wrapper' style='flex: 1; flex-shrink: 0;'></div>";
 
             let container = `<div style="display: flex; flex-direction: column;${
                 trial.max_width ? `max-width: ${trial.max_width};` : ""
@@ -203,10 +187,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 // Make the parent of the first div in the document becomes the context node
                 range.selectNode(document.getElementsByTagName("div").item(0));
                 var document_fragment = range.createContextualFragment(preamble);
-                display_element.insertBefore(
-                    document_fragment,
-                    display_element.firstChild
-                );
+                display_element.insertBefore(document_fragment, display_element.firstChild);
             }
 
             makePlayer();
