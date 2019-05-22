@@ -48,6 +48,12 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         pretty_name: "Loop",
         default: null,
         description: "Loops the audio recording"
+      },
+      continue_label: {
+        type: jsPsych.plugins.parameterType.STRING,
+        pretty_name: "Continue label",
+        default: "Continue",
+        description: "The label to use for the continue button"
       }
     }
   };
@@ -156,7 +162,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
 
       let audio = `<div id="player-container" class="media-wrapper" style="flex: 1; flex-shrink: 0;"></div>`;
 
-      let container = `${preamble ? preamble : ''}<div style="display: flex; flex-direction: column;${
+      let container = `<div style="display: flex; flex-direction: column;${
         trial.max_width ? `max-width: ${trial.max_width};` : ""
       }">${image_container}${audio}</div>`;
 
@@ -164,19 +170,32 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
 
       //Create submit button
       let button = document.createElement("button");
-      button.innerHTML = "Next";
-      button.style.position = "absolute";
-      button.style.right = "10%";
+      button.innerHTML = trial.continue_label;
+      button.classList.add("jspsych-btn", "mx-auto");
       button.onclick = end_trial;
 
       let button_div = document.createElement("div");
-      button_div.style.width = "100%";
-      button_div.appendChild(button);
+      button_div.classList.add("container");
+      let inner_div = document.createElement("div");
+      inner_div.classList.add("row");
+      inner_div.appendChild(button);
+      button_div.appendChild(inner_div);
 
       //Add elements to document
       display_element.innerHTML = container;
       display_element.innerHTML += disableAnnotatableIcon;
       display_element.appendChild(button_div);
+
+      // process preamble so we can execute scripts
+      if (preamble) {
+        // the range API let's us safely create document fragments that can execute scripts
+        var range = document.createRange();
+
+        // Make the parent of the first div in the document becomes the context node
+        range.selectNode(document.getElementsByTagName("div").item(0));
+        var document_fragment = range.createContextualFragment(preamble);
+        display_element.insertBefore(document_fragment, display_element.firstChild);
+      }
 
       makePlayer();
       makeAnnotatable();

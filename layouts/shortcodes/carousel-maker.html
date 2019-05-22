@@ -1,0 +1,51 @@
+<div id="carousel" class="carousel slide mx-auto ie-carousel">
+    {{ $sections := split .Inner "<hr />" }}
+    <div class="carousel-inner">
+
+        {{ range $index, $element := $sections }}
+        <div class="carousel-item {{ cond (eq $index 0) `active` ``}}">
+            {{ . | safeHTML }}
+        </div>
+        {{ end }}
+    </div>
+    <ol class="carousel-indicators">
+        {{ range $index, $element := $sections }}
+        <li data-target="#carousel" data-slide-to="{{ $index }}" class="{{ cond (eq $index 0) `active` ``}}"></li>
+        {{ end }}
+    </ol>
+    <div class="carousel-controls">
+      <button class="previous jspsych-btn" href="#carousel" disabled role="button" data-slide="prev">
+        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+        Previous
+      </button>
+      <button class="next jspsych-btn" href="#carousel" role="button" data-slide="next">
+        Next
+        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+      </button>
+   </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    var carousel = document.querySelector(".ie-carousel");
+    var inner = carousel.querySelector(".carousel-inner");
+    var previous = carousel.querySelector(".carousel-controls .previous");
+    var next = carousel.querySelector(".carousel-controls .next");
+
+    $(carousel).carousel({
+        interval: false,
+        keyboard: true,
+        wrap: false,
+        touch: true
+    }).on("slide.bs.carousel", function(event) {
+        var count = inner.children.length;
+        var currentIndex = Array.from(inner.children).indexOf(event.relatedTarget);
+
+        // If last item hide next arrow
+        next.toggleAttribute("disabled", (count - 1) === currentIndex);
+
+        // If first item hide prev arrow
+        previous.toggleAttribute("disabled", 0 === currentIndex);
+    });
+});
+</script>
