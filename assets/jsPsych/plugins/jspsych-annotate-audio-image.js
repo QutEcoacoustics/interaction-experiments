@@ -141,6 +141,17 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             }, 50); //Wait 50ms for image to load
         }
 
+        /**
+         * Sets the audio level for the player to max
+         */
+        function setAudioVolume() {
+            document.getElementById("player_html5").volume = 1.0;
+        }
+
+        /**
+         * Generates the plugins HTML
+         * @param {string} preamble HTML text to insert into document
+         */
         function generatePage(preamble) {
             let image_container = `<div style="display: flex; flex-direction: row">
           <div style="width: 92px; flex-shrink: 0;"></div>
@@ -150,7 +161,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             class="annotatable"
             style="flex: 1;"
           />
-          <div style="width: 147px; flex-shrink: 0;"></div>
+          <div style="width: 59px; flex-shrink: 0;"></div>
         </div>`;
 
             let audio = "<div id='player-container' class='media-wrapper' style='flex: 1; flex-shrink: 0;'></div>";
@@ -159,7 +170,17 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 trial.max_width ? `max-width: ${trial.max_width};` : ""
             }">${image_container}${audio}</div>`;
 
-            let disableAnnotatableIcon = "<style>.annotorious-hint { display: none }<style>";
+            let stylesToDisable = [
+                "mejs__volume-button",
+                "mejs__mute",
+                "mejs__horizontal-volume-current",
+                "mejs__controls a"
+            ];
+
+            let style = `<style>${stylesToDisable.map(
+                classItem => `.${classItem}`
+            )}, .annotorious-hint { display: none }<style>`;
+            console.log(style);
 
             //Create submit button
             let button = document.createElement("button");
@@ -176,7 +197,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
 
             //Add elements to document
             display_element.innerHTML = container;
-            display_element.innerHTML += disableAnnotatableIcon;
+            display_element.innerHTML += style;
             display_element.appendChild(button_div);
 
             // process preamble so we can execute scripts
@@ -191,6 +212,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             }
 
             makePlayer();
+            setAudioVolume();
             makeAnnotatable();
         }
 
