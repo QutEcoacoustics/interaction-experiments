@@ -8,5 +8,8 @@
         "statusBar.background": "#8945da",
         "statusBarItem.hoverBackground": "#a470e2",
         "statusBar.foreground": "#e7e7e7"
-    }
+    },
+    "cSpell.words": [
+        "annotorious"
+    ]
 }

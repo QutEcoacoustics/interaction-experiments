@@ -7,6 +7,8 @@
 {{ $styleCustom := $cssCustom  | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $styleCustom.Permalink }}">
 
+<!-- note: hugo does not support putting images into the asset pipeline -->
+<!-- so images are copied manually into the static directory -->
 {{ $css := resources.Get "mediaElement/mediaelementplayer.css" }}
 {{ $style := $css | resources.Minify  | resources.Fingerprint }}
 <link rel="stylesheet" href="{{ $style.Permalink }}">
