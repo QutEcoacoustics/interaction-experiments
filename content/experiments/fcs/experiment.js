@@ -153,10 +153,11 @@ function experimentInit() {
     // adding taskinstructions here and in mainExperiment
     //currently not working but timeline should grab content from Tutorial.md, then taskinstructions, then Task.md
 
-    var taskinstructions = {
-        type: "survey-html-form",
+    var taskInstructions = {
+        type: "external-html",
         url: "Task_instructions/index.html",
-        button_label: "continue"
+        cont_key: enterKeyPress,
+        cont_btn: "continue"
     };
 
 
@@ -164,7 +165,7 @@ function experimentInit() {
         timeline: [
             debug,
             tutorialAnnotation,
-            taskinstructions,
+            taskInstructions,
             experimentAnnotation
         ],
         timeline_variables: [
@@ -247,14 +248,14 @@ function experimentInit() {
 
     var contact = {
         type: "survey-html-form",
-        url: "contact/index.html",
+        url: "Contact/index.html",
         button_label: "Continue"
     };
     timeline.push(contact);
 
     var end = {
         type: "external-html",
-        url: "the_end/index.html",
+        url: "TheEnd/index.html",
         cont_key: enterKeyPress,
         cont_btn: "continue"
     };

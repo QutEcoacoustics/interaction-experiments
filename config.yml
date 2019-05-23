@@ -30,8 +30,8 @@ params:
   showPostSummary: false
   googleAnalytics: UA-48132665-6
   cookieConsent: false
-  faviconSafariPinnedTabColor: '##00467F'
-  faviconMsApplicationTileColor: '##00467F'
+  faviconSafariPinnedTabColor: '#00467F'
+  faviconMsApplicationTileColor: '#00467F'
   faviconThemeColor: '#00467F'
 menu:
   nav:

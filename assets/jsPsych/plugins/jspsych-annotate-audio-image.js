@@ -41,7 +41,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 type: jsPsych.plugins.parameterType.BOOL,
                 pretty_name: "Autoplay",
                 default: null,
-                description: "Plays the audio recording immediatly"
+                description: "Plays the audio recording immediately"
             },
             loop: {
                 type: jsPsych.plugins.parameterType.BOOL,
@@ -171,7 +171,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
           <div style="width: 59px; flex-shrink: 0;"></div>
         </div>`;
 
-            let audio = "<div id='player-container' class='media-wrapper' style='flex: 1; flex-shrink: 0;'></div>";
+            let audio = "<div id='player-container' class='media-wrapper' style='flex: 1; flex-shrink: 0; z-index: -100'></div>";
 
             let container = `<div style="display: flex; flex-direction: column;${
                 trial.max_width ? `max-width: ${trial.max_width};` : ""

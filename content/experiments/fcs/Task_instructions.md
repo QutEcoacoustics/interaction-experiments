@@ -22,10 +22,8 @@ You need to find, box, & label one example of these 5 things as quickly as possi
 </tr>
 </table>
 
-When you are ready to begin click NEXT and the soundscape will appear.
-Click NEXT again when you have completed the task to end the timer.
+When you are ready to begin click _Continue_ and the soundscape will appear.  
+Click  _Continue_ again when you have completed the task to end the timer.
 
-
-
-
+{{< continue-button >}}
 
