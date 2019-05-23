@@ -5,7 +5,7 @@ type: blank
 
 {{< carousel-maker >}} 
 
-# 1.
+# 
 
 In the following tasks you will be presented with a series of different long-duration environmental recordings, or soundscapes.
 
@@ -15,53 +15,52 @@ Each soundscape contains 24 hours of audio.
 
 ---
 
-# 2.
+# 
 
-You have three tools you can use to manipulate the soundscape below.
 
-Click anywhere on audio bar below the soundscape to play 60 sec of audio.
+Click the play button on the audio bar.
+
+You can can drag the audio button to anywhere in the soundscape to listen to it.
 
 Try it now. When you are happy that you understand how to use it, click Next.
 
----
-
-# 3.
-
-If you hover your cursor over the soundscape you will see it change to +. You can use this to draw a box anywhere on the soundscape to indicate what you think is interesting using the select tool.
-
-Try it now. Draw as many boxes as you like.
-They can be any size. They can overlap. You can also click and drag to move them. You can also delete them.
-
-When you are happy that you understand how to use it, click Next.
 
 ---
 
-# 4.
+# 
+If you drag your cursor over the soundscape (left click and hold) you will see a box appear. 
 
-Please hover your cursor over any of the boxes in the soundscape, and right click.
+Next to the box is a field that you can use to enter a description of what you think the sound is. 
 
-You should see a text box appear. Enter text or numbers into the field.
+Try drawing a box anywhere on the soundscape and entering a description of what you think it is.
+You can use the audio bar to give you more information.
+---
 
-When you are happy that you can do so, please click Next.
+# 
+
+Take some time to explore the soundscape below. 
+Try boxing and labelling five things that you think are interesting, then hit 'Next'. 
 
 ---
 
-# 5.
+# 
 
-Try using all of the tools you have just learned to find and box one example of a bird call. Label it with the number `1`.
-
-When you have done so, click Next.
+See if you can find, box, and label the dawn chorus. 
+The dawn chorus is when the birds begin chorusing at dawn. 
+It is typically loud and between the hours of 5am and 7am. 
+When you find it please label it with the number '1', then hit 'Next'.
 
 ---
+# 
 
-# 6.
+Take some time to explore the soundscape further. We are about to give you two tasks.
 
-You have completed the tutorial.
+This time we will be **timing you** to see how quickly you can find these sounds.
 
-On the next page you will be shown a new soundscape.
+We would like you to find **one example** of each of the sounds listed as **quickly** as possible.
 
-You will need to find one example of each of the sounds listed above it as **quickly** as possible. You will be timed.
+Your time **starts when you open the page** and **ends when you hit the 'Continue' button**.
 
-Click Next if you are ready to begin.
+Click Continue (under the visualisation) when you are ready to begin.
 
 {{< /carousel-maker >}}

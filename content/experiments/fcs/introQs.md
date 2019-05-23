@@ -13,7 +13,7 @@ Please enter whole numbers. <p id = q1>
 <input type = "radio" name = "Q2" value = "2">
 <label>Female </label>
 <input type = "radio" name = "Q2" value = "3">
-<label>Not listed, please state: </label>
+<label>Another gender (please specify): </label>
 <input type="text" name="othergender_text"/></ul>
 
 3. What is your interest in ecology? <p id = q3>

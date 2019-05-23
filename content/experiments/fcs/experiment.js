@@ -132,6 +132,21 @@ function experimentInit() {
         }
     };
 
+
+    var experimentbridge = {
+        type: "annotate-audio-image",
+        externalHtmlPreamble: "bridge/index.html",
+        image: function() {
+            var data = jsPsych.timelineVariable("tuteSite")();
+            var visualization = jsPsych.timelineVariable("visualizationStyles")();
+            return data.images[visualization];
+        },
+        audio: function() {
+            var data = jsPsych.timelineVariable("tuteSite")();
+            return data.audio;
+        }
+    };
+
     var experimentAnnotation = {
         type: "annotate-audio-image",
         externalHtmlPreamble: "Task/index.html",
@@ -150,8 +165,6 @@ function experimentInit() {
     var visualizationStyle = jsPsych.randomization.sampleWithoutReplacement(visualizationStyles, 1);
     var [tuteSite, studySite] = jsPsych.randomization.sampleWithoutReplacement(sites, 2);
 
-    // adding taskinstructions here and in mainExperiment
-    //currently not working but timeline should grab content from Tutorial.md, then taskinstructions, then Task.md
 
     var taskInstructions = {
         type: "external-html",
@@ -165,6 +178,7 @@ function experimentInit() {
         timeline: [
             debug,
             tutorialAnnotation,
+            experimentbridge,
             taskInstructions,
             experimentAnnotation
         ],
@@ -183,7 +197,7 @@ function experimentInit() {
     };
     timeline.push(mainExperiment);
 
-    //adding a subjectID tied to condition - is this in the right place?
+
 
     var subject_id = jsPsych.randomization.randomID(5);
 
@@ -248,7 +262,7 @@ function experimentInit() {
 
     var contact = {
         type: "survey-html-form",
-        url: "Contact/index.html",
+        url: "contact/index.html",
         button_label: "Continue"
     };
     timeline.push(contact);
@@ -256,8 +270,7 @@ function experimentInit() {
     var end = {
         type: "external-html",
         url: "TheEnd/index.html",
-        cont_key: enterKeyPress,
-        cont_btn: "continue"
+        cont_key: enterKeyPress
     };
 
     timeline.push(end);

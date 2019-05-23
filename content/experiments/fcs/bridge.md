@@ -1,12 +1,10 @@
 ---
-title: Task 2
+title: Task 1
 type: blank
 ---
 
 
 You need to find, box, & label one example of these 5 things as quickly as possible using the corresponding number.
-Click NEXT when you have completed the task.
-
 <table>
 <tr>
 <th>Bird call</th>
@@ -23,11 +21,3 @@ Click NEXT when you have completed the task.
 <td>5</td>
 </tr>
 </table>
-
-
-
-
-
-
-
-
