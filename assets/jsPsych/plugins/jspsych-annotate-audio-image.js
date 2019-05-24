@@ -109,12 +109,19 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
     }><source src="${trial.audio}" type="audio/${getFileExtension(trial.audio)}"/></audio>`;
 
                 //Create audio element with the following additional options: loop, autoplay
-                document.getElementById("player-container").innerHTML = audio;
+                let container = document.getElementById("player-container");
+
+                if (!container) {
+                    // dom is not ready, skip, wait try again later
+                    return;
+                }
+
+                container.innerHTML = audio;
 
                 var player = new MediaElementPlayer("player", {
                     success: function() {}
                 });
-                
+
                 setAudioVolume();
 
                 clearInterval(checkAudio);
@@ -129,7 +136,12 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 //Image has loaded, make it annotatable
                 let image = display_element.querySelector("#jspsych-audio-image");
                 if (image && image.width > 0) {
+                    // if annortorious has been used before on same dom element
+                    // it seems it breaks. Adding in a reset to counter.
+                    anno.reset();
+
                     anno.makeAnnotatable(image);
+
                     anno.addHandler("onAnnotationCreated", function(annotation) {
                         pushAction("AnnotationCreated", annotation);
                     });
@@ -139,9 +151,6 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                     anno.addHandler("onAnnotationRemoved", function(annotation) {
                         pushAction("AnnotationRemoved", annotation);
                     });
-
-                    //Fix z-index of editor panel (value is too low)
-                    display_element.querySelector(".annotorious-editor").style.zIndex = "10";
 
                     clearInterval(checkImage);
                 }
@@ -186,7 +195,12 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
 
             let style = `<style>${stylesToDisable.map(
                 classItem => `.${classItem}`
-            )}, .annotorious-hint { display: none }<style>`;
+            )}, .annotorious-hint { display: none }
+            .annotorious-editor {
+                /* z-index of editor panel (value is too low) */
+                z-index: 10;
+            }
+            <style>`;
 
             //Create submit button
             let button = document.createElement("button");

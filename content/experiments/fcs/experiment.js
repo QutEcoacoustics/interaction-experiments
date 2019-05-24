@@ -4,27 +4,9 @@
 function experimentInit() {
     const enterKeyPress = 13;
 
-
-    // other stuff
-
-    // if a subject has given consent to participate.
-    // var checkConsent = function(elem) {
-    //     if (elem.querySelector("#consentCheckbox").checked) {
-    //         return true;
-    //     } else {
-    //         alert(
-    //             "If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'"
-    //         );
-    //         return false;
-    //     }
-    // };
-
     // site visualization combos
     // TODO: need to add correct resources... but for now proves the point
     //images are updated - needs correct audio
-
-
-
     var visualizationStyles = ["fcs", "spectrogram", "waveform", "audioOnly"];
     var sites = [
         {
@@ -58,6 +40,45 @@ function experimentInit() {
             audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
         }
     ];
+
+    var visualizationStyle = jsPsych.randomization.sampleWithoutReplacement(visualizationStyles, 1);
+    var [tuteSite, studySite] = jsPsych.randomization.sampleWithoutReplacement(sites, 2);
+
+
+    // allow skipping through while debugging
+    let overrideVisualization = jsPsych.data.getURLVariable("visualizationStyle");
+    if (overrideVisualization) {
+        console.warn("Visualization style overridden from,to:", visualizationStyle, overrideVisualization);
+        visualizationStyle = overrideVisualization;
+    }
+
+    let overrideSite = jsPsych.data.getURLVariable("site");
+    if (overrideSite) {
+        console.warn("Site and tute site style overridden from,to:", [tuteSite, studySite], overrideSite);
+        tuteSite = overrideSite;
+        studySite = overrideSite;
+    }
+
+    let skipToTrial = jsPsych.data.getURLVariable("skip");
+    const defaultOnTrial =  () => console.log("Current trial is", jsPsych.currentTimelineNodeID());
+    var skipFunction = defaultOnTrial;
+    if (skipToTrial) {
+        console.warn("skipping to trial", skipToTrial);
+        skipFunction = function() {
+            var currentTrial = jsPsych.currentTimelineNodeID();
+            if (skipToTrial !== currentTrial) {
+                console.warn(`Debug skipping trial ${currentTrial} because trial id is not ${skipToTrial}`);
+                jsPsych.finishTrial({skipped: true});
+            }
+            else {
+                // reset
+
+                jsPsych.initSettings().on_trial_start = defaultOnTrial;
+            }
+        };
+    }
+
+
 
     //  scales for likert questions
     var scale1 = ["Very Low", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Very High"];
@@ -162,8 +183,7 @@ function experimentInit() {
     };
 
 
-    var visualizationStyle = jsPsych.randomization.sampleWithoutReplacement(visualizationStyles, 1);
-    var [tuteSite, studySite] = jsPsych.randomization.sampleWithoutReplacement(sites, 2);
+
 
 
     var taskInstructions = {
@@ -262,7 +282,7 @@ function experimentInit() {
 
     var contact = {
         type: "survey-html-form",
-        url: "contact/index.html",
+        url: "Contact/index.html",
         button_label: "Continue"
     };
     timeline.push(contact);
@@ -270,7 +290,8 @@ function experimentInit() {
     var end = {
         type: "external-html",
         url: "TheEnd/index.html",
-        cont_key: enterKeyPress
+        cont_key: enterKeyPress,
+        cont_btn: "continue"
     };
 
     timeline.push(end);
@@ -282,6 +303,7 @@ function experimentInit() {
         exclusions: {
             audio: true,
             min_width: 1500
-        }
+        },
+        on_trial_start: skipFunction
     };
 }

@@ -27,25 +27,35 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    var carousel = document.querySelector(".ie-carousel");
-    var inner = carousel.querySelector(".carousel-inner");
-    var previous = carousel.querySelector(".carousel-controls .previous");
-    var next = carousel.querySelector(".carousel-controls .next");
 
-    $(carousel).carousel({
-        interval: false,
-        keyboard: true,
-        wrap: false,
-        touch: true
-    }).on("slide.bs.carousel", function(event) {
-        var count = inner.children.length;
-        var currentIndex = Array.from(inner.children).indexOf(event.relatedTarget);
+    var setup = function() {
+        var carousel = document.querySelector(".ie-carousel");
+        if (!carousel) {
+            setTimeout(setup, 0);
+            return;
+        }
 
-        // If last item hide next arrow
-        next.toggleAttribute("disabled", (count - 1) === currentIndex);
+        var inner = carousel.querySelector(".carousel-inner");
+        var previous = carousel.querySelector(".carousel-controls .previous");
+        var next = carousel.querySelector(".carousel-controls .next");
 
-        // If first item hide prev arrow
-        previous.toggleAttribute("disabled", 0 === currentIndex);
-    });
+        $(carousel).carousel({
+            interval: false,
+            keyboard: true,
+            wrap: false,
+            touch: true
+        }).on("slide.bs.carousel", function(event) {
+            var count = inner.children.length;
+            var currentIndex = Array.from(inner.children).indexOf(event.relatedTarget);
+
+            // If last item hide next arrow
+            next.toggleAttribute("disabled", (count - 1) === currentIndex);
+
+            // If first item hide prev arrow
+            previous.toggleAttribute("disabled", 0 === currentIndex);
+        });
+    }
+
+    setup();
 });
 </script>
