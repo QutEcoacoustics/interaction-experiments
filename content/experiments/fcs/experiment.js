@@ -60,7 +60,7 @@ function experimentInit() {
     }
 
     let skipToTrial = jsPsych.data.getURLVariable("skip");
-    const defaultOnTrial =  () => console.log("Current trial is", jsPsych.currentTimelineNodeID());
+    const defaultOnTrial = () => console.log("Current trial is", jsPsych.currentTimelineNodeID());
     var skipFunction = defaultOnTrial;
     if (skipToTrial) {
         console.warn("skipping to trial", skipToTrial);
@@ -68,7 +68,7 @@ function experimentInit() {
             var currentTrial = jsPsych.currentTimelineNodeID();
             if (skipToTrial !== currentTrial) {
                 console.warn(`Debug skipping trial ${currentTrial} because trial id is not ${skipToTrial}`);
-                jsPsych.finishTrial({skipped: true});
+                jsPsych.finishTrial({ skipped: true });
             }
             else {
                 // reset
@@ -282,7 +282,7 @@ function experimentInit() {
 
     var contact = {
         type: "survey-html-form",
-        url: "Contact/index.html",
+        url: "contact/index.html",
         button_label: "Continue"
     };
     timeline.push(contact);
