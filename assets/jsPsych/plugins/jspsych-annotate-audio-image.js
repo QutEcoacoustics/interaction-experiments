@@ -180,7 +180,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
           <div style="width: 59px; flex-shrink: 0;"></div>
         </div>`;
 
-            let audio = "<div id='player-container' class='media-wrapper' style='flex: 1; flex-shrink: 0; z-index: -100'></div>";
+            let audio = "<div id='player-container' class='media-wrapper' style='flex: 1; flex-shrink: 0; z-index: 100'></div>";
 
             let container = `<div style="display: flex; flex-direction: column;${
                 trial.max_width ? `max-width: ${trial.max_width};` : ""
@@ -196,9 +196,9 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             let style = `<style>${stylesToDisable.map(
                 classItem => `.${classItem}`
             )}, .annotorious-hint { display: none }
-            .annotorious-editor {
+            .annotorious-editor, .annotorious-popup {
                 /* z-index of editor panel (value is too low) */
-                z-index: 10;
+                z-index: 200 !important;
             }
             <style>`;
 
