@@ -64,7 +64,7 @@ Any data collected as part of this research project will be stored securely as p
 
 ## How do I give my consent to participate?
 
-Clicking 'Continue' at the bottom of this page is accepted as an indication of your consent to participate in this research project.
+Clicking _Continue_ at the bottom of this page is accepted as an indication of your consent to participate in this research project.
 
 
 ## What if I have questions about the research project?
@@ -84,7 +84,7 @@ QUT is committed to research integrity and the ethical conduct of research proje
 
 ## Statement of consent
 
-By clicking 'Continue', you are indicating that you:
+By clicking _Continue_, you are indicating that you:
 
 * Have read and understood the information document regarding this research project.
 * Have had any questions answered to your satisfaction.

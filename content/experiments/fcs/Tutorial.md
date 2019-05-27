@@ -13,7 +13,7 @@ They will appear in the space below.
 
 Each soundscape contains 24 continuous hours (a full day) of audio, which may have been collected from suburban, rural or wilderness sites. 
 
-Please click 'Next' - located above the soundscape.
+Please click _Next_ - located above the soundscape.
 
 ---
 
@@ -24,7 +24,7 @@ Click the play button on the audio bar.
 
 Try dragging the audio button to that point in the soundscape to learn more about it.
 
-When you are happy that you understand how to use it, click 'Next'.
+When you are happy that you understand how to use it, click _Next_.
 
 
 ---
@@ -42,7 +42,7 @@ You can use the audio bar to give you more information.
 
 Take some time to explore some interesting points in the soundscape.
 
-Try boxing and labelling five things that you think are interesting, then hit 'Next'. 
+Try boxing and labelling five things that you think are interesting, then hit _Next_. 
 
 ---
 
@@ -51,7 +51,7 @@ Try boxing and labelling five things that you think are interesting, then hit 'N
 See if you can find, box, and label the dawn chorus. 
 The dawn chorus is when the birds begin chorusing at dawn. 
 It is typically loud and between the hours of 5am and 7am. 
-When you find it please box all of it, and label it with the number '1', then hit 'Next'.
+When you find it please box all of it, and label it with the number `1`, then hit _Next_.
 
 ---
 # 
@@ -60,7 +60,7 @@ On the next screen we will be **timing you** to see how quickly you can find spe
 
 We would like you to find **one example** of each of the listed sounds as **quickly** as possible.
 
-Your time **starts when you open the page** and **ends when you hit the 'Continue' button**.
+Your time **starts when you open the page** and **ends when you hit the _Continue_ button**.
 
 Click Continue (under the visualisation) when you are ready to begin.
 

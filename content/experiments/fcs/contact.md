@@ -15,6 +15,6 @@ type: blank
 <input type = "checkbox" id = "yes"> Yes
 <input type = "checkbox" name = "no"> No
 
-Please provide your email in the space provided if you answered 'yes' to any of those questions:
+Please provide your email in the space provided if you answered _Yes_ to any of those questions:
 <input type="text" name="email"/>
 
