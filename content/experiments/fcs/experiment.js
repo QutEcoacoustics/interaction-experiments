@@ -78,6 +78,25 @@ function experimentInit() {
         };
     }
 
+    var submitFunction = function(data) {
+        if (data.submitExperimentData === true) {
+            var xhr = new XMLHttpRequest();
+            var url = "secret";
+            xhr.open("POST", url, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.onreadystatechange = function() {
+                console.log("xhr,readystate, status", xhr, xhr.readyState, xhr.status);
+            };
+            var body = JSON.stringify({
+                "subject": subject_id,
+                "trials": jsPsych.data.get().values(),
+                "interactionData": jsPsych.data.getInteractionData().values()
+            });
+            console.log("Saving data to server", body);
+            xhr.send(body);
+        }
+    };
+
 
 
     //  scales for likert questions
@@ -85,6 +104,12 @@ function experimentInit() {
     var scale2 = ["Perfect", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Failure"];
     var scale3 = ["Not at all true", "", "", "Somewhat true", "", "", "Very true"];
 
+    var subject_id = jsPsych.randomization.randomID(10);
+
+    jsPsych.data.addProperties({
+        subject: subject_id,
+        condition: visualizationStyle
+    });
 
     // timeline
 
@@ -150,6 +175,10 @@ function experimentInit() {
         audio: function() {
             var data = jsPsych.timelineVariable("tuteSite")();
             return data.audio;
+        },
+        // checkpoint and save our experiment data
+        data: {
+            submitExperimentData: true
         }
     };
 
@@ -179,6 +208,10 @@ function experimentInit() {
         audio: function() {
             var data = jsPsych.timelineVariable("sites")();
             return data.audio;
+        },
+        // checkpoint and save our experiment data
+        data: {
+            submitExperimentData: true
         }
     };
 
@@ -218,13 +251,6 @@ function experimentInit() {
     timeline.push(mainExperiment);
 
 
-
-    var subject_id = jsPsych.randomization.randomID(5);
-
-    jsPsych.data.addProperties({
-        subject: subject_id,
-        condition: visualizationStyle
-    });
 
 
     // ideally randomise the two screens dealing with IMI and NASATLX - hence randomise-order:true which doesn't seem to be working
@@ -283,7 +309,11 @@ function experimentInit() {
     var contact = {
         type: "survey-html-form",
         url: "contact/index.html",
-        button_label: "Continue"
+        button_label: "Continue",
+        // checkpoint and save our experiment data
+        data: {
+            submitExperimentData: true
+        }
     };
     timeline.push(contact);
 
@@ -304,6 +334,7 @@ function experimentInit() {
             audio: true,
             min_width: 1500
         },
-        on_trial_start: skipFunction
+        on_trial_start: skipFunction,
+        on_trial_finish: submitFunction
     };
 }
