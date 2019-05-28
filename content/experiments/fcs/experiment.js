@@ -227,49 +227,71 @@ function experimentInit() {
     });
 
 
-    // ideally randomise the two screens dealing with IMI and NASATLX - hence randomise-order:true which doesn't seem to be working
 
+
+    /*
+        var IMI = {
+            type: "survey-likert",
+            questions:
+                [
+                    { id: 1, prompt: "I would describe the task as very enjoyable", labels: scale3 },
+                    { id: 2, prompt: "Doing the task was fun", labels: scale3 },
+                    { id: 3, prompt: "I thought the task was very boring.", labels: scale3 },
+                    { id: 4, prompt: "I found the task very interesting.", labels: scale3 },
+                    { id: 5, prompt: "I enjoyed doing the task very much.", labels: scale3 },
+                    { id: 6, prompt: "While I was working on the task, I was thinking about how much I enjoyed it.", labels: scale3 },
+                    { id: 7, prompt: "I thought the task was very interesting.", labels: scale3 },
+                ],
+            preamble: "For each of the following statements, please indicate how true it is for you, using the following scale:",
+            data: { IMIquestion_order: JSON.stringify(IMIquestion_order.id) }
+        };
+
+
+        var IMIArray = IMI.questions;
+        var shuffledIMI = jsPsych.randomization.shuffle(IMIArray);
+        IMI.questions = shuffledIMI;
+    */
+
+    var IMI_items = [
+        { id: 1, prompt: "I would describe the task as very enjoyable", labels: scale3 },
+        { id: 2, prompt: "Doing the task was fun", labels: scale3 },
+        { id: 3, prompt: "I thought the task was very boring.", labels: scale3 },
+        { id: 4, prompt: "I found the task very interesting.", labels: scale3 },
+        { id: 5, prompt: "I enjoyed doing the task very much.", labels: scale3 },
+        { id: 6, prompt: "While I was working on the task, I was thinking about how much I enjoyed it.", labels: scale3 },
+        { id: 7, prompt: "I thought the task was very interesting.", labels: scale3 },
+    ];
+
+    var IMI_items_random = jsPsych.randomization.repeat(IMI_items, 1);
 
     var IMI = {
-        type: "survey-likert",
-        questions:
-            [
-                { prompt: "I would describe the task as very enjoyable", labels: scale3 },
-                { prompt: "Doing the task was fun", labels: scale3 },
-                { prompt: "I thought the task was very boring.", labels: scale3 },
-                { prompt: "I found the task very interesting.", labels: scale3 },
-                { prompt: "I enjoyed doing the task very much.", labels: scale3 },
-                { prompt: "While I was working on the task, I was thinking about how much I enjoyed it.", labels: scale3 },
-                { prompt: "I thought the task was very interesting.", labels: scale3 },
-            ],
         preamble: "For each of the following statements, please indicate how true it is for you, using the following scale:",
-        randomise_order: true
+        type: "survey-likert",
+        questions: IMI_items_random,
+        data: { question_order: (IMI_items_random.map(x => x.prompt)) }, // appends a JSON representation of the question order to the data
     };
 
-    var IMIArray = IMI.questions;
-    var shuffledArray = jsPsych.randomization.shuffle(IMIArray);
-    IMI.questions = shuffledArray;
-    timeline.push(IMI);
+
+    var NASATLX_items = [
+        { id: 1, prompt: "How mentally demanding was the task?", labels: scale1 },
+        { id: 2, prompt: "How physically demanding was the task?", labels: scale1 },
+        { id: 3, prompt: "How hurried or rushed was the pace of the task?", labels: scale1 },
+        { id: 4, prompt: "How sucessful were you in accomplishing what you were asked to do?", labels: scale2 },
+        { id: 5, prompt: "How hard did you have to work to accomplish your level of performance?", labels: scale1 },
+        { id: 6, prompt: "How insecure, discouraged, irritated, stressed, and annoyed were you?", labels: scale1 },
+    ];
+
+    var NASATLX_items_random = jsPsych.randomization.repeat(NASATLX_items, 1);
 
     var NASATLX = {
         type: "survey-likert",
-        questions:
-            [
-                { prompt: "How mentally demanding was the task?", labels: scale1 },
-                { prompt: "How physically demanding was the task?", labels: scale1 },
-                { prompt: "How hurried or rushed was the pace of the task?", labels: scale1 },
-                { prompt: "How sucessful were you in accomplishing what you were asked to do?", labels: scale2 },
-                { prompt: "How hard did you have to work to accomplish your level of performance?", labels: scale1 },
-                { prompt: "How insecure, discouraged, irritated, stressed, and annoyed were you?", labels: scale1 },
-            ],
-        preamble: "Please answer the following questions regarding the task you just performed.",
-        randomise_order: true
+        questions: NASATLX_items_random,
+        data: { question_order: (NASATLX_items_random.map(x => x.prompt)) },
     };
 
-    var NASAArray = NASATLX.questions;
-    var shuffledArray = jsPsych.randomization.shuffle(NASAArray);
-    NASATLX.questions = shuffledArray;
-    timeline.push(NASATLX);
+
+    var randomSurveys = jsPsych.randomization.repeat([IMI, NASATLX], 1);
+    Array.prototype.push.apply(timeline, randomSurveys);
 
     var survey2 = {
         type: "survey-html-form",

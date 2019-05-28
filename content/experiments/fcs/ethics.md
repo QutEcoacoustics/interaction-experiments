@@ -9,10 +9,20 @@ type: blank
 
 QUT Ethics Approval Number 1900000178
 
-**Principal Researcher**: Dr Kellie Vella  
-**Associate Researchers**:	Dr Anthony Truskinger, Professor Paul Roe, Professor Margot Brereton, Professor Daniel Johnson  
-**Science & Engineering Faculty,**  
-**Queensland University of Technology (QUT)**  
+<table class = "table table-borderless">
+<tbody>
+    <tr>
+        <th scope="row">Principal Researcher:</th>
+        <td scope="row">Dr Kellie Vella</td>
+   </tr>
+   <tr>
+        <th scope="row">Associate Researchers:</th>
+        <td scope="row">Dr Anthony Truskinger, Professor Paul Roe, Professor Margot Brereton, Professor Daniel Johnson</td>
+    </tr>
+    </tbody>
+    </table>
+
+**Science & Engineering Faculty, Queensland University of Technology (QUT)**  
 
 ## Why is the study being conducted?
 

@@ -1,10 +1,11 @@
 ---
-title: Task 1
+title: Find, box, & label
 type: blank
 ---
 
 
-You need to find, box, & label one example of these 5 things as quickly as possible entering the corresponding number as the label.
+... **one example** of these 5 things as **quickly as possible** using the **corresponding number**.
+Click _Continue_ when you have completed the task.
 
 <table class = "table table-bordered mx-auto">
 <tr class = "text-center">

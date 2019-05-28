@@ -5,133 +5,137 @@ type: blank
 
 
 <div class = "form-group">
-<label for = "q1age">
-1. What is your age? 
-Please enter whole numbers. <p id = q1></label>
-<input class="form-check-input" type="number" min = "18" name="q1age">
+<label for = "q1age">1. What is your age? </label>
+<input type="number" class="form-control"  id = "age" name = "q1age" min = "18">
+<small id="agehelp" class="form-text text-muted">Please enter whole numbers. </small>
 </div>
 
 <div class = "form-group">
 <label for = "q2gender">
-2. What is your gender? <p id = q2></label>
-<select class = "form-control" id = "q2gender">
-<option> Male </option>
-<option> Female </option>
+2. What is your gender? </label>
+<select class = "form-control" name = "q2gender" >
+<option value="" selected disabled>Please select</option>
+<option id = "gender_male" name = "q2gender"> Male </option>
+<option id = "gender_female" name = "q2gender"> Female </option>
+<option id = "gender_nonbinary" name = "q2gender"> Non-binary </option>
+<option id = "gender_notdisclosed" name = "q2gender"> Prefer to not disclose </option>
 </select>
-
-<textarea class = "form-control" type = "text" id = "q2othergender" name="othergender_text"  placeholder="Other gender, please specify" rows = "1" cols = "30">
+<label for = "q2othergender">
+<textarea class = "form-control" type = "text" id = "gender_other" name = "q2othergender" placeholder="Other gender, please specify" rows = "1" cols = "30">
 </textarea>
+</label>
 </div>
 
 <div class = "form-group">
 <label for = "q3ecology">
-3. What is your interest in ecology? <p id = q3> </label>
-<select class = "form-control" id = "q3ecology">
-<option> Casual interest </option>
-<option> Professional interest </option>
-<option> No interest </option>
+3. What is your interest in ecology? </label>
+<select class = "form-control" name = "q3ecology">
+<option value="" selected disabled>Please select</option>
+<option id = "casual interest_ecology" name = "q3ecology"> Casual interest </option>
+<option id = "prof interest_ecology" name = "q3ecology"> Professional interest </option>
+<option id = "non interest ecology" name = "q3ecology"> No interest </option>
 </select>
 </div>
 
-<div class="form-group"> <label for = "q4">
-4. If you answered 'casual interest' or 'professional interest' can you tell us more about it here? <p id = q4> </label>
-<textarea id="Q4" name="Q4" class="form control" rows = "5" cols = "50"></textarea>
+<div class="form-group"> <label for = "q4_interest in ecology_qual">
+4. If you answered 'casual interest' or 'professional interest' can you tell us more about it here?</label>
+<textarea name ="q4_interest in ecology_qual" class="form-control"></textarea>
 </div>
 
-<div class = "form-group">
-<label class= "statement" for = "q5">5. How knowledgeable are you about any kind of soundscape ecology, ecoacoustics or bioacoustics?</label><p id="q5">
+
+<label class= "statement" for = "q5_ecoacousticsKnowledge">5. How knowledgeable are you about any kind of soundscape ecology, ecoacoustics or bioacoustics?</label>
 <ul class = "likert">
     <li>
-        <input type="radio" name="q5" value="1">
+        <input type="radio" name="q5_ecoacousticsKnowledge" value="1" >
         <label>Not at all knowledgeable</label>
      </li>
       <li>
-     <input type="radio" name="q5" value="2">
+     <input type="radio" name="q5_ecoacousticsKnowledge" value="2" >
         <label></label>
     </li>
       <li>
-      <input type="radio" name="q5" value="3">
+      <input type="radio" name="q5_ecoacousticsKnowledge" value="3" >
         <label></label>
      </li>
       <li>
-      <input type="radio" name="q5" value="4">
+      <input type="radio" name="q5_ecoacousticsKnowledge" value="4" >
         <label></label>
     </li>
       <li>
-     <input type="radio" name="q5" value="5">
+     <input type="radio" name="q5_ecoacousticsKnowledge" value="5" >
         <label></label>
     </li>
       <li>
-     <input type="radio" name="q5" value="6">
+     <input type="radio" name="q5_ecoacousticsKnowledge" value="6" >
         <label></label>
     </li>
       <li>
-     <input type="radio" name="q5" value="7">
+     <input type="radio" name="q5_ecoacousticsKnowledge" value="7" >
         <label>Very knowledgeable</label>
      </li>
 </ul>
-</div>
 
-<label class= "statement">6. How experienced are you with using environmental recordings? </label><p id = q6>
+
+<label class= "statement" for = "q6_expEnvRecordings">6. How experienced are you with using environmental recordings? </label>
 <ul class= "likert">
      <li>
-        <input type="radio" name="q6" value="1">
+        <input type="radio" name="q6_expEnvRecordings" value="1">
         <label>Not at all experienced</label>
     </li>
       <li>
-        <input type="radio" name="q6" value="2">
+        <input type="radio" name="q6_expEnvRecordings" value="2">
         <label></label>
     </li>
       <li>
-        <input type="radio" name="q6" value="3">
+        <input type="radio" name="q6_expEnvRecordings" value="3">
         <label></label>
     </li>
       <li>
-        <input type="radio" name="q6" value="4">
+        <input type="radio" name="q6_expEnvRecordings" value="4">
         <label></label>
         </li>
       <li>
-        <input type="radio" name="q6" value="6">
+        <input type="radio" name="q6_expEnvRecordings" value="6">
         <label></label>
         </li>
       <li>
-        <input type="radio" name="q6" value="6">
+        <input type="radio" name="q6_expEnvRecordings" value="6">
         <label></label>
     </li>
       <li>
-        <input type="radio" name="q6" value="7">
+        <input type="radio" name="q6_expEnvRecordings" value="7">
         <label>Very experienced</label>
     </li>
 </ul>
 
-<label class= "statement">7. How experienced are you with using any kind of acoustic visualisation (e.g. waveforms, spectrograms)?</label><p id = q7>
+<label class= "statement" for= "q7_expAcousVis">7. How experienced are you with using any kind of acoustic visualisation (e.g. waveforms, spectrograms)?</label>
 <ul class="likert">
      <li>
-        <input type="radio" name="q7" value="1">
+        <input type="radio" name="q7_expAcousVis" value="1">
         <label>Not at all experienced</label>
     </li>
       <li>
-        <input type="radio" name="q7" value="2">
+        <input type="radio" name="q7_expAcousVis" value="2">
         <label></label>
     </li>
       <li>
-        <input type="radio" name="q7" value="3">
+        <input type="radio" name="q7_expAcousVis" value="3">
         <label></label>
     </li>
       <li>
-        <input type="radio" name="q7" value="4">
+        <input type="radio" name="q7_expAcousVis" value="4">
         <label></label>
     </li>
       <li>
-      <input type="radio" name="q7" value="5">
+      <input type="radio" name="q7_expAcousVis" value="5">
         <label></label>
     </li>
       <li>
-      <input type="radio" name="q7" value="6">
+      <input type="radio" name="q7_expAcousVis" value="6">
         <label></label>
     </li>
       <li>
-        <input type="radio" name="q7" value="7">
+        <input type="radio" name="q7_expAcousVis" value="7">
         <label>Very experienced</label>
     </li>
 </ul>
