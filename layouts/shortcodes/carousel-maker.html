@@ -1,6 +1,6 @@
-<div id="carousel" class="carousel slide mx-auto ie-carousel">
+<div id="carousel" class="carousel slide mx-auto ie-carousel" >
     {{ $sections := split .Inner "---" }}
-    <div class="carousel-inner">
+    <div class="carousel-inner" style="height: {{ .Params.height }}">
 
         {{ range $index, $element := $sections }}
         <div class="carousel-item {{ cond (eq $index 0) `active` ``}}">

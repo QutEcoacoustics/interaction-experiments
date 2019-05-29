@@ -1,8 +1,11 @@
+/*globals anno*/
+/*globals MediaElementPlayer*/
+/*globals d3*/
 /**
  * @description Image viewer with annotation abilities that displays an audio player underneath.
  * The width of the audio player timeline matches the size of the image so that users can easily
  * view where in the image the audio relates to.
- * @requires Required external libraries include: annotorious, and mediaelement. They must be loaded and available in the global scope.
+ * @requires Required external libraries include: annotorious, mediaelement, and optionally D3. They must be loaded and available in the global scope.
  * @returns List of annotation events (creation, updates, removals)
  * @author Charles Alleman
  */
@@ -17,6 +20,12 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 pretty_name: "Image",
                 default: undefined,
                 description: "Image element to display"
+            },
+            axes: {
+                type: jsPsych.plugins.parameterType.OBJECT,
+                pretty_name: "Axes",
+                default: null,
+                description: "Whether or not to show axes. If defined, should take the form of: {x: {min: 0, step: 1; max: 100}, y: {min: 0, step: 1; max: 100}}"
             },
             audio: {
                 type: jsPsych.plugins.parameterType.AUDIO,
@@ -58,6 +67,19 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         }
     };
 
+    // event bindings for annotorious. they have to only bound once!
+    var annotationAction = null;
+
+    anno.addHandler("onAnnotationCreated", function(annotation) {
+        annotationAction("AnnotationCreated", annotation);
+    });
+    anno.addHandler("onAnnotationUpdated", function(annotation) {
+        annotationAction("AnnotationUpdated", annotation);
+    });
+    anno.addHandler("onAnnotationRemoved", function(annotation) {
+        annotationAction("AnnotationRemoved", annotation);
+    });
+
     plugin.trial = function(display_element, trial) {
         var data = {
             actions: []
@@ -87,7 +109,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          * @param {object} annotation Annotation object returned by event
          * @returns {void}
          */
-        function pushAction(event, annotation) {
+        annotationAction = function pushAction(event, annotation) {
             data.actions.push({
                 event: event,
                 text: annotation.text,
@@ -96,7 +118,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 x: annotation.shapes[0].geometry.x,
                 y: annotation.shapes[0].geometry.y
             });
-        }
+        };
 
         /**
          * Create the audio player
@@ -136,25 +158,62 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 //Image has loaded, make it annotatable
                 let image = display_element.querySelector("#jspsych-audio-image");
                 if (image && image.width > 0) {
-                    // if annortorious has been used before on same dom element
+                    clearInterval(checkImage);
+
+                    // hardcoding width and height because annotorious can't deal
+                    // with size changes - this canvas does not seem to stretch
+                    var column = document.querySelector("#columnContainer");
+                    column.style.width = (image.naturalWidth + 92 + 59).toString() + "px";
+
+
+                    // if annotorious has been used before on same dom element
                     // it seems it breaks. Adding in a reset to counter.
                     anno.reset();
 
                     anno.makeAnnotatable(image);
 
-                    anno.addHandler("onAnnotationCreated", function(annotation) {
-                        pushAction("AnnotationCreated", annotation);
-                    });
-                    anno.addHandler("onAnnotationUpdated", function(annotation) {
-                        pushAction("AnnotationUpdated", annotation);
-                    });
-                    anno.addHandler("onAnnotationRemoved", function(annotation) {
-                        pushAction("AnnotationRemoved", annotation);
-                    });
+                    // event bindings were moved to global because there is no
+                    // way to reset the bindings globally and it was causing
+                    // repeated firing of events.
 
-                    clearInterval(checkImage);
+                    addAxes();
                 }
             }, 50); //Wait 50ms for image to load
+        }
+
+        function addAxes() {
+            if (trial.axes) {
+                // add our axes overlay
+                let container = display_element.querySelector(".annotorious-annotationlayer");
+                let dimensions = container.getBoundingClientRect();
+
+                var axes = d3.select(container)
+                    .append("svg")
+                    .attr("width", "100%")
+                    .attr("height", "100%")
+                    .attr("preserveAspectRatio", "none")
+
+                    .attr("class", "axes-container")
+                    .attr("viewBox", "0 0 1440 256");
+
+                let x = trial.axes.x;
+                if (x) {
+                    let xScale = d3.scaleUtc().domain([new Date(x.min), new Date(x.max)]).range([0, 1440]);
+                    let xAxis = d3.axisBottom(xScale).ticks(d3.timeHour);
+                    axes.append("g")
+                        .attr("transform", "translate(0, 256)")
+                        .call(xAxis);
+                }
+                let y = trial.axes.y;
+                if (y) {
+                    let yScale = d3.scaleLinear().domain([y.min, y.max]).range([256, 0]);
+                    //let ticks = d3.range(y.min, y.max, y.step || 1000);
+                    let yAxis = d3.axisLeft(yScale);
+                    axes.append("g")
+                        .attr("transform", "translate(0, 0)")
+                        .call(yAxis);
+                }
+            }
         }
 
         /**
@@ -182,9 +241,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
 
             let audio = "<div id='player-container' class='media-wrapper' style='flex: 1; flex-shrink: 0; z-index: 100'></div>";
 
-            let container = `<div style="display: flex; flex-direction: column;${
-                trial.max_width ? `max-width: ${trial.max_width};` : ""
-            }">${image_container}${audio}</div>`;
+            let container = `<div id='columnContainer' style="display: flex; flex-direction: column; margin-bottom: 1ex; margin-top: 1ex;">${image_container}${audio}</div>`;
 
             let stylesToDisable = [
                 "mejs__volume-button",
@@ -196,9 +253,25 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             let style = `<style>${stylesToDisable.map(
                 classItem => `.${classItem}`
             )}, .annotorious-hint { display: none }
+
+            .mejs__container { width: 100% !important; }
+
             .annotorious-editor, .annotorious-popup {
                 /* z-index of editor panel (value is too low) */
                 z-index: 200 !important;
+            }
+            .annotorious-annotationlayer {
+                margin-bottom: 32px
+            }
+            .axes-container {
+                background-color: transparent;
+                height: 100%;
+                pointer-events: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                overflow: visible;
             }
             <style>`;
 
@@ -236,21 +309,10 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         }
 
         if (trial.externalHtmlPreamble) {
-            var xmlhttp;
-            if (window.XMLHttpRequest) {
-                // code for IE7+, Firefox, Chrome, Opera, Safari
-                xmlhttp = new XMLHttpRequest();
-            } else {
-                // code for IE6, IE5
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            xmlhttp.onreadystatechange = function() {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    generatePage(xmlhttp.responseText);
-                }
-            };
-            xmlhttp.open("GET", trial.externalHtmlPreamble, true);
-            xmlhttp.send();
+            window.fetch(trial.externalHtmlPreamble)
+                .then(response => response.text())
+                .then(text => generatePage(text))
+                .catch(error => console.log(error));
         } else {
             generatePage();
         }

@@ -7,7 +7,7 @@ function experimentInit() {
     // site visualization combos
     // TODO: need to add correct resources... but for now proves the point
     //images are updated - needs correct audio
-    var visualizationStyles = ["fcs", "spectrogram", "waveform", "audioOnly"];
+    var availableVisualizationStyles = ["fcs", "spectrogram", "waveform", "audioOnly"];
     var sites = [
         {
             name: "Liz Tasmania",
@@ -41,15 +41,15 @@ function experimentInit() {
         }
     ];
 
-    var visualizationStyle = jsPsych.randomization.sampleWithoutReplacement(visualizationStyles, 1);
+    var visualizationStyles = jsPsych.randomization.sampleWithoutReplacement(availableVisualizationStyles, 1);
     var [tuteSite, studySite] = jsPsych.randomization.sampleWithoutReplacement(sites, 2);
 
 
     // allow skipping through while debugging
     let overrideVisualization = jsPsych.data.getURLVariable("visualizationStyle");
     if (overrideVisualization) {
-        console.warn("Visualization style overridden from,to:", visualizationStyle, overrideVisualization);
-        visualizationStyle = overrideVisualization;
+        console.warn("Visualization style overridden from,to:", visualizationStyles, overrideVisualization);
+        visualizationStyles = overrideVisualization;
     }
 
     let overrideSite = jsPsych.data.getURLVariable("site");
@@ -68,7 +68,11 @@ function experimentInit() {
 
     jsPsych.data.addProperties({
         subject: subject_id,
-        condition: visualizationStyle
+        condition: {
+            visualizationStyle: visualizationStyles[0],
+            tuteSite: tuteSite.name,
+            studySite: studySite.name
+        }
     });
 
     // timeline
@@ -102,13 +106,23 @@ function experimentInit() {
         type: "annotate-audio-image",
         externalHtmlPreamble: "Tutorial/index.html",
         image: function() {
-            var data = jsPsych.timelineVariable("tuteSite")();
-            var visualization = jsPsych.timelineVariable("visualizationStyles")();
-            return data.images[visualization];
+            var site = jsPsych.timelineVariable("tuteSite")();
+            var visualization = jsPsych.timelineVariable("visualizationStyle")();
+            return site.images[visualization];
         },
         audio: function() {
-            var data = jsPsych.timelineVariable("tuteSite")();
-            return data.audio;
+            var site = jsPsych.timelineVariable("tuteSite")();
+            return site.audio;
+        },
+        axes: {
+            x: {
+                min: "2019-05-29",
+                max: "2019-05-30"
+            },
+            y: {
+                min: 0,
+                max: 11025
+            }
         },
         // checkpoint and save our experiment data
         data: {
@@ -120,36 +134,33 @@ function experimentInit() {
         type: "annotate-audio-image",
         externalHtmlPreamble: "bridge/index.html",
         image: function() {
-            var data = jsPsych.timelineVariable("tuteSite")();
-            var visualization = jsPsych.timelineVariable("visualizationStyles")();
-            return data.images[visualization];
+            var site = jsPsych.timelineVariable("tuteSite")();
+            var visualization = jsPsych.timelineVariable("visualizationStyle")();
+            return site.images[visualization];
         },
         audio: function() {
-            var data = jsPsych.timelineVariable("tuteSite")();
-            return data.audio;
-        }
+            var site = jsPsych.timelineVariable("tuteSite")();
+            return site.audio;
+        },
     };
 
     var experimentAnnotation = {
         type: "annotate-audio-image",
         externalHtmlPreamble: "Task/index.html",
         image: function() {
-            var data = jsPsych.timelineVariable("sites")();
-            var visualization = jsPsych.timelineVariable("visualizationStyles")();
-            return data.images[visualization];
+            var site = jsPsych.timelineVariable("studySite")();
+            var visualization = jsPsych.timelineVariable("visualizationStyle")();
+            return site.images[visualization];
         },
         audio: function() {
-            var data = jsPsych.timelineVariable("sites")();
-            return data.audio;
+            var site = jsPsych.timelineVariable("studySite")();
+            return site.audio;
         },
         // checkpoint and save our experiment data
         data: {
             submitExperimentData: true
         }
     };
-
-
-
 
 
     var taskInstructions = {
@@ -170,9 +181,8 @@ function experimentInit() {
         timeline_variables: [
             {
                 tuteSite: tuteSite,
-                sites: studySite,
-                visualizationStyles: visualizationStyle,
-                tutePages: tutorial_pages
+                studySite: studySite,
+                visualizationStyle: visualizationStyles[0],
             }
         ],
         // sample: {

@@ -25,6 +25,10 @@
 {{ $annotorious = $annotorious | resources.Fingerprint }}
 <script src="{{ $annotorious.RelPermalink }}" integrity="{{ $annotorious.Data.Integrity }}"></script>
 
+{{ $d3 := resources.Get "d3/d3.min.js" }}
+{{ $d3 = $d3 | resources.Fingerprint }}
+<script src="{{ $d3.RelPermalink }}" integrity="{{ $d3.Data.Integrity }}"></script>
+
 {{ $scratch := newScratch }}
 <!-- until newlines are supported by go templates, this is the best we can do -->
 <!-- https://github.com/golang/go/issues/29770 -->

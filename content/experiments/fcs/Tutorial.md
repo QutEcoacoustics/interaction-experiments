@@ -3,7 +3,7 @@ title: Tutorial
 type: blank
 ---
 
-{{< carousel-maker >}} 
+{{< carousel-maker height="10em" >}} 
 
 # 
 We would like you to explore some long-duration environmental recordings, or soundscapes. You can see one in the space below.

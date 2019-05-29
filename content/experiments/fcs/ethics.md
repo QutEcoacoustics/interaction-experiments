@@ -10,19 +10,22 @@ type: blank
 QUT Ethics Approval Number 1900000178
 
 <table class = "table table-borderless">
-<tbody>
-    <tr>
-        <th scope="row">Principal Researcher:</th>
-        <td scope="row">Dr Kellie Vella</td>
-   </tr>
-   <tr>
-        <th scope="row">Associate Researchers:</th>
-        <td scope="row">Dr Anthony Truskinger, Professor Paul Roe, Professor Margot Brereton, Professor Daniel Johnson</td>
+    <tbody>
+        <tr>
+            <th scope="row">Principal Researcher:</th>
+            <td scope="row">Dr Kellie Vella</td>
     </tr>
+    <tr>
+            <th scope="row">Associate Researchers:</th>
+            <td scope="row">Dr Anthony Truskinger, Professor Paul Roe, Professor Margot Brereton, Professor Daniel Johnson</td>
+        </tr>
+        <tr>
+            <th scope="row" colspan="2">
+                Science & Engineering Faculty, Queensland University of Technology (QUT)
+            </th>
+        </td>
     </tbody>
-    </table>
-
-**Science & Engineering Faculty, Queensland University of Technology (QUT)**  
+</table>
 
 ## Why is the study being conducted?
 
