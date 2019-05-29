@@ -59,46 +59,6 @@ function experimentInit() {
         studySite = overrideSite;
     }
 
-    let skipToTrial = jsPsych.data.getURLVariable("skip");
-    const defaultOnTrial = () => console.log("Current trial is", jsPsych.currentTimelineNodeID());
-    var skipFunction = defaultOnTrial;
-    if (skipToTrial) {
-        console.warn("skipping to trial", skipToTrial);
-        skipFunction = function() {
-            var currentTrial = jsPsych.currentTimelineNodeID();
-            if (skipToTrial !== currentTrial) {
-                console.warn(`Debug skipping trial ${currentTrial} because trial id is not ${skipToTrial}`);
-                jsPsych.finishTrial({ skipped: true });
-            }
-            else {
-                // reset
-
-                jsPsych.initSettings().on_trial_start = defaultOnTrial;
-            }
-        };
-    }
-
-    var submitFunction = function(data) {
-        if (data.submitExperimentData === true) {
-            var xhr = new XMLHttpRequest();
-            var url = "secret";
-            xhr.open("POST", url, true);
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.onreadystatechange = function() {
-                console.log("xhr,readystate, status", xhr, xhr.readyState, xhr.status);
-            };
-            var body = JSON.stringify({
-                "subject": subject_id,
-                "trials": jsPsych.data.get().values(),
-                "interactionData": jsPsych.data.getInteractionData().values()
-            });
-            console.log("Saving data to server", body);
-            xhr.send(body);
-        }
-    };
-
-
-
     //  scales for likert questions
     var scale1 = ["Very Low", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Very High"];
     var scale2 = ["Perfect", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Failure"];
@@ -137,33 +97,7 @@ function experimentInit() {
     };
     timeline.push(survey1);
 
-
-
-
     //tutorial and experimental task
-    var tutorial_pages = "Tutorial/index.html";
-
-    var tutorialInstructions = {
-        type: "instructions",
-        pages: tutorial_pages,
-        cont_btn: "continue"
-    };
-
-    // for testing, remove later
-    var debug = {
-        type: "html-button-response",
-        choices: ["OK"],
-        stimulus: function() {
-            var data = {
-                tuteSite: jsPsych.timelineVariable("tuteSite")(),
-                site: jsPsych.timelineVariable("sites")(),
-                visualizationStyles: jsPsych.timelineVariable("visualizationStyles")()
-            };
-            var trialData = JSON.stringify(data, null, 2);
-            return `<pre>${trialData}</pre>`;
-        }
-    };
-
     var tutorialAnnotation = {
         type: "annotate-audio-image",
         externalHtmlPreamble: "Tutorial/index.html",
@@ -182,8 +116,7 @@ function experimentInit() {
         }
     };
 
-
-    var experimentbridge = {
+    var experimentBridge = {
         type: "annotate-audio-image",
         externalHtmlPreamble: "bridge/index.html",
         image: function() {
@@ -229,9 +162,8 @@ function experimentInit() {
 
     var mainExperiment = {
         timeline: [
-            debug,
             tutorialAnnotation,
-            experimentbridge,
+            experimentBridge,
             taskInstructions,
             experimentAnnotation
         ],
@@ -341,9 +273,7 @@ function experimentInit() {
 
     var end = {
         type: "external-html",
-        url: "TheEnd/index.html",
-        cont_key: enterKeyPress,
-        cont_btn: "continue"
+        url: "TheEnd/index.html"
     };
 
     timeline.push(end);
@@ -356,7 +286,15 @@ function experimentInit() {
             audio: true,
             min_width: 1500
         },
-        on_trial_start: skipFunction,
-        on_trial_finish: submitFunction
+        // this is used by common.js and not a psychJS setting
+        prepareDataForSubmit: function() {
+            return {
+                "subject": subject_id,
+                "trials": jsPsych.data.get().values(),
+                "interactionData": jsPsych.data.getInteractionData().values()
+            };
+        },
+        // this is used by common.js and not a psychJS setting
+        experimentName: "fcs"
     };
 }

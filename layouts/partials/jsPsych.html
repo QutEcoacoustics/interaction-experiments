@@ -1,50 +1,63 @@
 
 {{ $css := resources.Get "jsPsych/css/jspsych.css" }}
 {{ $style := $css | resources.Minify  | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $style.Permalink }}">
+<link rel="stylesheet" href="{{ $style.RelPermalink }}">
 
 {{ $cssCustom := resources.Get "custom.css" }}
 {{ $styleCustom := $cssCustom  | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $styleCustom.Permalink }}">
+<link rel="stylesheet" href="{{ $styleCustom.RelPermalink }}">
 
 <!-- note: hugo does not support putting images into the asset pipeline -->
 <!-- so images are copied manually into the static directory -->
 {{ $css := resources.Get "mediaElement/mediaelementplayer.css" }}
 {{ $style := $css | resources.Minify  | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $style.Permalink }}">
+<link rel="stylesheet" href="{{ $style.RelPermalink }}">
 
 {{ $mediaElement := resources.Get "mediaElement/mediaelement-and-player.js" }}
 {{ $mediaElement = $mediaElement | resources.Fingerprint }}
-<script src="{{ $mediaElement.Permalink }}" integrity="{{ $mediaElement.Data.Integrity }}"></script>
+<script src="{{ $mediaElement.RelPermalink }}" integrity="{{ $mediaElement.Data.Integrity }}"></script>
 
 {{ $css := resources.Get "annotorious/css/annotorious.css" }}
 {{ $style := $css | resources.Minify  | resources.Fingerprint }}
-<link rel="stylesheet" href="{{ $style.Permalink }}">
+<link rel="stylesheet" href="{{ $style.RelPermalink }}">
 
-{{ $annotorious := resources.Get "annotorious/annotorious.debug.js" }}
+{{ $annotorious := resources.Get "annotorious/annotorious.min.js" }}
 {{ $annotorious = $annotorious | resources.Fingerprint }}
-<script src="{{ $annotorious.Permalink }}" integrity="{{ $annotorious.Data.Integrity }}"></script>
+<script src="{{ $annotorious.RelPermalink }}" integrity="{{ $annotorious.Data.Integrity }}"></script>
 
 {{ $scratch := newScratch }}
-{{ range $.Site.Data.assets.javascript }}
-    {{ $scratch.Add "javascripts" (slice ( resources.Get . )) }}
-{{ end}}
+<!-- until newlines are supported by go templates, this is the best we can do -->
+<!-- https://github.com/golang/go/issues/29770 -->
+{{ $scratch.Add "bundleList" (slice) }}
+{{ $scratch.Add "bundleList"  ( resources.Get "jsPsych/jspsych.js" ) }}
+{{ $scratch.Add "bundleList"  ( resources.Get "jsPsych/plugins/jspsych-call-function.js" ) }}
+{{ $scratch.Add "bundleList"  ( resources.Get "jsPsych/plugins/jspsych-html-button-response.js" ) }}
+{{ $scratch.Add "bundleList"  ( resources.Get "jsPsych/plugins/jspsych-html-keyboard-response.js" ) }}
+{{ $scratch.Add "bundleList"  ( resources.Get "jsPsych/plugins/jspsych-image-keyboard-response.js" ) }}
+{{ $scratch.Add "bundleList"  ( resources.Get "jsPsych/plugins/jspsych-external-html.js" ) }}
+{{ $scratch.Add "bundleList"  ( resources.Get "jsPsych/plugins/jspsych-survey-text.js" ) }}
+{{ $scratch.Add "bundleList"  ( resources.Get "jsPsych/plugins/jspsych-survey-multi-choice.js" ) }}
+{{ $scratch.Add "bundleList"  ( resources.Get "jsPsych/plugins/jspsych-survey-likert.js" ) }}
+{{ $scratch.Add "bundleList"  ( resources.Get "jsPsych/plugins/jspsych-instructions.js" ) }}
+{{ $scratch.Add "bundleList"  ( resources.Get "jsPsych/plugins/jspsych-annotate-audio-image.js" ) }}
+{{ $scratch.Add "bundleList"  ( resources.Get "jsPsych/plugins/jspsych-survey-html-form.js" ) }}
 
-{{ $jsBundle := $scratch.Get "javascripts" | resources.Concat "js/jsPsychBundle.js"  }}
-{{ $common := resources.Get "common.js" }}
+{{ $jsPsychBundle := $scratch.Get "bundleList" | resources.Concat "js/jsPsychBundle.js"  }}
 
-{{ if eq $.Hugo.Environment "production" }}
-    {{ $jsBundle = $jsBundle | resources.Minify }}
+{{ $common := slice (resources.Get "fetch.3.0.0.umd.js") (resources.Get "common.js" | resources.ExecuteAsTemplate "common-templated.js" . ) |  resources.Concat "js/bundle.js" }}
 
-    {{ $secureJS := $jsBundle | resources.Fingerprint }}
-    <script type="text/javascript" src="{{ $secureJS.Permalink }}" integrity="{{ $secureJS.Data.Integrity }}"></script>
+{{ if eq hugo.Environment "production" }}
+    {{ $jsPsychBundle = $jsPsychBundle | resources.Minify }}
+
+    {{ $secureJS := $jsPsychBundle | resources.Fingerprint }}
+    <script type="text/javascript" src="{{ $secureJS.RelPermalink }}" integrity="{{ $secureJS.Data.Integrity }}"></script>
 
     {{ $common = $common | resources.Fingerprint }}
-    <script src="{{ $common.Permalink }}" integrity="{{ $common.Data.Integrity }}"></script>
+    <script src="{{ $common.RelPermalink }}" integrity="{{ $common.Data.Integrity }}"></script>
 {{ else }}
-    <script type="text/javascript" src="{{ $jsBundle.Permalink }}" ></script>
+    <script type="text/javascript" src="{{ $jsPsychBundle.RelPermalink }}" ></script>
 
-    <script src="{{ $common.Permalink }}" ></script>
+    <script src="{{ $common.RelPermalink }}" ></script>
 {{ end }}
 
 

@@ -1,7 +1,14 @@
 [build]
   publish = "public"
   command = "hugo --gc --minify"
+  functions = ".netlify/functions"
 
 [build.environment]
   HUGO_VERSION = "0.55.5"
   GIT_LFS_ENABLED = "true"
+  AWS_LAMBDA_JS_RUNTIME = "nodejs10.x"
+
+# [dev]
+#   command = "hugo server -DEF" # Command to start your dev server
+#   port = 1313
+#   publish = "static"

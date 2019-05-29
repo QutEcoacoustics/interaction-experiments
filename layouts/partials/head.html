@@ -1,27 +1,27 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  {{ $.Hugo.Generator }}
-  <meta name="environment" content="{{ $.Hugo.Environment }}">
+  {{ hugo.Generator }}
+  <meta name="environment" content="{{ hugo.Environment }}">
 
   {{ with .Site.Params.description }}
   <meta name="description" content="{{ . }}">
   {{ end }}
 
   {{ $appleTouchIcon := "apple-touch-icon.png" }}
-  <link rel="apple-touch-icon" sizes="180x180" href="{{ $appleTouchIcon | absURL }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ $appleTouchIcon | relURL }}">
 
   {{ $favicon32x32 := "favicon-32x32.png" }}
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ $favicon32x32 | absURL }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ $favicon32x32 | relURL }}">
 
   {{ $favicon16x16 := "favicon-16x16.png" }}
-  <link rel="icon" type="image/png" sizes="16x16" href="{{ $favicon16x16 | absURL }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ $favicon16x16 | relURL }}">
 
   {{ $siteWebmanifest := "site.webmanifest" }}
-  <link rel="manifest" href="{{ $siteWebmanifest | absURL }}">
+  <link rel="manifest" href="{{ $siteWebmanifest | relURL }}">
 
   {{ $safariPinnedTab := "safari-pinned-tab.svg" }}
-  <link rel="mask-icon" href="{{ $safariPinnedTab | absURL }}" color="{{ .Site.Params.faviconSafariPinnedTabColor }}">
+  <link rel="mask-icon" href="{{ $safariPinnedTab | relURL }}" color="{{ .Site.Params.faviconSafariPinnedTabColor }}">
 
   <meta name="msapplication-TileColor" content="{{ .Site.Params.faviconMsApplicationTileColor }}">
 

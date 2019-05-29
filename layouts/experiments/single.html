@@ -25,11 +25,10 @@
 {{- end -}}
 {{ define "tail"}}
 {{ $experimentJS := .Resources.GetMatch `experiment.js` }}
-{{ if eq $.Hugo.Environment "production" }}
+{{ if eq hugo.Environment "production" }}
 {{ $experimentJS = $experimentJS | resources.Fingerprint }}
 <script src="{{ $experimentJS.Permalink }}" integrity="{{ $experimentJS.Data.Integrity }}"></script>
 {{ else }}
-<test></test>
 <script src="{{ $experimentJS.Permalink }}"></script>
 {{ end }}
 
