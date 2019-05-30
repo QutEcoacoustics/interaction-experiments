@@ -161,7 +161,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             var checkImage = setInterval(function() {
                 //Image has loaded, make it annotatable
                 let image = display_element.querySelector("#jspsych-audio-image");
-                if (image && image.width > 0) {
+                if (image && image.naturalWidth > 0) {
                     clearInterval(checkImage);
 
                     // hardcoding width and height because annotorious can't deal
@@ -189,7 +189,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             if (trial.axes) {
                 // add our axes overlay
                 let container = display_element.querySelector(".annotorious-annotationlayer");
-                let dimensions = container.getBoundingClientRect();
+                //let dimensions = container.getBoundingClientRect();
 
                 var axes = d3.select(container)
                     .append("svg")
