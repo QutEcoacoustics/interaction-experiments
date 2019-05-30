@@ -101,6 +101,7 @@
             });
 
             jsPsych.init(configuration);
+            jsPsych.data.get().addToLast({start_date: jsPsych.startTime()});
         }
         else {
             console.warn("experiment.js not found (probably because you are not on an experiment page) and was not invoked");

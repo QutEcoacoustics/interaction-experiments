@@ -81,8 +81,10 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
     });
 
     plugin.trial = function(display_element, trial) {
+        var player = null;
         var data = {
-            actions: []
+            actions: [],
+            mediaEvents: []
         };
 
         /**
@@ -111,12 +113,14 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          */
         annotationAction = function pushAction(event, annotation) {
             data.actions.push({
+                time_elapsed: jsPsych.totalTime(),
                 event: event,
                 text: annotation.text,
                 height: annotation.shapes[0].geometry.height,
                 width: annotation.shapes[0].geometry.width,
                 x: annotation.shapes[0].geometry.x,
-                y: annotation.shapes[0].geometry.y
+                y: annotation.shapes[0].geometry.y,
+                mediaPosition: null
             });
         };
 
@@ -140,7 +144,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
 
                 container.innerHTML = audio;
 
-                var player = new MediaElementPlayer("player", {
+                player = new MediaElementPlayer("player", {
                     success: function() {}
                 });
 
