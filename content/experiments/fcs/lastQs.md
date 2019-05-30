@@ -1,28 +1,17 @@
 ---
-title: A few last questions...
+title: Almost done...
 type: blank
 ---
 
-<div class = "form-group">
-<label for = "qual1_ thoughts of task">
-1. Please tell us what you thought of this task:</label>
-<textarea name ="qual1_ thoughts of task" class="form-control"></textarea>
-</div>
-
-<div class = "form-group">
-<label for = "qual2_caught interest">
-2. Please tell us what caught your interest when working with the soundscapes: </label>
-<textarea name ="qual2_caught interest" class="form-control"></textarea>
-</div>
 
 <div class = "form-group">
 <label for = "qual3_anythoughts">
-3. Do you have any other thoughts you’d like to share? </label>
+1. Do you have any thoughts you’d like to share about this study? </label>
 <textarea name ="qual3_anythoughts" class="form-control"></textarea>
 </div>
 
 <label for = "colourblind">
-4. To your knowledge, do you have any kind of colour blindness? </label>
+2. To your knowledge, do you have any kind of colour blindness? </label>
  <div class="custom-control custom-radio">
   <input type="radio" id="colourblind_no" name="colourblind" class="custom-control-input" value = "No">
 <label class="custom-control-label" for = "colourblind_no">
@@ -36,7 +25,7 @@ Yes </label>
 
 <div class = "form-group">
 <label for = "colourblind_details">
-5. If you answered yes to the previous question, can you please provide details? </label>
+3. If you answered yes to the previous question, can you please provide details below? </label>
 <textarea name ="colourblind_details" class="form-control"></textarea>
 </div>
 

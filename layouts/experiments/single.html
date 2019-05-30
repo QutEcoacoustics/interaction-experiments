@@ -27,9 +27,9 @@
 {{ $experimentJS := .Resources.GetMatch `experiment.js` }}
 {{ if eq hugo.Environment "production" }}
 {{ $experimentJS = $experimentJS | resources.Fingerprint }}
-<script src="{{ $experimentJS.Permalink }}" integrity="{{ $experimentJS.Data.Integrity }}"></script>
+<script src="{{ $experimentJS.RelPermalink }}" integrity="{{ $experimentJS.Data.Integrity }}"></script>
 {{ else }}
-<script src="{{ $experimentJS.Permalink }}"></script>
+<script src="{{ $experimentJS.RelPermalink }}"></script>
 {{ end }}
 
 {{ end }}

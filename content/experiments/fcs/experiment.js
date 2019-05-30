@@ -17,6 +17,12 @@ function experimentInit() {
                 waveform: "./images/waveform_Liz.png",
                 audioOnly: "./images/blueblock.png"
             },
+            axes: {
+                fcs: { x: { min: "2019-05-29", max: "2019-05-30" }, y: { min: 0, max: 11025 } },
+                spectrogram: { x: { min: "2019-05-29", max: "2019-05-30" }, y: { min: 0, max: 11025 } },
+                waveform: { x: { min: "2019-05-29", max: "2019-05-30" }, y: { min: -1.0, max: 1.0 } },
+                audioOnly: { x: { min: "2019-05-29", max: "2019-05-30" }, }
+            },
             audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
         },
         {
@@ -27,9 +33,16 @@ function experimentInit() {
                 waveform: "./images/waveform_Sheryn.png",
                 audioOnly: "./images/blueblock.png"
             },
+            axes: {
+                fcs: { x: { min: "2017-02-08", max: "2017-02-09" }, y: { min: 0, max: 11025 } },
+                spectrogram: { x: { min: "2017-02-08", max: "2017-02-09" }, y: { min: 0, max: 11025 } },
+                waveform: { x: { min: "2017-02-08", max: "2017-02-09" }, y: { min: -1.0, max: 1.0 } },
+                audioOnly: { x: { min: "2017-02-08", max: "2017-02-09" }, }
+            },
             audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
         },
-        {
+
+        /*{
             name: "Inala",
             images: {
                 fcs: "./images/FCS_Inala.png",
@@ -37,8 +50,30 @@ function experimentInit() {
                 waveform: "./images/waveform_Inala.png",
                 audioOnly: "./images/blueblock.png"
             },
+            axes: {
+             fcs: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: 0, max: 11025 } },
+             spectrogram: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: 0, max: 11025 } },
+             waveform: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: -1.0, max: 1.0 } },
+             audioOnly: { x: { min: "2018-09-22", max: "2018-09-23" }, }
+             },
             audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
         }
+         name: "TNC_Indo",
+            images: {
+                fcs: "./images/FCS_Inala.png",
+                spectrogram: "./images/greyscale_Inala.png",
+                waveform: "./images/waveform_Inala.png",
+                audioOnly: "./images/blueblock.png"
+            },
+            axes: {
+             fcs: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: 0, max: 11025 } },
+             spectrogram: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: 0, max: 11025 } },
+             waveform: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: -1.0, max: 1.0 } },
+             audioOnly: { x: { min: "2016-08-02", max: "2016-08-03" }, }
+             },
+            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
+        }
+        */
     ];
 
     var visualizationStyles = jsPsych.randomization.sampleWithoutReplacement(availableVisualizationStyles, 1);
@@ -130,6 +165,30 @@ function experimentInit() {
         }
     };
 
+
+    var exploreQs = {
+        type: "annotate-audio-image",
+        externalHtmlPreamble: "explore_questions/index.html",
+        image: function() {
+            var site = jsPsych.timelineVariable("tuteSite")();
+            var visualization = jsPsych.timelineVariable("visualizationStyle")();
+            return site.images[visualization];
+        },
+        audio: function() {
+            var site = jsPsych.timelineVariable("tuteSite")();
+            return site.audio;
+        },
+    };
+
+
+    var task1prompt = {
+        type: "external-html",
+        url: "Task1prompt/index.html",
+        cont_key: enterKeyPress,
+        cont_btn: "continue"
+    };
+
+
     var experimentBridge = {
         type: "annotate-audio-image",
         externalHtmlPreamble: "bridge/index.html",
@@ -171,9 +230,12 @@ function experimentInit() {
     };
 
 
+
     var mainExperiment = {
         timeline: [
             tutorialAnnotation,
+            exploreQs,
+            task1prompt,
             experimentBridge,
             taskInstructions,
             experimentAnnotation
@@ -194,46 +256,20 @@ function experimentInit() {
 
 
 
-
-
-
-    /*
-        var IMI = {
-            type: "survey-likert",
-            questions:
-                [
-                    { id: 1, prompt: "I would describe the task as very enjoyable", labels: scale3 },
-                    { id: 2, prompt: "Doing the task was fun", labels: scale3 },
-                    { id: 3, prompt: "I thought the task was very boring.", labels: scale3 },
-                    { id: 4, prompt: "I found the task very interesting.", labels: scale3 },
-                    { id: 5, prompt: "I enjoyed doing the task very much.", labels: scale3 },
-                    { id: 6, prompt: "While I was working on the task, I was thinking about how much I enjoyed it.", labels: scale3 },
-                    { id: 7, prompt: "I thought the task was very interesting.", labels: scale3 },
-                ],
-            preamble: "For each of the following statements, please indicate how true it is for you, using the following scale:",
-            data: { IMIquestion_order: JSON.stringify(IMIquestion_order.id) }
-        };
-
-
-        var IMIArray = IMI.questions;
-        var shuffledIMI = jsPsych.randomization.shuffle(IMIArray);
-        IMI.questions = shuffledIMI;
-    */
-
     var IMI_items = [
-        { id: 1, prompt: "I would describe the task as very enjoyable", labels: scale3 },
-        { id: 2, prompt: "Doing the task was fun", labels: scale3 },
-        { id: 3, prompt: "I thought the task was very boring.", labels: scale3 },
-        { id: 4, prompt: "I found the task very interesting.", labels: scale3 },
-        { id: 5, prompt: "I enjoyed doing the task very much.", labels: scale3 },
-        { id: 6, prompt: "While I was working on the task, I was thinking about how much I enjoyed it.", labels: scale3 },
-        { id: 7, prompt: "I thought the task was very interesting.", labels: scale3 },
+        { id: 1, prompt: "I would describe the tasks as very enjoyable", labels: scale3 },
+        { id: 2, prompt: "Doing the tasks was fun", labels: scale3 },
+        { id: 3, prompt: "I thought the tasks were very boring.", labels: scale3 },
+        { id: 4, prompt: "I found the tasks very interesting.", labels: scale3 },
+        { id: 5, prompt: "I enjoyed doing the tasks very much.", labels: scale3 },
+        { id: 6, prompt: "While I was working on the tasks, I was thinking about how much I enjoyed it.", labels: scale3 },
+        { id: 7, prompt: "I thought the tasks were very interesting.", labels: scale3 },
     ];
 
     var IMI_items_random = jsPsych.randomization.repeat(IMI_items, 1);
 
     var IMI = {
-        preamble: "For each of the following statements, please indicate how true it is for you, using the following scale:",
+        preamble: "Please think about the two timed tasks you just completed. For each of the following statements, indicate how true it is for you overall, using the following scale:",
         type: "survey-likert",
         questions: IMI_items_random,
         data: { question_order: (IMI_items_random.map(x => x.prompt)) }, // appends a JSON representation of the question order to the data
@@ -241,9 +277,9 @@ function experimentInit() {
 
 
     var NASATLX_items = [
-        { id: 1, prompt: "How mentally demanding was the task?", labels: scale1 },
-        { id: 2, prompt: "How physically demanding was the task?", labels: scale1 },
-        { id: 3, prompt: "How hurried or rushed was the pace of the task?", labels: scale1 },
+        { id: 1, prompt: "How mentally demanding were the tasks?", labels: scale1 },
+        { id: 2, prompt: "How physically demanding were the tasks?", labels: scale1 },
+        { id: 3, prompt: "How hurried or rushed was the pace of the tasks?", labels: scale1 },
         { id: 4, prompt: "How sucessful were you in accomplishing what you were asked to do?", labels: scale2 },
         { id: 5, prompt: "How hard did you have to work to accomplish your level of performance?", labels: scale1 },
         { id: 6, prompt: "How insecure, discouraged, irritated, stressed, and annoyed were you?", labels: scale1 },
@@ -252,6 +288,7 @@ function experimentInit() {
     var NASATLX_items_random = jsPsych.randomization.repeat(NASATLX_items, 1);
 
     var NASATLX = {
+        preamble: "Please think about the two timed tasks you just completed and answer the following questions:",
         type: "survey-likert",
         questions: NASATLX_items_random,
         data: { question_order: (NASATLX_items_random.map(x => x.prompt)) },
