@@ -178,7 +178,7 @@ function experimentInit() {
             var site = jsPsych.timelineVariable("tuteSite")();
             return site.audio;
         },
-        function() {
+        axes: function() {
             var site = jsPsych.timelineVariable("tuteSite")();
             var visualization = jsPsych.timelineVariable("visualizationStyle")();
             return site.axes[visualization];
@@ -206,7 +206,7 @@ function experimentInit() {
             var site = jsPsych.timelineVariable("tuteSite")();
             return site.audio;
         },
-        function() {
+        axes: function() {
             var site = jsPsych.timelineVariable("tuteSite")();
             var visualization = jsPsych.timelineVariable("visualizationStyle")();
             return site.axes[visualization];
@@ -225,7 +225,7 @@ function experimentInit() {
             var site = jsPsych.timelineVariable("studySite")();
             return site.audio;
         },
-        function() {
+        axes: function() {
             var site = jsPsych.timelineVariable("studySite")();
             var visualization = jsPsych.timelineVariable("visualizationStyle")();
             return site.axes[visualization];
