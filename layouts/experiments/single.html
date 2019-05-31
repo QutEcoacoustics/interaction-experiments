@@ -1,26 +1,25 @@
 {{- define "main" -}}
 
-<!--
-<h1>{{ .Title | markdownify }}</h1>
-<h2>Experiment single</h2>
-{{ if .Draft }}
-<span class="badge badge-pill badge-secondary">Inactive</span>
-{{ end }}
--->
-<p>
+<div class="row">
+    <h1 class="col small">{{ .Title | markdownify }}</h1>
+    {{ if .Draft }}
+    <span class="badge badge-pill badge-secondary">Inactive</span>
+    {{ end }}
+
     <small class="text-secondary">
         {{ $customDateFormat := "2006-01-02" }}
         {{ with .Site.Params.customDateFormat }}{{ $customDateFormat = . }}{{ end }}
         {{ .Date.Format $customDateFormat }}
-        {{ if gt .Lastmod .Date }}, updated {{ .Lastmod.Format $customDateFormat }}{{ end }}
+        , last updated {{ .Lastmod.Format $customDateFormat }}
     </small>
-    {{ partial "tags" . }}
-</p>
-{{ .Content }}
-
-<div id="experimentBody">
+    <!--{{ partial "tags" . }}-->
 </div>
 
+
+{{ .Content }}
+<div id="experimentBody">
+    <!-- jspsych goes here -->
+</div>
 
 {{- end -}}
 {{ define "tail"}}

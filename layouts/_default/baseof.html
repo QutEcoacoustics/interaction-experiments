@@ -5,19 +5,17 @@
 
 <body>
   {{ partial "nav.html" . }}
-  
-  <div class="container">
-    <article>
+
+  <main role="main" class="container">
       {{ block "main" . }}{{ end }}
-    </article>
-  </div>
+  </main>
 
   {{ partial "jsPsych.html" . }}
   {{ block "tail" . }}{{ end }}
   {{ partial "google-analytics-async.html" . }}
   {{ partial "cookie-consent.html" . }}
 
-  
+
 </body>
 
 </html>

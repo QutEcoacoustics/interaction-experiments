@@ -1,34 +1,31 @@
 {{ define "main" }}
 <main>
-    <article>
+    <article class="ie-article">
         <header>
             <h1>{{.Title}}</h1>
         </header>
         <!-- "{{.Content}}" pulls from the markdown content of the corresponding _index.md -->
         {{.Content}}
+
+        <p>
+                You may want to go to a particular experiment:
+        </p>
+        <ul>
+        <!-- Ranges through content/experiments -->
+        {{ range (union .Pages .Sections) }}
+            <li>
+                {{ if .Draft }}
+                <span class="badge badge-pill badge-secondary">Inactive</span>
+                {{ end }}
+                {{ $customDateFormat := "2006-01-02" }}
+                {{ with .Site.Params.customDateFormat }}{{ $customDateFormat = . }}{{ end }}
+                <a href="{{ .Permalink }}">{{ .Date.Format $customDateFormat }} | {{.Title}}</a>
+            </li>
+        {{ end }}
+        </ul>
     </article>
-    <h2>Experiments list</h2>
-    <ul>
-    <!-- Ranges through content/posts/*.md -->
-    {{ range .Pages }}
-        <li>
-            {{ if .Draft }}
-            <span class="badge badge-pill badge-secondary">Inactive</span>
-            {{ end }}
-            {{ $customDateFormat := "2006-01-02" }}
-            {{ with .Site.Params.customDateFormat }}{{ $customDateFormat = . }}{{ end }}
-            <a href="{{.Permalink}}">{{ .Date.Format $customDateFormat }} | {{.Title}}</a>
-        </li>
-    {{ end }}
-    </ul>
-    TODO make this the list above
-    {{  range .Sections }}
-    {{ . }}
-    {{ end }}
-    <hr/>
-    {{ .Layout}}
 </main>
 {{ end }}
 {{ define "tail" }}
-    
+
 {{ end}}

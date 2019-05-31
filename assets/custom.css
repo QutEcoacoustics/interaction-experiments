@@ -1,4 +1,8 @@
-
+.ie-article {
+    max-width: 40em;
+    margin-left: auto;
+    margin-right: auto;
+}
 .ie-isolated-content .div {
     padding: 5px;
     text-align: left;
@@ -18,16 +22,18 @@
     text-align: center;
 }
 
-.ie-isolated-content .likert:last-of-type {border-bottom:0;}
+.ie-isolated-content .likert:last-of-type {
+    border-bottom: 0;
+}
 .ie-isolated-content .likert:before {
-  content: '';
-  position:relative;
-  top:11px;
-  left:0%;
-  display:block;
-  background-color:#efefef;
-  height:4px;
-  width:88%;
+    content: "";
+    position: relative;
+    top: 11px;
+    left: 0%;
+    display: block;
+    background-color: #efefef;
+    height: 4px;
+    width: 88%;
 }
 
 .ie-isolated-content .likert li input[type="radio"] {
@@ -44,16 +50,16 @@
 }
 
 .ie-isolated-content .buttons {
-    margin:30px 0;
-    padding:0 4.25%;
-    text-align:right
-  }
-  .ie-isolated-content .buttons button {
+    margin: 30px 0;
+    padding: 0 4.25%;
+    text-align: right;
+}
+.ie-isolated-content .buttons button {
     padding: 5px 10px;
     background-color: #67ab49;
     border: 0;
     border-radius: 3px;
-  }
+}
 
 .ie-isolated-content .statement {
     display: block;
@@ -62,7 +68,6 @@
     text-align: left;
 }
 
-
 /*.ie-isolated-content .table {
     width: 80%;
     border: 1px solid black;
@@ -70,7 +75,7 @@
 }*/
 
 .ie-isolated-content .table class {
-    margin-left:auto;
+    margin-left: auto;
     margin-right: auto;
 }
 
@@ -78,7 +83,6 @@
     padding: 15px;
     text-align: center;
 }
-
 
 .ie-isolated-content {
     text-align: left;

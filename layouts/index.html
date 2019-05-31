@@ -1,13 +1,34 @@
 {{- define "main" -}}
 
-{{ $homepage := .Page.Title  | default "Home" }}
+
+<article class="ie-article">
+{{ $homepage := .Site.Title }}
 {{ with .Site.Menus.nav }}
-  {{ range first 1 . }}
-    {{ $homepage = .Name }}
-  {{ end }}
+    {{ range first 1 . }}
+        {{ $homepage = .Name }}
+    {{ end }}
 {{ end }}
-<h1>{{ $homepage }}</h1>
+{{ $title := .Page.Title  | default $homepage }}
+
+<h1>{{ $title }}</h1>
 {{ .Content }}
-{{ partial "post-list" . }}
+
+<p>
+    You may want to go to a particular experiment:
+</p>
+<ul>
+{{ range  (.GetPage "/experiments").Sections }}
+    <li>
+        <a href="{{.Permalink}}">{{.Date.Format "2006-01-02"}} | {{.Title}}</a>
+    </li>
+{{ end }}
+</ul>
+
+<p>
+    {{ $about := .GetPage "about" }}
+    Or you can find out more about this site in the <a href="{{ $about.RelPermalink }}">{{ $about.Title }}</a> page.
+</p>
+
+</article>
 
 {{- end -}}
