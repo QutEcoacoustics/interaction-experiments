@@ -76,7 +76,7 @@ type: blank
 </ul>
 
 
-<label class= "statement" for = "q6_expEnvRecordings">6. How experienced are you with using environmental recordings? </label>
+<label class= "statement" for = "q6_expEnvRecordings">6. How experienced are you with using environmental audio recordings? </label>
 <ul class= "likert">
      <li>
         <input type="radio" name="q6_expEnvRecordings" value="1">

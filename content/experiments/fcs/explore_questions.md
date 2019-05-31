@@ -18,6 +18,6 @@ type: blank
 
 <div class = "form-group">
 <label for = "qual3_learn">
-3. What did you learn from the soundscape? </label>
+3. What did you learn from exploring the soundscape? </label>
 <textarea name ="qual3_learn" class="form-control"></textarea>
 </div>
