@@ -1,6 +1,7 @@
 [build]
   publish = "public"
-  command = "hugo --gc --minify"
+  ## --gc currently has a weird bug that interferes with executeAsTemplate in jspaych.html where it just deletes content from the templated file
+  command = "hugo --cleanDestinationDir --minify"
   functions = ".netlify/functions"
 
 [build.environment]
