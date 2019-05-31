@@ -3,7 +3,7 @@
     // fetch polyfill should be included in this bundle
     // these values are templated by JSPsych
     const buildDate = "{{ now.Format `2006-01-02T15:04:05-07:00` }}";
-    const buildCommit = "{{.Site.Home.GitInfo.Hash }}";
+    const buildCommit = "{{ getenv `COMMIT_REF` }}";
     const submitUrl  = "/.netlify/functions/submitExperiment";
 
     var prepareDataForSubmit = null;

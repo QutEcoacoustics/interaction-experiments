@@ -5,7 +5,7 @@
   functions = ".netlify/functions"
 
 [build.environment]
-  HUGO_VERSION = "0.55.5"
+  HUGO_VERSION = "0.55.6"
   GIT_LFS_ENABLED = "true"
   AWS_LAMBDA_JS_RUNTIME = "nodejs10.x"
 
