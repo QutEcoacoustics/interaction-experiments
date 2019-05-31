@@ -26,9 +26,7 @@ If you drag your cursor over the soundscape (**left click and hold**) you will s
 
 Next to the box is a field that you can use to enter a description of what you think the sound is. 
 
-Try drawing a box anywhere on the soundscape and entering a description of what you think it is.
-
-To keep a box visible you need to **save your label**.
+To keep a box visible you need to **save your label**. Try it now. 
 
 Before you progress to the next screen, **delete all the boxes** you created by hovering over the box and clicking the **x**.
 
