@@ -38,6 +38,12 @@ $(document).ready(function() {
         var inner = carousel.querySelector(".carousel-inner");
         var previous = carousel.querySelector(".carousel-controls .previous");
         var next = carousel.querySelector(".carousel-controls .next");
+        var enableButtonAtEnd = document.querySelector("{{ .Get `enableButtonAtEnd` }}" || null);
+        if (enableButtonAtEnd) {
+            // disable target button until we get to last slide of carousel
+            // it is assumed, that if this button is supplied, it is some kind of global continue button or href
+            enableButtonAtEnd.toggleAttribute("disabled", true);
+        }
 
         $(carousel).carousel({
             interval: false,
@@ -49,7 +55,13 @@ $(document).ready(function() {
             var currentIndex = Array.from(inner.children).indexOf(event.relatedTarget);
 
             // If last item hide next arrow
-            next.toggleAttribute("disabled", (count - 1) === currentIndex);
+            var isLast = (count - 1) === currentIndex
+            next.toggleAttribute("disabled", isLast);
+            if (isLast && enableButtonAtEnd) {
+                // only enable once, we don't want to disable after we hit end of page
+                enableButtonAtEnd.toggleAttribute("disabled", false);
+            }
+
 
             // If first item hide prev arrow
             previous.toggleAttribute("disabled", 0 === currentIndex);
