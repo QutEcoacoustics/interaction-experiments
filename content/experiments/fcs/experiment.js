@@ -319,17 +319,16 @@ function experimentInit() {
     var contact = {
         type: "survey-html-form",
         url: "contact/index.html",
-        button_label: "Continue",
-        // checkpoint and save our experiment data
-        data: {
-            submitExperimentData: true
-        }
+        button_label: "Continue"
     };
     timeline.push(contact);
 
     var end = {
         type: "external-html",
-        url: "TheEnd/index.html"
+        url: "TheEnd/index.html",
+        on_start: function() {
+            jsPsych.endExperiment();
+        }
     };
 
     timeline.push(end);
