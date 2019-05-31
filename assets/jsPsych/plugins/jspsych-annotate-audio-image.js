@@ -84,18 +84,55 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         var player = null;
         var data = {
             actions: [],
-            mediaEvents: []
+            mediaEvents: [],
+            totalTimePlaying: 0,
+            bufferedTimeRanges: null
         };
 
         /**
          * Resets the innerHTML and finishes the trial
          */
         var end_trial = function() {
-            display_element.innerHTML = "";
+
+            player.pause();
+            data.bufferedTimeRanges = Array
+                .from(player.buffered)
+                .map((x,i) => ({start: player.buffered.start(i), end: player.buffered.end(i)}));
+
+            var playState =  data.mediaEvents.reduce((state, event) => {
+                switch (event.event) {
+                case "playing":
+                    state.on = event.mediaPosition;
+                    break;
+                case "seeking" :
+                case "seeked":
+                    // do nothing
+                    break;
+                case "pause":
+                case "end":
+                case "stalled":
+                case "suspend":
+                    state.total += event.mediaPosition - state.on;
+                    state.on = null;
+                }
+                return state;
+            },
+            {on: false, total: 0});
+
+            // in this case user did not stop playing before going to next screen
+            if (playState.on) {
+                playState.total += player.currentTime - playState.on;
+            }
+
+            data.totalTimePlaying = playState.total;
+
+            while (display_element.firstChild) {
+                display_element.removeChild(display_element.firstChild);
+            }
+
             jsPsych.finishTrial(data);
         };
 
-        //Returns the audio file type
         /**
          * Returns the audio file extension (eg 'wav')
          * @returns {string} Audio file extension
@@ -120,7 +157,9 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 width: annotation.shapes[0].geometry.width,
                 x: annotation.shapes[0].geometry.x,
                 y: annotation.shapes[0].geometry.y,
-                mediaPosition: null
+                mediaPosition: player && player.getCurrentTime() || null,
+                paused: player ? player.paused : null
+
             });
         };
 
@@ -134,7 +173,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         trial.autoplay ? "autoplay" : ""
     }><source src="${trial.audio}" type="audio/${getFileExtension(trial.audio)}"/></audio>`;
 
-                //Create audio element with the following additional options: loop, autoplay
+                // Create audio element with the following additional options: loop, autoplay
                 let container = document.getElementById("player-container");
 
                 if (!container) {
@@ -144,14 +183,26 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
 
                 container.innerHTML = audio;
 
-                player = new MediaElementPlayer("player", {
-                    success: function() {}
+                new MediaElementPlayer("player", {
+                    success: function(media) {
+                        player = media;
+                        setAudioVolume();
+
+                        ["seeking", "seeked", "playing", "pause", "end", "stalled", "suspend"].forEach(function(eventName) {
+                            media.addEventListener(
+                                eventName,
+                                () => data.mediaEvents.push({
+                                    time_elapsed: jsPsych.totalTime(),
+                                    event: eventName,
+                                    mediaPosition: media.currentTime}));
+                        });
+
+
+                    }
                 });
 
-                setAudioVolume();
-
                 clearInterval(checkAudio);
-            }, 50); //Wait 50ms for image to load
+            }, 50); // Wait 50ms for image to load
         }
 
         /**

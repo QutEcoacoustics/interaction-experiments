@@ -17,29 +17,32 @@ function experimentInit() {
                 waveform: "./images/waveform_Liz.png",
                 audioOnly: "./images/blueblock.png"
             },
-            axes: {
-                fcs: { x: { min: "2019-05-29", max: "2019-05-30" }, y: { min: 0, max: 11025 } },
-                spectrogram: { x: { min: "2019-05-29", max: "2019-05-30" }, y: { min: 0, max: 11025 } },
-                waveform: { x: { min: "2019-05-29", max: "2019-05-30" }, y: { min: -1.0, max: 1.0 } },
-                audioOnly: { x: { min: "2019-05-29", max: "2019-05-30" }, }
+            axes:
+            {
+                fcs: { x: { min: "2019-05-29", max: "2019-05-30" }, y: { min: 0, max: 11025 } },
+                spectrogram: { x: { min: "2019-05-29", max: "2019-05-30" }, y: { min: 0, max: 11025 } },
+                waveform: { x: { min: "2019-05-29", max: "2019-05-30" }, y: { min: -1.0, max: 1.0 } },
+                audioOnly: { x: { min: "2019-05-29", max: "2019-05-30" } }
             },
-            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
+            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/SM304256_0%2B1_20151113_000000%2B1100.mp3"
         },
         {
             name: "Sheryn",
-            images: {
+            images:
+            {
                 fcs: "./images/FCS_Sheryn.png",
                 spectrogram: "./images/greyscale_Sheryn.png",
                 waveform: "./images/waveform_Sheryn.png",
                 audioOnly: "./images/blueblock.png"
             },
-            axes: {
-                fcs: { x: { min: "2017-02-08", max: "2017-02-09" }, y: { min: 0, max: 11025 } },
-                spectrogram: { x: { min: "2017-02-08", max: "2017-02-09" }, y: { min: 0, max: 11025 } },
-                waveform: { x: { min: "2017-02-08", max: "2017-02-09" }, y: { min: -1.0, max: 1.0 } },
-                audioOnly: { x: { min: "2017-02-08", max: "2017-02-09" }, }
+            axes:
+            {
+                fcs: { x: { min: "2017-02-08", max: "2017-02-09" }, y: { min: 0, max: 11025 } },
+                spectrogram: { x: { min: "2017-02-08", max: "2017-02-09" }, y: { min: 0, max: 11025 } },
+                waveform: { x: { min: "2017-02-08", max: "2017-02-09" }, y: { min: -1.0, max: 1.0 } },
+                audioOnly: { x: { min: "2017-02-08", max: "2017-02-09" } }
             },
-            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
+            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/Sheryn_concat.mp3"
         },
 
         /*{
@@ -50,28 +53,30 @@ function experimentInit() {
                 waveform: "./images/waveform_Inala.png",
                 audioOnly: "./images/blueblock.png"
             },
-            axes: {
-             fcs: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: 0, max: 11025 } },
-             spectrogram: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: 0, max: 11025 } },
-             waveform: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: -1.0, max: 1.0 } },
-             audioOnly: { x: { min: "2018-09-22", max: "2018-09-23" }, }
-             },
-            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
+            axes:
+            {
+                 fcs: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: 0, max: 11025 } },
+                 spectrogram: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: 0, max: 11025 } },
+                 waveform: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: -1.0, max: 1.0 } },
+                 audioOnly: { x: { min: "2018-09-22", max: "2018-09-23" } }
+            },
+            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/Inala_24hrs.mp3"
         }
          name: "TNC_Indo",
-            images: {
-                fcs: "./images/FCS_Inala.png",
-                spectrogram: "./images/greyscale_Inala.png",
-                waveform: "./images/waveform_Inala.png",
+            images:
+            {
+                fcs: "./images/<intentionally broken>.png",
+                spectrogram: "./images/<intentionally broken>.png",
+                waveform: "./images/<intentionally broken>.png",
                 audioOnly: "./images/blueblock.png"
             },
-            axes: {
-             fcs: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: 0, max: 11025 } },
-             spectrogram: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: 0, max: 11025 } },
-             waveform: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: -1.0, max: 1.0 } },
-             audioOnly: { x: { min: "2016-08-02", max: "2016-08-03" }, }
-             },
-            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/audio-image-audio.wav"
+            axes: {
+                 fcs: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: 0, max: 11025 } },
+                 spectrogram: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: 0, max: 11025 } },
+                 waveform: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: -1.0, max: 1.0 } },
+                 audioOnly: { x: { min: "2016-08-02", max: "2016-08-03" } }
+            },
+            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/TNCIndo60_0-2400.mp3"
         }
         */
     ];
@@ -149,15 +154,10 @@ function experimentInit() {
             var site = jsPsych.timelineVariable("tuteSite")();
             return site.audio;
         },
-        axes: {
-            x: {
-                min: "2019-05-29",
-                max: "2019-05-30"
-            },
-            y: {
-                min: 0,
-                max: 11025
-            }
+        axes: function() {
+            var site = jsPsych.timelineVariable("tuteSite")();
+            var visualization = jsPsych.timelineVariable("visualizationStyle")();
+            return site.axes[visualization];
         },
         // checkpoint and save our experiment data
         data: {
@@ -178,6 +178,11 @@ function experimentInit() {
             var site = jsPsych.timelineVariable("tuteSite")();
             return site.audio;
         },
+        function() {
+            var site = jsPsych.timelineVariable("tuteSite")();
+            var visualization = jsPsych.timelineVariable("visualizationStyle")();
+            return site.axes[visualization];
+        }
     };
 
 
@@ -201,6 +206,11 @@ function experimentInit() {
             var site = jsPsych.timelineVariable("tuteSite")();
             return site.audio;
         },
+        function() {
+            var site = jsPsych.timelineVariable("tuteSite")();
+            var visualization = jsPsych.timelineVariable("visualizationStyle")();
+            return site.axes[visualization];
+        }
     };
 
     var experimentAnnotation = {
@@ -214,6 +224,11 @@ function experimentInit() {
         audio: function() {
             var site = jsPsych.timelineVariable("studySite")();
             return site.audio;
+        },
+        function() {
+            var site = jsPsych.timelineVariable("studySite")();
+            var visualization = jsPsych.timelineVariable("visualizationStyle")();
+            return site.axes[visualization];
         },
         // checkpoint and save our experiment data
         data: {
@@ -256,7 +271,7 @@ function experimentInit() {
 
 
 
-    var IMI_items = [
+    var imiItemsRandom = jsPsych.randomization.repeat([
         { id: 1, prompt: "I would describe the tasks as very enjoyable", labels: scale3 },
         { id: 2, prompt: "Doing the tasks was fun", labels: scale3 },
         { id: 3, prompt: "I thought the tasks were very boring.", labels: scale3 },
@@ -264,36 +279,30 @@ function experimentInit() {
         { id: 5, prompt: "I enjoyed doing the tasks very much.", labels: scale3 },
         { id: 6, prompt: "While I was working on the tasks, I was thinking about how much I enjoyed it.", labels: scale3 },
         { id: 7, prompt: "I thought the tasks were very interesting.", labels: scale3 },
-    ];
-
-    var IMI_items_random = jsPsych.randomization.repeat(IMI_items, 1);
+    ], 1);
 
     var IMI = {
         preamble: "Please think about the two timed tasks you just completed. For each of the following statements, indicate how true it is for you overall, using the following scale:",
         type: "survey-likert",
-        questions: IMI_items_random,
-        data: { question_order: (IMI_items_random.map(x => x.prompt)) }, // appends a JSON representation of the question order to the data
+        questions: imiItemsRandom,
+        data: { trialName: "IMI", question_order: (imiItemsRandom.map(x => x.prompt)) }, // appends a JSON representation of the question order to the data
     };
 
-
-    var NASATLX_items = [
+    var nasatlxItemsRandom = jsPsych.randomization.repeat([
         { id: 1, prompt: "How mentally demanding were the tasks?", labels: scale1 },
         { id: 2, prompt: "How physically demanding were the tasks?", labels: scale1 },
         { id: 3, prompt: "How hurried or rushed was the pace of the tasks?", labels: scale1 },
         { id: 4, prompt: "How sucessful were you in accomplishing what you were asked to do?", labels: scale2 },
         { id: 5, prompt: "How hard did you have to work to accomplish your level of performance?", labels: scale1 },
         { id: 6, prompt: "How insecure, discouraged, irritated, stressed, and annoyed were you?", labels: scale1 },
-    ];
-
-    var NASATLX_items_random = jsPsych.randomization.repeat(NASATLX_items, 1);
+    ], 1);
 
     var NASATLX = {
         preamble: "Please think about the two timed tasks you just completed and answer the following questions:",
         type: "survey-likert",
-        questions: NASATLX_items_random,
-        data: { question_order: (NASATLX_items_random.map(x => x.prompt)) },
+        questions: nasatlxItemsRandom,
+        data: { trialName: "NASATLX", question_order: (nasatlxItemsRandom.map(x => x.prompt)) },
     };
-
 
     var randomSurveys = jsPsych.randomization.repeat([IMI, NASATLX], 1);
     Array.prototype.push.apply(timeline, randomSurveys);
