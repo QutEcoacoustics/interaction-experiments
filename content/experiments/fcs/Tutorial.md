@@ -28,7 +28,9 @@ Next to the box is a field that you can use to enter a description of what you t
 
 Try drawing a box anywhere on the soundscape and entering a description of what you think it is.
 
-Before you progress to the next screen, **delete all the boxes** you created by hovering over the box and clicking the x.
+To keep a box visible you need to **save your label**.
+
+Before you progress to the next screen, **delete all the boxes** you created by hovering over the box and clicking the **x**.
 
 ---
 
@@ -36,7 +38,7 @@ Take some time to explore some interesting points in the soundscape.
 
 Box **five things** that you would **like to explore** more.
 
-Please **label and save** the boxes. 
+Please **label** as best you can and **save** them. 
 
 When you are done hit _Continue_ below the soundscape. 
 
