@@ -218,20 +218,29 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                     // hardcoding width and height because annotorious can't deal
                     // with size changes - this canvas does not seem to stretch
                     var column = document.querySelector("#columnContainer");
-                    column.style.width = (image.naturalWidth + 92 + 59).toString() + "px";
-
+                    const idealWidth = image.naturalWidth + 92 + 59;
+                    column.style.max_width = (idealWidth).toString() + "px";
 
                     // if annotorious has been used before on same dom element
                     // it seems it breaks. Adding in a reset to counter.
                     anno.reset();
 
                     anno.makeAnnotatable(image);
+                    var annoContainer = column.querySelector(".annotorious-annotationlayer");
 
                     // event bindings were moved to global because there is no
                     // way to reset the bindings globally and it was causing
                     // repeated firing of events.
 
                     addAxes();
+
+                    var setScale = function() {
+                        var columnRect = column.getBoundingClientRect();
+
+                        annoContainer.style.zoom = columnRect.width / idealWidth;
+                    };
+                    setScale();
+                    window.addEventListener("resize", setScale);
                 }
             }, 50); //Wait 50ms for image to load
         }
@@ -333,6 +342,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             //Create submit button
             let button = document.createElement("button");
             button.innerHTML = trial.continue_label;
+            button.id = "continue";
             button.classList.add("jspsych-btn", "mx-auto");
             button.onclick = end_trial;
 
