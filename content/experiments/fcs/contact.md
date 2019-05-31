@@ -17,7 +17,7 @@ No</label>
 
 
 <label for = "contact_research">
-2. Would you like to take part in future research conducted by QUT's EcoAcoustics Group? </label>
+2. Would you like to take part in future research conducted by the QUT Ecoacoustics research group? </label>
 <div class="custom-control custom-radio">
   <input type="radio" id="futureresearch_yes" name="contact_research" class="custom-control-input" value = "Yes">
 <label class="custom-control-label" for = "futureresearch_yes">
