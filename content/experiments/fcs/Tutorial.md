@@ -7,7 +7,7 @@ type: blank
 
 We would like you to explore some long-duration environmental recordings, or **soundscapes**. You can see one in the space below.
 
-Each soundscape contains 24 continuous hours (**a full day**) of audio, which may have been collected from suburban, rural or wilderness sites. 
+Each soundscape contains 24 continuous hours (**a full day**) of audio, which have been collected from rural or wilderness sites. 
 
 Please click _Next_ - located above the soundscape.
 
@@ -15,7 +15,7 @@ Please click _Next_ - located above the soundscape.
 
 Click the PLAY button on the audio bar.
 
-Try **dragging the audio button** to that point in the soundscape to learn more about it.
+Try **dragging the audio button** to any point in the soundscape to learn more about it.
 
 When you are happy that you understand how to use the audio, click _Next_.
 
@@ -38,7 +38,7 @@ Box **five things** that you would **like to explore** more.
 
 Please **label** as best you can and **save** them. 
 
-When you are done hit _Continue_ below the soundscape. 
+When you are done, hit _Continue_ below the soundscape. 
 
 
 {{< /carousel-maker >}}

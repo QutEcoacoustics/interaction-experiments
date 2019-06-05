@@ -20,10 +20,11 @@ type: blank
 <option id = "gender_nonbinary" name = "q2gender"> Non-binary </option>
 <option id = "gender_notdisclosed" name = "q2gender"> Prefer to not disclose </option>
 </select>
-<label for = "q2othergender">
-<textarea class = "form-control" type = "text" id = "gender_other" name = "q2othergender" placeholder="Other gender, please specify" rows = "1" cols = "30">
+
+<label for = "q2othergender">If not listed, please enter in the field below:</label>
+<textarea class = "form-control" type = "text" id = "gender_other" name = "q2othergender" rows = "1" cols = "30">
 </textarea>
-</label>
+
 </div>
 
 <div class = "form-group">
@@ -43,11 +44,11 @@ type: blank
 </div>
 
 
-<label class= "statement" for = "q5_ecoacousticsKnowledge">5. How knowledgeable are you about any kind of soundscape ecology, ecoacoustics or bioacoustics?</label>
+<label class= "statement" for = "q5_ecoacousticsKnowledge">5. Please indicate your highest level of expertise with either soundscape ecology, ecoacoustics or bioacoustics:  </label>
 <ul class = "likert">
     <li>
         <input type="radio" name="q5_ecoacousticsKnowledge" value="1" >
-        <label>Not at all knowledgeable</label>
+        <label>No expertise</label>
      </li>
       <li>
      <input type="radio" name="q5_ecoacousticsKnowledge" value="2" >
@@ -71,7 +72,7 @@ type: blank
     </li>
       <li>
      <input type="radio" name="q5_ecoacousticsKnowledge" value="7" >
-        <label>Very knowledgeable</label>
+        <label>Very high expertise</label>
      </li>
 </ul>
 

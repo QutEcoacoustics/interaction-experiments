@@ -12,9 +12,9 @@ It is typically loud and between the hours of 5am and 7am.
 
 <table class = "table table-bordered mx-auto">
 <tr class = "text-center">
-<th scope = "col">1</th>
-<th scope = "col">2</th>
-<th scope = "col">3</th
+<th scope = "col" style = "width:33%">1</th>
+<th scope = "col" style = "width:33%">2</th>
+<th scope = "col" style = "width:34%">3</th>
 </tr>
 <tr class = "text-center">
 <td scope = "row">Rain</td>

@@ -65,9 +65,9 @@ function experimentInit() {
          name: "TNC_Indo",
             images:
             {
-                fcs: "./images/<intentionally broken>.png",
-                spectrogram: "./images/<intentionally broken>.png",
-                waveform: "./images/<intentionally broken>.png",
+                fcs: "./images/FCS_TNC_Indo.png",
+                spectrogram: "./images/greyscale_TNC_Indo.png",
+                waveform: "./images/waveform_TNC_Indo.png",
                 audioOnly: "./images/blueblock.png"
             },
             axes: {
@@ -101,7 +101,7 @@ function experimentInit() {
 
     //  scales for likert questions
     var scale1 = ["Very Low", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Very High"];
-    var scale2 = ["Perfect", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Failure"];
+    var scale2 = ["Failure", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Perfect"];
     var scale3 = ["Not at all true", "", "", "Somewhat true", "", "", "Very true"];
 
     var subject_id = jsPsych.randomization.randomID(10);
@@ -133,6 +133,14 @@ function experimentInit() {
         cont_btn: "continue"
     };
     timeline.push(ethics);
+
+    var warning = {
+        type: "external-html",
+        url: "warning/index.html",
+        cont_btn: "continue"
+    };
+    timeline.push(warning);
+
 
     var survey1 = {
         type: "survey-html-form",
@@ -166,25 +174,29 @@ function experimentInit() {
     };
 
 
-    var exploreQs = {
-        type: "annotate-audio-image",
-        externalHtmlPreamble: "explore_questions/index.html",
-        image: function() {
-            var site = jsPsych.timelineVariable("tuteSite")();
-            var visualization = jsPsych.timelineVariable("visualizationStyle")();
-            return site.images[visualization];
-        },
-        audio: function() {
-            var site = jsPsych.timelineVariable("tuteSite")();
-            return site.audio;
-        },
-        axes: function() {
-            var site = jsPsych.timelineVariable("tuteSite")();
-            var visualization = jsPsych.timelineVariable("visualizationStyle")();
-            return site.axes[visualization];
-        }
-    };
 
+    var tutorial = {
+        timeline: [
+            tutorialAnnotation,
+        ],
+        timeline_variables: [
+            {
+                tuteSite: tuteSite,
+                studySite: studySite,
+                visualizationStyle: visualizationStyles[0],
+            }
+        ],
+    };
+    timeline.push(tutorial);
+
+
+    var exploreQs = {
+        type: "external-html",
+        url: "explore_questions/index.html",
+        cont_key: enterKeyPress,
+        cont_btn: "continue"
+    };
+    timeline.push(exploreQs);
 
     var task1prompt = {
         type: "external-html",
@@ -192,6 +204,7 @@ function experimentInit() {
         cont_key: enterKeyPress,
         cont_btn: "continue"
     };
+
 
 
     var experimentBridge = {
@@ -248,8 +261,6 @@ function experimentInit() {
 
     var mainExperiment = {
         timeline: [
-            tutorialAnnotation,
-            exploreQs,
             task1prompt,
             experimentBridge,
             taskInstructions,
