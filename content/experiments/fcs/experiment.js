@@ -134,14 +134,6 @@ function experimentInit() {
     };
     timeline.push(ethics);
 
-    var warning = {
-        type: "external-html",
-        url: "warning/index.html",
-        cont_btn: "continue"
-    };
-    timeline.push(warning);
-
-
     var survey1 = {
         type: "survey-html-form",
         url: "introQs/index.html",

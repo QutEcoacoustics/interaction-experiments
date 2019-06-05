@@ -102,6 +102,25 @@
 
             jsPsych.init(configuration);
             jsPsych.data.get().addToLast({start_date: jsPsych.startTime()});
+
+            // stop accidental navigation
+            if (window.LiveReload) {
+                var original = window.LiveReload.performReload;
+                window.LiveReload.performReload = function() {
+                    window.LiveReload.isReloading = true;
+                    original.apply(window.LiveReload, Array.from(arguments));
+                };
+            }
+            window.addEventListener("beforeunload", function(e) {
+                if (window.LiveReload && window.LiveReload.isReloading)  {
+                    return;
+                }
+
+                // Cancel the event
+                e.preventDefault();
+                // Chrome requires returnValue to be set
+                e.returnValue = "Navigating away will stop the experiment";
+            });
         }
         else {
             console.warn("experiment.js not found (probably because you are not on an experiment page) and was not invoked");

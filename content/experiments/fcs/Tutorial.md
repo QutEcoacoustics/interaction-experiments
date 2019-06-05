@@ -9,13 +9,13 @@ We would like you to explore some long-duration environmental recordings, or **s
 
 Each soundscape contains 24 continuous hours (**a full day**) of audio, which have been collected from rural or wilderness sites. 
 
-Please click _Next_ - located above the soundscape.
+Please click _Next_---located above the soundscape.
 
 ---
 
-Click the PLAY button on the audio bar.
+Click the _Play_ <img src="play_button.png" class="ie-inline-image" /> button on the audio bar.
 
-Try **dragging the audio button** to any point in the soundscape to learn more about it.
+Try **clicking on the seek bar** at any point in the soundscape to learn more about it.
 
 When you are happy that you understand how to use the audio, click _Next_.
 
@@ -28,7 +28,8 @@ Next to the box is a field that you can use to enter a description of what you t
 
 To keep a box visible you need to **save your label**. Try it now. 
 
-Before you progress to the next screen, **delete all the boxes** you created by hovering over the box and clicking the **x**.
+Before you progress to the next screen, **delete all the boxes** you created by 
+hovering over the box and clicking the delete button <img src="/annotorious/css/delete.png" class="ie-inline-image" />.
 
 ---
 

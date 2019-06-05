@@ -1,5 +1,5 @@
 <div id="carousel" class="carousel slide mx-auto ie-carousel" >
-    {{ $sections := split .Inner "---" }}
+    {{ $sections := split .Inner "\n---" }}
     <div class="carousel-inner" style="height: {{ .Params.height }}">
 
         {{ range $index, $element := $sections }}

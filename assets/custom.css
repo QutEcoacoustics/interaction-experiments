@@ -8,6 +8,10 @@
     text-align: left;
 }
 
+.ie-inline-image {
+    height: 1em;
+}
+
 .ie-isolated-content .likert {
     display: flex;
     margin: 0;
