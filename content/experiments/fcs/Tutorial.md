@@ -35,11 +35,11 @@ hovering over the box and clicking the delete button <img src="/annotorious/css/
 
 Take some time to explore some interesting points in the soundscape.
 
-Box **five things** that you would **like to explore** more.
+Box **five things** that you would **like to explore** more. Try to be as accurate drawing the box as you can be.
 
-Please **label** as best you can and **save** them. 
+Please **label** them, noting  what you think they are or what you would like to know more.
 
-When you are done, hit _Continue_ below the soundscape. 
+When have **saved them**, hit _Continue_ below the soundscape. 
 
 
 {{< /carousel-maker >}}

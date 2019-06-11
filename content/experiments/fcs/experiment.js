@@ -15,7 +15,7 @@ function experimentInit() {
                 fcs: "./images/FCS_Liz.png",
                 spectrogram: "./images/greyscale_Liz.png",
                 waveform: "./images/waveform_Liz.png",
-                audioOnly: "./images/blueblock.png"
+                audioOnly: "./images/whitebox1.png"
             },
             axes:
             {
@@ -33,7 +33,7 @@ function experimentInit() {
                 fcs: "./images/FCS_Sheryn.png",
                 spectrogram: "./images/greyscale_Sheryn.png",
                 waveform: "./images/waveform_Sheryn.png",
-                audioOnly: "./images/blueblock.png"
+                audioOnly: "./images/whitebox1.png"
             },
             axes:
             {
@@ -51,7 +51,7 @@ function experimentInit() {
                 fcs: "./images/FCS_Inala.png",
                 spectrogram: "./images/greyscale_Inala.png",
                 waveform: "./images/waveform_Inala.png",
-                audioOnly: "./images/blueblock.png"
+                audioOnly: "./images/whitebox1.png"
             },
             axes:
             {
@@ -68,7 +68,7 @@ function experimentInit() {
                 fcs: "./images/FCS_TNC_Indo.png",
                 spectrogram: "./images/greyscale_TNC_Indo.png",
                 waveform: "./images/waveform_TNC_Indo.png",
-                audioOnly: "./images/blueblock.png"
+                audioOnly: "./images/whitebox1.png"
             },
             axes: {
                  fcs: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: 0, max: 11025 } },
@@ -220,7 +220,6 @@ function experimentInit() {
 
     var experimentAnnotation = {
         type: "annotate-audio-image",
-        externalHtmlPreamble: "Task/index.html",
         image: function() {
             var site = jsPsych.timelineVariable("studySite")();
             var visualization = jsPsych.timelineVariable("visualizationStyle")();
@@ -234,6 +233,12 @@ function experimentInit() {
             var site = jsPsych.timelineVariable("studySite")();
             var visualization = jsPsych.timelineVariable("visualizationStyle")();
             return site.axes[visualization];
+        },
+        externalHtmlPreamble: function() {
+            var site = jsPsych.timelineVariable("studySite")();
+            //return site.audio
+            return "Task/index.html";
+
         },
         // checkpoint and save our experiment data
         data: {
@@ -310,13 +315,13 @@ function experimentInit() {
     var randomSurveys = jsPsych.randomization.repeat([IMI, NASATLX], 1);
     Array.prototype.push.apply(timeline, randomSurveys);
 
-    var survey2 = {
+    /* var survey2 = {
         type: "survey-html-form",
         url: "lastQs/index.html",
         button_label: "Continue"
     };
     timeline.push(survey2);
-
+*/
     //
 
     var contact = {
