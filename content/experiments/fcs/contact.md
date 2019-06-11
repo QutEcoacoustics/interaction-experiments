@@ -45,8 +45,13 @@ No
 </label>
 </div>
 
-
 <label for= "input_email">Please provide your email in the space provided if you answered _Yes_ to any of those questions: 
 </label>
 <input type="email" class="form-control" id="input_email"placeholder="Enter email"/>
+
+<div class = "form-group">
+<label for = "qual3_anythoughts">
+If you have any thoughts you’d like to share about this study, please enter them below: </label>
+<textarea name ="qual3_anythoughts" class="form-control"></textarea>
+</div>
 
