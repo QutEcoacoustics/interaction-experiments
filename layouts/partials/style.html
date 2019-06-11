@@ -9,15 +9,15 @@ body {
 }
 
 .custom-navbar a {
-  display: inline-block; 
+  display: inline-block;
   padding: 18px 0;
-  margin-right: 1em; 
-  font-weight: bold; 
+  margin-right: 1em;
+  font-weight: bold;
 }
 
 .custom-navbar a:hover,
 .custom-navbar a:focus {
-  text-decoration: none; 
+  text-decoration: none;
 }
 
 @media print {
@@ -31,7 +31,8 @@ article {
 }
 
 img {
-  max-width: 100%;
+    /* disabled: interferes with annotation surfaces */
+  /*max-width: 100%;*/
 }
 
 {{ with .Site.Params.contentBackgroundColor }}
@@ -132,7 +133,7 @@ pre {
 pre code {
   padding: 0;
   font-size: inherit;
-  color: inherit; 
+  color: inherit;
   white-space: pre-wrap;
   background-color: transparent;
   border: none;
@@ -141,7 +142,7 @@ pre code {
 
 code {
   padding: 2px 4px;
-  color: inherit; 
+  color: inherit;
   background-color: #f5f5f5;
   border: 1px solid #ccc;
   border-radius: 4px;

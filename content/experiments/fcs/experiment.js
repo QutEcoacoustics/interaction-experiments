@@ -342,7 +342,7 @@ function experimentInit() {
         auto_update_progress_bar: true,
         exclusions: {
             audio: true,
-            min_width: 1500
+            min_width: 1366
         },
         // this is used by common.js and not a psychJS setting
         prepareDataForSubmit: function() {

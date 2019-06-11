@@ -80,6 +80,13 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         annotationAction("AnnotationRemoved", annotation);
     });
 
+    const dimensions = {
+        left: 110,
+        right: 20,
+        imageWidth: 1440,
+        imageHeight: 256,
+    };
+
     plugin.trial = function(display_element, trial) {
         var player = null;
         var data = {
@@ -196,9 +203,9 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                                     event: eventName,
                                     mediaPosition: media.currentTime}));
                         });
-
-
-                    }
+                    },
+                    alwaysShowHours: true,
+                    features: [ "playpause", "current", "progress"]
                 });
 
                 clearInterval(checkAudio);
@@ -215,11 +222,13 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 if (image && image.naturalWidth > 0) {
                     clearInterval(checkImage);
 
+                    image.height = dimensions.imageHeight;
+                    image.width = dimensions.imageWidth;
+
                     // hardcoding width and height because annotorious can't deal
                     // with size changes - this canvas does not seem to stretch
                     var column = document.querySelector("#columnContainer");
-                    const idealWidth = image.naturalWidth + 92 + 59;
-                    column.style.max_width = (idealWidth).toString() + "px";
+                    var imageContainer = column.querySelector(".image-container");
 
                     // if annotorious has been used before on same dom element
                     // it seems it breaks. Adding in a reset to counter.
@@ -228,16 +237,21 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                     anno.makeAnnotatable(image);
                     var annoContainer = column.querySelector(".annotorious-annotationlayer");
 
-                    // event bindings were moved to global because there is no
+                    // annotorious event bindings were moved to global because there is no
                     // way to reset the bindings globally and it was causing
                     // repeated firing of events.
 
                     addAxes();
 
                     var setScale = function() {
-                        var columnRect = column.getBoundingClientRect();
-
-                        annoContainer.style.zoom = columnRect.width / idealWidth;
+                        var rect = column.getBoundingClientRect();
+                        var scale =  (rect.width - (dimensions.left + dimensions.right)) / dimensions.imageWidth;
+                        annoContainer.style.transform = `scale(${scale})`;
+                        // Array.from(annoContainer.children).forEach(
+                        //     child => child.style.transform = `scale(${scale})`
+                        // );
+                        imageContainer.style.height = (dimensions.imageHeight * scale) + "px";
+                        //annoContainer.style.width =
                     };
                     setScale();
                     window.addEventListener("resize", setScale);
@@ -253,24 +267,26 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
 
                 var axes = d3.select(container)
                     .append("svg")
-                    .attr("width", "100%")
-                    .attr("height", "100%")
+                    .attr("width", dimensions.imageWidth)
+                    .attr("height", dimensions.imageHeight)
                     .attr("preserveAspectRatio", "none")
 
                     .attr("class", "axes-container")
-                    .attr("viewBox", "0 0 1440 256");
+                    .attr("viewBox", `0 0 ${dimensions.imageWidth} ${dimensions.imageHeight}`);
 
                 let x = trial.axes.x;
                 if (x) {
-                    let xScale = d3.scaleUtc().domain([new Date(x.min), new Date(x.max)]).range([0, 1440]);
+                    let xScale = d3.scaleUtc()
+                        .domain([new Date(x.min), new Date(x.max)])
+                        .range([0, dimensions.imageWidth]);
                     let xAxis = d3.axisBottom(xScale).ticks(d3.timeHour);
                     axes.append("g")
-                        .attr("transform", "translate(0, 256)")
+                        .attr("transform", `translate(0, ${dimensions.imageHeight})`)
                         .call(xAxis);
                 }
                 let y = trial.axes.y;
                 if (y) {
-                    let yScale = d3.scaleLinear().domain([y.min, y.max]).range([256, 0]);
+                    let yScale = d3.scaleLinear().domain([y.min, y.max]).range([dimensions.imageHeight, 0]);
                     //let ticks = d3.range(y.min, y.max, y.step || 1000);
                     let yAxis = d3.axisLeft(yScale);
                     axes.append("g")
@@ -292,20 +308,21 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          * @param {string} preamble HTML text to insert into document
          */
         function generatePage(preamble) {
-            let image_container = `<div style="display: flex; flex-direction: row">
-          <div style="width: 92px; flex-shrink: 0;"></div>
-          <img
-            src="${trial.image}"
-            id="jspsych-audio-image"
-            class="annotatable"
-            style="flex: 1;"
-          />
-          <div style="width: 59px; flex-shrink: 0;"></div>
+            let image_container = `<div style="display: inline-flex; flex-direction: row; width: 100%">
+          <div style="width: ${dimensions.left}px; flex-shrink: 0;"></div>
+          <div class="image-container">
+            <img
+                src="${trial.image}"
+                id="jspsych-audio-image"
+                class="annotatable"
+            />
+          </div>
+          <div style="width: ${dimensions.right}px; flex-shrink: 0;"></div>
         </div>`;
 
             let audio = "<div id='player-container' class='media-wrapper' style='flex: 1; flex-shrink: 0; z-index: 100'></div>";
 
-            let container = `<div id='columnContainer' style="display: flex; flex-direction: column; margin-bottom: 1ex; margin-top: 1ex;">${image_container}${audio}</div>`;
+            let container = `<div id='columnContainer' style="margin-bottom: 1ex; margin-top: 1ex;">${image_container}${audio}</div>`;
 
             let stylesToDisable = [
                 "mejs__volume-button",
@@ -324,17 +341,36 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 /* z-index of editor panel (value is too low) */
                 z-index: 200 !important;
             }
+            .jspsych-display-element {
+                overflow: unset !important;
+            }
+            .image-container {
+                margin-bottom: 1%;
+                flex-grow: 1;
+                /* jspsych styles interfering */
+                text-align: left;
+                transform-origin: 0 0;
+            }
             .annotorious-annotationlayer {
-                margin-bottom: 32px
+                z-index: 150;
+                transform-origin: 0 0;
+            }
+            .image-container::after {
+                content: ".";
+                display: block;
+                clear: both;
+                visibility: hidden;
+                line-height: 0;
+                height: 0;
             }
             .axes-container {
                 background-color: transparent;
-                height: 100%;
+                height: ${dimensions.imageHeight}px;
                 pointer-events: none;
                 position: absolute;
                 top: 0;
                 left: 0;
-                width: 100%;
+                width: ${dimensions.imageWidth}px;
                 overflow: visible;
             }
             <style>`;
