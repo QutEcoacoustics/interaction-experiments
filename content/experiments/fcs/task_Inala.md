@@ -5,10 +5,10 @@ type: blank
 
 
 ... **one example** of these 3 things as **quickly as possible** using the **corresponding number**.
+Box the **entire sound from beginning to end**. 
 Click _Continue_ when you have completed the task.
 
-**Note:** The dawn chorus is when the birds begin chorusing at dawn. 
-It is typically loud and between the hours of 5am and 7am. 
+**Note:** The dawn chorus is when the birds begin chorusing at dawn.  
 
 <table class = "table table-bordered mx-auto">
 <tr class = "text-center">
@@ -17,9 +17,11 @@ It is typically loud and between the hours of 5am and 7am.
 <th scope = "col" style = "width:34%">3</th>
 </tr>
 <tr class = "text-center">
-<td scope = "row">Rain</td>
-<td>Dawn chorus</td>
-<td>A single high register bird call</td>
+<td scope = "row">Dawn chorus</td>
+<td>Crickets</td>
+<td>Road noise</td>
 </tr>
 </table>
+
+
 

@@ -7,18 +7,18 @@ type: blank
 Box the **entire sound from beginning to end**. 
 Click _Continue_ when you have completed the task.
 
-**Note:** A frog chorus is when many frogs call out over each other. 
+**Note:** The dawn chorus is when the birds begin chorusing at dawn. 
 
 <table class = "table table-bordered mx-auto">
 <tr class = "text-center">
-<th scope = "col" style = "width:33%, font-weight:bold">1</th>
+<th scope = "col" style = "width:33%">1</th>
 <th scope = "col" style = "width:33%">2</th>
 <th scope = "col" style = "width:34%">3</th>
 </tr>
 <tr class = "text-center">
-<td scope = "row">Frog chorus</td>
+<td scope = "row">Dawn chorus</td>
+<td>A high register bird call</td>
 <td>Crickets</td>
-<td>Road noise</td>
 </tr>
 </table>
 

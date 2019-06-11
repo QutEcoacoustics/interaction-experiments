@@ -155,6 +155,6 @@ Yes </label>
 </div>
 
 <div class = "form-group">
-<label for = "colourblind_details"> 9. If you answered yes to the previous question, can you please provide details below? </label>
+<label for = "colourblind_details"> If you answered 'yes' to the previous question, can you please provide details below? </label>
 <textarea name ="colourblind_details" class="form-control"></textarea>
 </div>

@@ -24,22 +24,17 @@ When you are happy that you understand how to use the audio, click _Next_.
 
 If you drag your cursor over the soundscape (**left click and hold**) you will see a box appear. 
 
-Next to the box is a field that you can use to enter a description of what you think the sound is. 
+Next to the box is a field that you can use to make a **label** of what you think the sound is. 
 
-To keep a box visible you need to **save your label**. Try it now. 
+To keep a box visible you need to **save your label**. Try it now and click _Next_ when you understand the function. 
 
-Before you progress to the next screen, **delete all the boxes** you created by 
-hovering over the box and clicking the delete button <img src="/annotorious/css/delete.png" class="ie-inline-image" />.
+
 
 ---
 
-Take some time to explore some interesting points in the soundscape.
+To **delete any boxes** you saved, hover over the box and click the delete button <img src="/annotorious/css/delete.png" class="ie-inline-image" />. Try it now.
 
-Box **five things** that you would **like to explore** more. Try to be as accurate drawing the box as you can be.
-
-Please **label** them, noting  what you think they are or what you would like to know more.
-
-When have **saved them**, hit _Continue_ below the soundscape. 
+When you are happy that you understand how to box and label audio, hit _Continue_ below the soundscape.
 
 
 {{< /carousel-maker >}}

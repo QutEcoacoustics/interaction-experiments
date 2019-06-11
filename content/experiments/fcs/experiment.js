@@ -24,7 +24,8 @@ function experimentInit() {
                 waveform: { x: { min: "2019-05-29", max: "2019-05-30" }, y: { min: -1.0, max: 1.0 } },
                 audioOnly: { x: { min: "2019-05-29", max: "2019-05-30" } }
             },
-            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/SM304256_0%2B1_20151113_000000%2B1100.mp3"
+            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/SM304256_0%2B1_20151113_000000%2B1100.mp3",
+            instructions: "task_Liz/index.html"
         },
         {
             name: "Sheryn",
@@ -42,12 +43,14 @@ function experimentInit() {
                 waveform: { x: { min: "2017-02-08", max: "2017-02-09" }, y: { min: -1.0, max: 1.0 } },
                 audioOnly: { x: { min: "2017-02-08", max: "2017-02-09" } }
             },
-            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/Sheryn_concat.mp3"
+            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/Sheryn_concat.mp3",
+            instructions: "task_Sheryn/index.html"
         },
 
-        /*{
+        {
             name: "Inala",
-            images: {
+            images:
+            {
                 fcs: "./images/FCS_Inala.png",
                 spectrogram: "./images/greyscale_Inala.png",
                 waveform: "./images/waveform_Inala.png",
@@ -55,14 +58,17 @@ function experimentInit() {
             },
             axes:
             {
-                 fcs: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: 0, max: 11025 } },
-                 spectrogram: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: 0, max: 11025 } },
-                 waveform: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: -1.0, max: 1.0 } },
-                 audioOnly: { x: { min: "2018-09-22", max: "2018-09-23" } }
+                fcs: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: 0, max: 11025 } },
+                spectrogram: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: 0, max: 11025 } },
+                waveform: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: -1.0, max: 1.0 } },
+                audioOnly: { x: { min: "2018-09-22", max: "2018-09-23" } }
             },
-            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/Inala_24hrs.mp3"
-        }
-         name: "TNC_Indo",
+            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/Inala_24hrs.mp3",
+            instructions: "task_Inala/index.html"
+        },
+
+        {
+            name: "TNC_Indo",
             images:
             {
                 fcs: "./images/FCS_TNC_Indo.png",
@@ -71,18 +77,22 @@ function experimentInit() {
                 audioOnly: "./images/whitebox1.png"
             },
             axes: {
-                 fcs: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: 0, max: 11025 } },
-                 spectrogram: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: 0, max: 11025 } },
-                 waveform: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: -1.0, max: 1.0 } },
-                 audioOnly: { x: { min: "2016-08-02", max: "2016-08-03" } }
+                fcs: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: 0, max: 11025 } },
+                spectrogram: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: 0, max: 11025 } },
+                waveform: { x: { min: "2016-08-02", max: "2016-08-03" }, y: { min: -1.0, max: 1.0 } },
+                audioOnly: { x: { min: "2016-08-02", max: "2016-08-03" } }
             },
-            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/TNCIndo60_0-2400.mp3"
+            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/TNCIndo60_0-2400.mp3",
+            instructions: "task_Indo/index.html"
         }
-        */
+
     ];
 
     var visualizationStyles = jsPsych.randomization.sampleWithoutReplacement(availableVisualizationStyles, 1);
-    var [tuteSite, studySite] = jsPsych.randomization.sampleWithoutReplacement(sites, 2);
+    var tuteSite = sites.filter(x => x.name == "Inala")[0];
+    var sitesWithoutTuteSite = sites.filter(x => x.name != tuteSite.name);
+    var studySite = jsPsych.randomization.sampleWithoutReplacement(sitesWithoutTuteSite, 1)[0];
+
 
 
     // allow skipping through while debugging
@@ -99,10 +109,8 @@ function experimentInit() {
         studySite = overrideSite;
     }
 
-    //  scales for likert questions
-    var scale1 = ["Very Low", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Very High"];
-    var scale2 = ["Failure", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Perfect"];
-    var scale3 = ["Not at all true", "", "", "Somewhat true", "", "", "Very true"];
+    //  subject id & likert measures
+
 
     var subject_id = jsPsych.randomization.randomID(10);
 
@@ -114,6 +122,51 @@ function experimentInit() {
             studySite: studySite.name
         }
     });
+
+    /*var scale1 = ["Very Low", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Very High"];
+    var scale2 = ["Failure", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Perfect"]; */
+    var scale3 = ["Not at all true", "", "", "Somewhat true", "", "", "Very true"];
+    var scale4 = ["Strongly disagree", "","","","","", "Strongly agree"];
+
+
+    var imiItemsRandom = jsPsych.randomization.repeat([
+        { id: 1, prompt: "I would describe the task as very enjoyable", labels: scale3 },
+        { id: 2, prompt: "Doing the task was fun", labels: scale3 },
+        { id: 3, prompt: "I thought the task was very boring.", labels: scale3 },
+        { id: 4, prompt: "I found the task very interesting.", labels: scale3 },
+        { id: 5, prompt: "I enjoyed doing the task very much.", labels: scale3 },
+        { id: 6, prompt: "While I was working on the task, I was thinking about how much I enjoyed it.", labels: scale3 },
+        { id: 7, prompt: "I thought the task was very interesting.", labels: scale3 },
+    ], 1);
+
+    var IMI_explore = {
+        preamble: "Please think about the task you just completed, and indicate how true the following statements are for you:",
+        type: "survey-likert",
+        questions: imiItemsRandom,
+        data: { trialName: "IMI", question_order: (imiItemsRandom.map(x => x.prompt)) },
+    };
+
+    var IMI_search = {
+        preamble: "Please think about the search task you performed over three different soundscapes, and indicate how true the following statements are for you overall:",
+        type: "survey-likert",
+        questions: imiItemsRandom,
+        data: { trialName: "IMI", question_order: (imiItemsRandom.map(x => x.prompt)) },
+    };
+
+    var challengeItemsRandom = jsPsych.randomization.repeat([
+        { id: 1, prompt: "I found this to be a complex task", labels: scale4 },
+        { id: 2, prompt: "This task was mentally demanding", labels: scale4 },
+        { id: 3, prompt: "This task required a lot of thought and problem solving", labels: scale4 },
+        { id: 4, prompt: "I found this to be a challenging task", labels: scale4 },
+    ], 1);
+
+    var challenge = {
+        preamble: "Please think about the three timed tasks you just completed, and indicate how much you agree with the following statements overall:",
+        type: "survey-likert",
+        questions: challengeItemsRandom,
+        data: { trialName: "NASATLX", question_order: (challengeItemsRandom.map(x => x.prompt)) },
+    };
+
 
     // timeline
 
@@ -141,7 +194,7 @@ function experimentInit() {
     };
     timeline.push(survey1);
 
-    //tutorial and experimental task
+    //tutorial and experimental tasks
     var tutorialAnnotation = {
         type: "annotate-audio-image",
         externalHtmlPreamble: "Tutorial/index.html",
@@ -158,13 +211,8 @@ function experimentInit() {
             var site = jsPsych.timelineVariable("tuteSite")();
             var visualization = jsPsych.timelineVariable("visualizationStyle")();
             return site.axes[visualization];
-        },
-        // checkpoint and save our experiment data
-        data: {
-            submitExperimentData: true
         }
     };
-
 
 
     var tutorial = {
@@ -182,26 +230,9 @@ function experimentInit() {
     timeline.push(tutorial);
 
 
-    var exploreQs = {
-        type: "external-html",
-        url: "explore_questions/index.html",
-        cont_key: enterKeyPress,
-        cont_btn: "continue"
-    };
-    timeline.push(exploreQs);
-
-    var task1prompt = {
-        type: "external-html",
-        url: "Task1prompt/index.html",
-        cont_key: enterKeyPress,
-        cont_btn: "continue"
-    };
-
-
-
-    var experimentBridge = {
+    var Explore_task = {
         type: "annotate-audio-image",
-        externalHtmlPreamble: "bridge/index.html",
+        externalHtmlPreamble: "explore_task/index.html",
         image: function() {
             var site = jsPsych.timelineVariable("tuteSite")();
             var visualization = jsPsych.timelineVariable("visualizationStyle")();
@@ -218,7 +249,46 @@ function experimentInit() {
         }
     };
 
-    var experimentAnnotation = {
+    //does it even need this?
+    var Experiment_explore = {
+        timeline: [
+            Explore_task
+        ],
+        timeline_variables: [
+            {
+                tuteSite: tuteSite,
+                studySite: studySite,
+                visualizationStyle: visualizationStyles[0],
+            }
+        ],
+    };
+    timeline.push(Experiment_explore);
+
+
+
+    var exploreQs = {
+        type: "external-html",
+        url: "explore_questions/index.html",
+        cont_key: enterKeyPress,
+        cont_btn: "continue"
+    };
+    timeline.push(exploreQs);
+
+    timeline.push(IMI_explore);
+
+    var searchInstructions = {
+        type: "external-html",
+        url: "search_instructions/index.html",
+        cont_key: enterKeyPress,
+        cont_btn: "continue",
+        data: {
+            submitExperimentData: true
+        }
+    };
+
+    timeline.push(searchInstructions);
+
+    var searchTasks = {
         type: "annotate-audio-image",
         image: function() {
             var site = jsPsych.timelineVariable("studySite")();
@@ -236,9 +306,7 @@ function experimentInit() {
         },
         externalHtmlPreamble: function() {
             var site = jsPsych.timelineVariable("studySite")();
-            //return site.audio
-            return "Task/index.html";
-
+            return site.instructions;
         },
         // checkpoint and save our experiment data
         data: {
@@ -246,22 +314,11 @@ function experimentInit() {
         }
     };
 
-
-    var taskInstructions = {
-        type: "external-html",
-        url: "Task_instructions/index.html",
-        cont_key: enterKeyPress,
-        cont_btn: "continue"
-    };
-
-
-
-    var mainExperiment = {
+    var Experiment_Search = {
         timeline: [
-            task1prompt,
-            experimentBridge,
-            taskInstructions,
-            experimentAnnotation
+            searchTasks,
+            searchTasks,
+            searchTasks
         ],
         timeline_variables: [
             {
@@ -275,44 +332,10 @@ function experimentInit() {
         //     size: 1
         // }
     };
-    timeline.push(mainExperiment);
+    timeline.push(Experiment_Search);
 
 
-
-    var imiItemsRandom = jsPsych.randomization.repeat([
-        { id: 1, prompt: "I would describe the tasks as very enjoyable", labels: scale3 },
-        { id: 2, prompt: "Doing the tasks was fun", labels: scale3 },
-        { id: 3, prompt: "I thought the tasks were very boring.", labels: scale3 },
-        { id: 4, prompt: "I found the tasks very interesting.", labels: scale3 },
-        { id: 5, prompt: "I enjoyed doing the tasks very much.", labels: scale3 },
-        { id: 6, prompt: "While I was working on the tasks, I was thinking about how much I enjoyed it.", labels: scale3 },
-        { id: 7, prompt: "I thought the tasks were very interesting.", labels: scale3 },
-    ], 1);
-
-    var IMI = {
-        preamble: "Please think about the two timed tasks you just completed. For each of the following statements, indicate how true it is for you overall, using the following scale:",
-        type: "survey-likert",
-        questions: imiItemsRandom,
-        data: { trialName: "IMI", question_order: (imiItemsRandom.map(x => x.prompt)) }, // appends a JSON representation of the question order to the data
-    };
-
-    var nasatlxItemsRandom = jsPsych.randomization.repeat([
-        { id: 1, prompt: "How mentally demanding were the tasks?", labels: scale1 },
-        { id: 2, prompt: "How physically demanding were the tasks?", labels: scale1 },
-        { id: 3, prompt: "How hurried or rushed was the pace of the tasks?", labels: scale1 },
-        { id: 4, prompt: "How sucessful were you in accomplishing what you were asked to do?", labels: scale2 },
-        { id: 5, prompt: "How hard did you have to work to accomplish your level of performance?", labels: scale1 },
-        { id: 6, prompt: "How insecure, discouraged, irritated, stressed, and annoyed were you?", labels: scale1 },
-    ], 1);
-
-    var NASATLX = {
-        preamble: "Please think about the two timed tasks you just completed and answer the following questions:",
-        type: "survey-likert",
-        questions: nasatlxItemsRandom,
-        data: { trialName: "NASATLX", question_order: (nasatlxItemsRandom.map(x => x.prompt)) },
-    };
-
-    var randomSurveys = jsPsych.randomization.repeat([IMI, NASATLX], 1);
+    var randomSurveys = jsPsych.randomization.repeat([IMI_search, challenge], 1);
     Array.prototype.push.apply(timeline, randomSurveys);
 
     /* var survey2 = {
