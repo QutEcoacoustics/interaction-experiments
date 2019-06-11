@@ -9,7 +9,7 @@
     <small class="text-secondary">
         {{ $customDateFormat := "2006-01-02" }}
         {{ with .Site.Params.customDateFormat }}{{ $customDateFormat = . }}{{ end }}
-        {{ .Date.Format $customDateFormat }}
+        {{ .Date.Format $customDateFormat -}}
         , last updated {{ .Lastmod.Format $customDateFormat }}
     </small>
     <!--{{ partial "tags" . }}-->
