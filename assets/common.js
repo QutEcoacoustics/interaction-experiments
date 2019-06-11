@@ -9,6 +9,17 @@
     var prepareDataForSubmit = null;
     var experimentName = null;
 
+    function warnIfLeaving(e) {
+        if (window.LiveReload && window.LiveReload.isReloading)  {
+            return;
+        }
+
+        // Cancel the event
+        e.preventDefault();
+        // Chrome requires returnValue to be set
+        e.returnValue = "Navigating away will stop the experiment";
+    }
+
     function submitData() {
         var data = Object.assign(
             prepareDataForSubmit(),
@@ -38,6 +49,8 @@
         console.log(data.json());
 
         submitData();
+
+        window.removeEventListener("beforeunload", warnIfLeaving);
 
         if (userFunction) {
             return userFunction.call(this, Array.prototype.slice.call(arguments, 1));
@@ -111,16 +124,7 @@
                     original.apply(window.LiveReload, Array.from(arguments));
                 };
             }
-            window.addEventListener("beforeunload", function(e) {
-                if (window.LiveReload && window.LiveReload.isReloading)  {
-                    return;
-                }
-
-                // Cancel the event
-                e.preventDefault();
-                // Chrome requires returnValue to be set
-                e.returnValue = "Navigating away will stop the experiment";
-            });
+            window.addEventListener("beforeunload", warnIfLeaving);
         }
         else {
             console.warn("experiment.js not found (probably because you are not on an experiment page) and was not invoked");
