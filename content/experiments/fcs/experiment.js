@@ -5,8 +5,6 @@ function experimentInit() {
     const enterKeyPress = 13;
 
     // site visualization combos
-    // TODO: need to add correct resources... but for now proves the point
-    //images are updated - needs correct audio
     var availableVisualizationStyles = ["fcs", "spectrogram", "waveform", "audioOnly"];
     var sites = [
         {
@@ -89,39 +87,24 @@ function experimentInit() {
     ];
 
     var visualizationStyles = jsPsych.randomization.sampleWithoutReplacement(availableVisualizationStyles, 1);
-    var tuteSite = sites.filter(x => x.name == "Inala")[0];
-    var sitesWithoutTuteSite = sites.filter(x => x.name != tuteSite.name);
-    var studySite = jsPsych.randomization.sampleWithoutReplacement(sitesWithoutTuteSite, 1)[0];
+    var tuteSiteName = "Inala";
+    var conditions = jsPsych
+        // randomize sites and combine with visualization styles to create all conditions
+        .randomization.factorial({visualizationStyle: visualizationStyles, site: sites}, 1)
+        // ensure the tute site comes first
+        .reduce((result, item) => item.site.name === tuteSiteName ? [item, ...result] : [...result, item], []);
 
 
 
-    // allow skipping through while debugging
+    // allow setting a particular visualization style for debugging
     let overrideVisualization = jsPsych.data.getURLVariable("visualizationStyle");
     if (overrideVisualization) {
         console.warn("Visualization style overridden from,to:", visualizationStyles, overrideVisualization);
         visualizationStyles = overrideVisualization;
     }
 
-    let overrideSite = jsPsych.data.getURLVariable("site");
-    if (overrideSite) {
-        console.warn("Site and tute site style overridden from,to:", [tuteSite, studySite], overrideSite);
-        tuteSite = overrideSite;
-        studySite = overrideSite;
-    }
-
     //  subject id & likert measures
-
-
     var subject_id = jsPsych.randomization.randomID(10);
-
-    jsPsych.data.addProperties({
-        subject: subject_id,
-        condition: {
-            visualizationStyle: visualizationStyles[0],
-            tuteSite: tuteSite.name,
-            studySite: studySite.name
-        }
-    });
 
     /*var scale1 = ["Very Low", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Very High"];
     var scale2 = ["Failure", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Perfect"]; */
@@ -167,6 +150,15 @@ function experimentInit() {
         data: { trialName: "NASATLX", question_order: (challengeItemsRandom.map(x => x.prompt)) },
     };
 
+    // helper functions
+
+    var getSite = () =>  jsPsych.timelineVariable("site", true);
+    var getStyle = () => jsPsych.timelineVariable("visualizationStyle", true);
+    var getImage = () => getSite().images[getStyle()];
+    var getAudio = () => getSite().audio;
+    var getAxes = () => getSite().axes[getStyle()];
+    var getExternalHtmlPreamble = () => getSite().instructions;
+    var getCondition = () => ({site: getSite().name, visualizationStyle: getStyle()});
 
     // timeline
 
@@ -176,7 +168,7 @@ function experimentInit() {
         type: "external-html",
         url: "welcome/index.html",
         cont_key: enterKeyPress,
-        cont_btn: "continue"
+        cont_btn: "continue",
     };
     timeline.push(welcome);
 
@@ -198,73 +190,24 @@ function experimentInit() {
     var tutorialAnnotation = {
         type: "annotate-audio-image",
         externalHtmlPreamble: "Tutorial/index.html",
-        image: function() {
-            var site = jsPsych.timelineVariable("tuteSite")();
-            var visualization = jsPsych.timelineVariable("visualizationStyle")();
-            return site.images[visualization];
-        },
-        audio: function() {
-            var site = jsPsych.timelineVariable("tuteSite")();
-            return site.audio;
-        },
-        axes: function() {
-            var site = jsPsych.timelineVariable("tuteSite")();
-            var visualization = jsPsych.timelineVariable("visualizationStyle")();
-            return site.axes[visualization];
-        }
+        image: getImage,
+        audio: getAudio,
+        axes: getAxes,
+        data: () => ({
+            condition: getCondition()
+        })
     };
 
-
-    var tutorial = {
-        timeline: [
-            tutorialAnnotation,
-        ],
-        timeline_variables: [
-            {
-                tuteSite: tuteSite,
-                studySite: studySite,
-                visualizationStyle: visualizationStyles[0],
-            }
-        ],
-    };
-    timeline.push(tutorial);
-
-
-    var Explore_task = {
+    var exploreTask = {
         type: "annotate-audio-image",
         externalHtmlPreamble: "explore_task/index.html",
-        image: function() {
-            var site = jsPsych.timelineVariable("tuteSite")();
-            var visualization = jsPsych.timelineVariable("visualizationStyle")();
-            return site.images[visualization];
-        },
-        audio: function() {
-            var site = jsPsych.timelineVariable("tuteSite")();
-            return site.audio;
-        },
-        axes: function() {
-            var site = jsPsych.timelineVariable("tuteSite")();
-            var visualization = jsPsych.timelineVariable("visualizationStyle")();
-            return site.axes[visualization];
-        }
+        image: getImage,
+        audio: getAudio,
+        axes: getAxes,
+        data: () => ({
+            condition: getCondition()
+        })
     };
-
-    //does it even need this?
-    var Experiment_explore = {
-        timeline: [
-            Explore_task
-        ],
-        timeline_variables: [
-            {
-                tuteSite: tuteSite,
-                studySite: studySite,
-                visualizationStyle: visualizationStyles[0],
-            }
-        ],
-    };
-    timeline.push(Experiment_explore);
-
-
 
     var exploreQs = {
         type: "external-html",
@@ -272,9 +215,19 @@ function experimentInit() {
         cont_key: enterKeyPress,
         cont_btn: "continue"
     };
-    timeline.push(exploreQs);
 
-    timeline.push(IMI_explore);
+    var tutorialAndExplore = {
+        timeline: [
+            tutorialAnnotation,
+            exploreTask,
+            exploreQs,
+            IMI_explore
+        ],
+        // we'll use the first condition for both tutorial and explore tasks
+        timeline_variables: conditions.slice(0, 1),
+    };
+    timeline.push(tutorialAndExplore);
+
 
     var searchInstructions = {
         type: "external-html",
@@ -285,54 +238,36 @@ function experimentInit() {
             submitExperimentData: true
         }
     };
-
     timeline.push(searchInstructions);
 
-    var searchTasks = {
+    var searchTask = {
         type: "annotate-audio-image",
-        image: function() {
-            var site = jsPsych.timelineVariable("studySite")();
-            var visualization = jsPsych.timelineVariable("visualizationStyle")();
-            return site.images[visualization];
-        },
-        audio: function() {
-            var site = jsPsych.timelineVariable("studySite")();
-            return site.audio;
-        },
-        axes: function() {
-            var site = jsPsych.timelineVariable("studySite")();
-            var visualization = jsPsych.timelineVariable("visualizationStyle")();
-            return site.axes[visualization];
-        },
-        externalHtmlPreamble: function() {
-            var site = jsPsych.timelineVariable("studySite")();
-            return site.instructions;
-        },
-        // checkpoint and save our experiment data
-        data: {
-            submitExperimentData: true
-        }
+        externalHtmlPreamble: getExternalHtmlPreamble,
+        image: getImage,
+        audio: getAudio,
+        axes: getAxes,
+        data: () => ({
+            // checkpoint and save our experiment data
+            // TODO Kellie: this is a lot of data submissions.
+            // In total there will be 5 per experiment: searchInstructions + 3 × searchTask + 1 more when experiment finished
+            submitExperimentData: true,
+            condition: getCondition()
+        }),
     };
 
-    var Experiment_Search = {
+    // repeat the search task for each of the conditions supplied to timeline_variable
+    var searchExperiment = {
         timeline: [
-            searchTasks,
-            searchTasks,
-            searchTasks
+            searchTask
         ],
-        timeline_variables: [
-            {
-                tuteSite: tuteSite,
-                studySite: studySite,
-                visualizationStyle: visualizationStyles[0],
-            }
-        ],
+        // skip the first condition since it was used for the tutorial and explore tasks
+        timeline_variables: conditions.slice(1),
         // sample: {
         //     type: "without-replacement",
         //     size: 1
         // }
     };
-    timeline.push(Experiment_Search);
+    timeline.push(searchExperiment);
 
 
     var randomSurveys = jsPsych.randomization.repeat([IMI_search, challenge], 1);
@@ -376,6 +311,10 @@ function experimentInit() {
         prepareDataForSubmit: function() {
             return {
                 "subject": subject_id,
+                "allConditions": {
+                    visualizationStyles: visualizationStyles,
+                    sites: conditions.map(x => x.site.name)
+                },
                 "trials": jsPsych.data.get().values(),
                 "interactionData": jsPsych.data.getInteractionData().values()
             };

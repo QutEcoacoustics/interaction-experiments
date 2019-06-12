@@ -16,7 +16,9 @@
 
         // Cancel the event
         e.preventDefault();
-        // Chrome requires returnValue to be set
+
+        // Chrome requires returnValue to be set even though the message is not
+        // passed onto the user
         e.returnValue = "Navigating away will stop the experiment";
     }
 
@@ -45,9 +47,7 @@
             .catch(error => console.error(error));
     }
 
-    function endExperiment(userFunction, data) {
-        console.log(data.json());
-
+    function endExperiment(userFunction/*, data*/) {
         submitData();
 
         window.removeEventListener("beforeunload", warnIfLeaving);
