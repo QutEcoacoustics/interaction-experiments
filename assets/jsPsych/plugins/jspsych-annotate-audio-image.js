@@ -88,6 +88,8 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
     };
 
     plugin.trial = function(display_element, trial) {
+        // interval handles that needs to be cleared on trial finish
+        var checkImageIntervalHandle, checkAudioIntervalHandle = null;
         var player = null;
         var data = {
             actions: [],
@@ -100,6 +102,8 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          * Resets the innerHTML and finishes the trial
          */
         var end_trial = function() {
+            clearInterval(checkImageIntervalHandle);
+            clearInterval(checkAudioIntervalHandle);
 
             player.pause();
             data.bufferedTimeRanges = Array
@@ -208,7 +212,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                     features: [ "playpause", "current", "progress"]
                 });
 
-                clearInterval(checkAudio);
+                clearInterval(checkAudioIntervalHandle);
             }, 50); // Wait 50ms for image to load
         }
 
@@ -216,11 +220,11 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          * Enable image annotations
          */
         function makeAnnotatable() {
-            var checkImage = setInterval(function() {
+            checkImageIntervalHandle = setInterval(function() {
                 //Image has loaded, make it annotatable
                 let image = display_element.querySelector("#jspsych-audio-image");
                 if (image && image.naturalWidth > 0) {
-                    clearInterval(checkImage);
+                    clearInterval(checkImageIntervalHandle);
 
                     image.height = dimensions.imageHeight;
                     image.width = dimensions.imageWidth;
