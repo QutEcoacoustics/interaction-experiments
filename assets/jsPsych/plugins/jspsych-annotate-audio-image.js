@@ -33,18 +33,18 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 default: undefined,
                 description: "Audio element to display control panel for and play"
             },
+            codecs: {
+                type: jsPsych.plugins.parameterType.COMPLEX,
+                array: true,
+                default: [[".weba", "audio/webm"], [".mp3", "audio/mpeg"], [".oga", "audio/ogg"], [".ogg", "audio/ogg"]],
+                pretty_name: "Alternative codecs",
+                description: "Allow the browser to choose it's preferred audio format"
+            },
             externalHtmlPreamble: {
                 type: jsPsych.plugins.parameterType.STRING,
                 pretty_name: "External HTML Preamble",
                 default: null,
                 description: "URI address of an external HTML file."
-            },
-            max_width: {
-                type: jsPsych.plugins.parameterType.INT,
-                pretty_name: "Image Width",
-                default: null,
-                description:
-                    "Maximum width of the audio element. Image element will be 239px smaller than the audio element."
             },
             autoplay: {
                 type: jsPsych.plugins.parameterType.BOOL,
@@ -110,6 +110,9 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 .from(player.buffered)
                 .map((x,i) => ({start: player.buffered.start(i), end: player.buffered.end(i)}));
 
+            var src = player.currentSrc;
+            data.audioFileUsed = src && src.slice(src.lastIndexOf(".")) || src;
+
             var playState =  data.mediaEvents.reduce((state, event) => {
                 switch (event.event) {
                 case "playing":
@@ -145,15 +148,6 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         };
 
         /**
-         * Returns the audio file extension (eg 'wav')
-         * @returns {string} Audio file extension
-         */
-        function getFileExtension() {
-            let splits = trial.audio.split(".");
-            return splits[splits.length - 1];
-        }
-
-        /**
          * Pushes the relevant data from an event into the data variable.
          * @param {string} event Name of action/event
          * @param {object} annotation Annotation object returned by event
@@ -178,11 +172,16 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          * Create the audio player
          */
         function makePlayer() {
-            var checkAudio = setInterval(function() {
-                let audio = `<audio id="player" preload="none" style="width: 100%; height: 100%;"
-    controls width="100%" height="100%" controls ${trial.loop ? "loop" : ""} ${
-        trial.autoplay ? "autoplay" : ""
-    }><source src="${trial.audio}" type="audio/${getFileExtension(trial.audio)}"/></audio>`;
+            checkAudioIntervalHandle = setInterval(function() {
+                var audioWithoutExtension = trial.audio.slice(0, trial.audio.lastIndexOf("."));
+                var sources = trial.codecs
+                    .map(([extension, mime]) => `<source src="${audioWithoutExtension}${extension}" type="${mime}"/>`)
+                    .join("\n");
+                let audio = `
+                <audio id="player" preload="none" style="width: 100%; height: 100%;"
+                controls width="100%" height="100%" controls ${trial.loop ? "loop" : ""} ${trial.autoplay ? "autoplay" : ""}>
+                    ${sources}
+                </audio>`;
 
                 // Create audio element with the following additional options: loop, autoplay
                 let container = document.getElementById("player-container");
@@ -199,7 +198,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                         player = media;
                         setAudioVolume();
 
-                        ["seeking", "seeked", "playing", "pause", "end", "stalled", "suspend"].forEach(function(eventName) {
+                        ["seeking", "seeked", "playing", "pause", "end", "stalled", "suspend", "abort"].forEach(function(eventName) {
                             media.addEventListener(
                                 eventName,
                                 () => data.mediaEvents.push({
