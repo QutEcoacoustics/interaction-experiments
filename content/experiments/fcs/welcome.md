@@ -3,8 +3,14 @@ title: Welcome
 type: blank
 ---
 
-The following study requires that you have access to your computer's audio.<p>
-We recommend viewing on a laptop or PC as images will not load correctly on a smaller screen.<p>
+The following experiment will introduce you to the exploration and searching of 24-hour soundscapes. 
+
+This requires that you have access to your computer's audio.
+
+We recommend viewing on a laptop or PC as images will not load correctly on a smaller screen.
+
+Please **do not click back** once you begin the experiment as you will exit the experiment entirely. 
+
 Click Continue if you are ready to proceed.
 
 {{< continue-button >}}

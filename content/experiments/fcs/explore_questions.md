@@ -11,12 +11,12 @@ type: blank
 </div>
 <div class = "form-group">
 <label for = "qual2_caught interest">
-2. What caught your interest when you chose those five things? </label>
+2. What led you to choose those five things? </label>
 <textarea name ="qual2_caught interest" class="form-control"></textarea>
 </div>
 <div class = "form-group">
 <label for = "qual3_learn">
-3. What did you discover or learn from exploring the soundscape? </label>
+3. What did you discover or learn about the soundscape? </label>
 <textarea name ="qual3_learn" class="form-control"></textarea>
 </div>
 

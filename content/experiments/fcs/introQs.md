@@ -7,22 +7,11 @@ type: blank
 <div class = "form-group">
 <label for = "q1age">1. What is your age? </label>
 <input type="number" class="form-control"  id = "age" name = "q1age" min = "18">
-<small id="agehelp" class="form-text text-muted">Please enter whole numbers. </small>
 </div>
 
 <div class = "form-group">
-<label for = "q2gender">
-2. What is your gender? </label>
-<select class = "form-control" name = "q2gender" >
-<option value="" selected disabled>Please select</option>
-<option id = "gender_male" name = "q2gender"> Male </option>
-<option id = "gender_female" name = "q2gender"> Female </option>
-<option id = "gender_nonbinary" name = "q2gender"> Non-binary </option>
-<option id = "gender_notdisclosed" name = "q2gender"> Prefer to not disclose </option>
-</select>
-
-<label for = "q2othergender">If not listed, please enter in the field below:</label>
-<textarea class = "form-control" type = "text" id = "gender_other" name = "q2othergender" rows = "1" cols = "30">
+<label for = "q2gender">2. Please enter your gender in the field below:</label>
+<textarea class = "form-control" type = "text" id = "gender" name = "q2gender" rows = "1" cols = "30">
 </textarea>
 
 </div>
@@ -155,6 +144,6 @@ Yes </label>
 </div>
 
 <div class = "form-group">
-<label for = "colourblind_details"> If you answered 'yes' to the previous question, can you please provide details below? </label>
+<label for = "colourblind_details"> If you answered 'yes', can you please provide details below? </label>
 <textarea name ="colourblind_details" class="form-control"></textarea>
 </div>

@@ -1,12 +1,14 @@
 ---
-title: Searching!
+title: Timed Task!
 type: blank
 ---
-We will now give you **three different soundscapes** in a row.
+We would like to time how quickly you can find examples of a given sound. 
 
-This time we will be **timing you** to see how quickly you can find box, and label **one example** of each of the sounds listed as **quickly** as possible. Your timer will stop when you have completed each of the three screens.
+You will be given three different soundscapes in a row, each with three different sounds that we want you to find.  
 
-Please enter the **corresponding number** to label each box, e.g. if 'bird call' is under **1**, enter **1** as the label.
+Try to find, box, and label **one example** of each sound, using the corresponding number. 
+
+For example, if you see 'Bird call - 1', enter **1** as the label.
 
 Please box the **entire sound** from beginning to end. 
 

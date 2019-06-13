@@ -126,14 +126,14 @@ function experimentInit() {
         preamble: "Please think about the task you just completed, and indicate how true the following statements are for you:",
         type: "survey-likert",
         questions: imiItemsRandom,
-        data: { trialName: "IMI", question_order: (imiItemsRandom.map(x => x.prompt)) },
+        data: { trialName: "IMI_explore", question_order: (imiItemsRandom.map(x => x.prompt)) },
     };
 
     var IMI_search = {
         preamble: "Please think about the search task you performed over three different soundscapes, and indicate how true the following statements are for you overall:",
         type: "survey-likert",
         questions: imiItemsRandom,
-        data: { trialName: "IMI", question_order: (imiItemsRandom.map(x => x.prompt)) },
+        data: { trialName: "IMI_search", question_order: (imiItemsRandom.map(x => x.prompt)) },
     };
 
     var challengeItemsRandom = jsPsych.randomization.repeat([
