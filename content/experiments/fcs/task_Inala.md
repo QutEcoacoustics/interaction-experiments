@@ -2,10 +2,8 @@
 title: Find, box, & label
 type: blank
 ---
+Be **quick**, use the **corresponding number**, box the **entire sound**. 
 
-
-... **one example** of these 3 things as **quickly as possible** using the **corresponding number**.
-Box the **entire sound from beginning to end**. 
 Click _Continue_ when you have completed the task.
 
 **Note:** The dawn chorus is when the birds begin chorusing at dawn.  

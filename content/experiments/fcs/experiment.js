@@ -147,7 +147,7 @@ function experimentInit() {
         preamble: "Please think about the three timed tasks you just completed, and indicate how much you agree with the following statements overall:",
         type: "survey-likert",
         questions: challengeItemsRandom,
-        data: { trialName: "NASATLX", question_order: (challengeItemsRandom.map(x => x.prompt)) },
+        data: { trialName: "Challenge", question_order: (challengeItemsRandom.map(x => x.prompt)) },
     };
 
     // helper functions
@@ -182,7 +182,10 @@ function experimentInit() {
     var survey1 = {
         type: "survey-html-form",
         url: "introQs/index.html",
-        button_label: "Continue"
+        button_label: "Continue",
+        data:() => ({
+            trialName: "introQs"
+        })
     };
     timeline.push(survey1);
 
@@ -194,6 +197,7 @@ function experimentInit() {
         audio: getAudio,
         axes: getAxes,
         data: () => ({
+            trialName: "tutorial",
             condition: getCondition()
         })
     };
@@ -205,6 +209,7 @@ function experimentInit() {
         audio: getAudio,
         axes: getAxes,
         data: () => ({
+            trialName: "exploreTask",
             condition: getCondition()
         })
     };
@@ -213,7 +218,10 @@ function experimentInit() {
         type: "external-html",
         url: "explore_questions/index.html",
         cont_key: enterKeyPress,
-        cont_btn: "continue"
+        cont_btn: "continue",
+        data:() => ({
+            trialName: "exploreQs"
+        })
     };
 
     var tutorialAndExplore = {
@@ -251,6 +259,7 @@ function experimentInit() {
             // TODO Kellie: this is a lot of data submissions.
             // In total there will be 5 per experiment: searchInstructions + 3 × searchTask + 1 more when experiment finished
             submitExperimentData: true,
+            trialName: "searchTask",
             condition: getCondition()
         }),
     };
@@ -273,19 +282,13 @@ function experimentInit() {
     var randomSurveys = jsPsych.randomization.repeat([IMI_search, challenge], 1);
     Array.prototype.push.apply(timeline, randomSurveys);
 
-    /* var survey2 = {
-        type: "survey-html-form",
-        url: "lastQs/index.html",
-        button_label: "Continue"
-    };
-    timeline.push(survey2);
-*/
-    //
-
     var contact = {
         type: "survey-html-form",
         url: "contact/index.html",
-        button_label: "Continue"
+        button_label: "Continue",
+        data:() => ({
+            trialName: "contact"
+        })
     };
     timeline.push(contact);
 

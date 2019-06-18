@@ -47,7 +47,7 @@ No
 <div class = "form-group">
 <label for= "input_email">Please provide your email in the space provided if you answered _Yes_ to any of those questions: 
 </label>
-<input type="email" class="form-control" id="input_email"placeholder="Enter email"/>
+<textarea name = "input_email" input type="email" class="form-control" placeholder="Enter email"/>
 </div>
 <div class = "form-group">
 <label for = "qual3_anythoughts">
