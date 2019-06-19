@@ -98,7 +98,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             bufferedTimeRanges: null
         };
         let cursor = null;
-        let playBar = null;
+        let cursorBar = null;
 
         /**
          * Resets the innerHTML and finishes the trial
@@ -151,105 +151,47 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         };
 
         /**
-         * Returns the max duration of the audio file.
-         * @returns {number} Duration in seconds
+         * Create cursor on image to display the position of the audio
          */
-        async function getDurationAsync() {
-            return new Promise(function(resolve) {
-                var file = new Audio();
-                $(file).on("loadedmetadata", function() {
-                    resolve(file.duration);
-                });
-                file.src = trial.audio;
-            });
-        }
+        function createCursor() {
+            cursorBar = document.createElement("div");
+            cursorBar.classList = ["cursor-bar"];
 
-        /**
-         * Find the annotatable image.
-         * @returns {Promise<HTMLImageElement>} HTML Image element
-         */
-        function getImageAsync() {
-            return new Promise(function(resolve) {
-                let interval = setInterval(function() {
-                    let image = display_element.querySelector("#jspsych-audio-image");
+            let image, audio;
+            let interval = setInterval(function() {
+                image = display_element.querySelector("#jspsych-audio-image");
+                audio = display_element.querySelector("#player");
 
-                    if (image && image.naturalWidth > 0) {
-                        clearInterval(interval);
-                        resolve(image);
-                    }
-                }, 50);
-            });
-        }
+                if (audio && image && image.naturalWidth > 0) {
+                    clearInterval(interval);
 
-        /**
-         * Find the audio player.
-         * @returns {Promise<HTMLAudioElement>} HTML Audio element
-         */
-        function getAudioAsync() {
-            return new Promise(function(resolve) {
-                let interval = setInterval(function() {
-                    let audio = display_element.querySelector("#player");
+                    //Create cursor
+                    display_element.querySelector(".annotorious-annotationlayer").appendChild(cursorBar);
+                    updateCursor();
 
-                    if (audio) {
-                        clearInterval(interval);
-                        resolve(audio);
-                    }
-                }, 50);
-            });
-        }
-
-        /**
-         * Convert current time in audio player to seconds
-         * @param {string} time Current time given by audio player
-         * @returns {number} Time passed in seconds
-         */
-        function convertTimeToSeconds(time) {
-            let timeZones = time.split(":");
-            return (+timeZones[0]) * 60 * 60 + (+timeZones[1]) * 60 + (+timeZones[2]);
-        }
-
-        /**
-         * Create progress bar on image to display the position of the audio
-         */
-        function createProgressBar() {
-            playBar = document.createElement("div");
-
-            //Positional Styling
-            playBar.classList = ["playBar"];
-
-            getImageAsync().then(image => { //Check image has loaded
-                getAudioAsync().then(() => { //Check audio element has loaded
-                    getDurationAsync().then(duration => { //Get file audio duration
-                        //Initial setup
-                        let currentTime = convertTimeToSeconds(display_element.querySelector(".mejs__currenttime").innerHTML);
-                        playBar.style.width = `${image.width * (currentTime / duration)}px`;
-                        display_element.querySelector(".annotorious-annotationlayer").appendChild(playBar);
-
-                        //Refresh cursor
-                        cursor = setInterval(function() {
-                            updateCursor(image, duration);
-                        }, 15000); //Update every minute
-                    });
-                });
-            });
+                    //Refresh cursor
+                    cursor = setInterval(function() {
+                        updateCursor();
+                    }, 1000); //Update every second`;
+                }
+            }, 50);
         }
 
         /**
          * Updates the cursor on the annotatable image
-         * @param {HTMLImageElement} image Annotatable image
-         * @param {number} duration Length of audio clip
          */
-        function updateCursor(image, duration) {
-            let currentTime;
-            let interval = setInterval(() => {
-                currentTime = display_element.querySelector(".mejs__currenttime");
-                if (currentTime) {
+        function updateCursor() {
+            let image, audio;
+
+            let interval = setInterval(function() {
+                image = display_element.querySelector("#jspsych-audio-image");
+                audio = display_element.querySelector("#player");
+
+                if (audio && image && image.naturalWidth > 0) {
                     clearInterval(interval);
+                    cursorBar.style.width = `${image.width * (audio.currentTime / audio.duration)}px`;
                 }
             }, 50);
-
-            currentTime = convertTimeToSeconds(currentTime.innerHTML);
-            playBar.style.width = `${image.width * (currentTime / duration)}px`;
         }
 
         /**
@@ -312,11 +254,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                                         mediaPosition: media.currentTime
                                     });
 
-                                    getImageAsync().then(image => { //Check image has loaded
-                                        getDurationAsync().then(duration => { //Get file audio duration
-                                            updateCursor(image, duration);
-                                        });
-                                    });
+                                    updateCursor();
                                 });
                         });
                     },
@@ -492,7 +430,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 width: ${dimensions.imageWidth}px;
                 overflow: visible;
             }
-            .playBar {
+            .cursor-bar {
                 border-color: red;
                 border-style: solid;
                 border-width: 0px 2px 0px 0px;
@@ -537,7 +475,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
 
             makePlayer();
             makeAnnotatable();
-            createProgressBar();
+            createCursor();
         }
 
         if (trial.externalHtmlPreamble) {
