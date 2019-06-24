@@ -36,7 +36,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             codecs: {
                 type: jsPsych.plugins.parameterType.COMPLEX,
                 array: true,
-                default: [[".weba", "audio/webm"], [".mp3", "audio/mpeg"], [".oga", "audio/ogg"], [".ogg", "audio/ogg"]],
+                default: [[".oga", "audio/ogg"], [".webm", "audio/webm"], [".mp3", "audio/mpeg"], [".ogg", "audio/ogg"]],
                 pretty_name: "Alternative codecs",
                 description: "Allow the browser to choose it's preferred audio format"
             },
