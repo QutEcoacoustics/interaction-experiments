@@ -186,7 +186,12 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          * Updates the cursor on the annotatable image
          */
         function updateCursor() {
-            cursorBar.style.width = `${cursorImage.width * (cursorAudio.currentTime / cursorAudio.duration)}px`;
+            let leftPadding = cursorImage.width * (cursorAudio.currentTime / cursorAudio.duration);
+            cursorBar.style['transform'] = `translateX(${leftPadding}px)`;
+            cursorBar.style['msTransform'] = `translateX(${leftPadding}px)`; //IE
+            cursorBar.style['MozTransform'] = `translateX(${leftPadding}px)`; //Firefox
+            cursorBar.style['WebkitTransform'] = `translateX(${leftPadding}px)`; //Chrome
+            cursorBar.style['OTransform'] = `translateX(${leftPadding}px)`; //Opera
         }
 
         /**
@@ -430,14 +435,14 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 overflow: visible;
             }
             .cursor-bar {
-                border-color: red;
-                border-style: solid;
-                border-width: 0px 2px 0px 0px;
+                background-color: red;
                 height: 100%;
                 left: 0px;
+                opacity: 0.7;
                 pointer-events: none;
                 position: absolute;
                 top: 0px;
+                width: 1px;
                 z-index: 175; //Greater than canvas(150) but less than popup(200)
             }
             <style>`;
