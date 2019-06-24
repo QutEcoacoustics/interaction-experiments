@@ -36,7 +36,12 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             codecs: {
                 type: jsPsych.plugins.parameterType.COMPLEX,
                 array: true,
-                default: [[".oga", "audio/ogg"], [".webm", "audio/webm"], [".mp3", "audio/mpeg"], [".ogg", "audio/ogg"]],
+                default: [
+                    [".oga", "audio/ogg"],
+                    [".webm", "audio/webm"],
+                    [".mp3", "audio/mpeg"],
+                    [".ogg", "audio/ogg"]
+                ],
                 pretty_name: "Alternative codecs",
                 description: "Allow the browser to choose it's preferred audio format"
             },
@@ -84,12 +89,14 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         left: 110,
         right: 20,
         imageWidth: 1440,
-        imageHeight: 256,
+        imageHeight: 256
     };
 
     plugin.trial = function(display_element, trial) {
         // interval handles that needs to be cleared on trial finish
-        var checkImageIntervalHandle, checkAudioIntervalHandle = null;
+        var checkImageIntervalHandle = null,
+            checkAudioIntervalHandle = null,
+            checkCursorIntervalHandle = null;
         var player = null;
         var data = {
             actions: [],
@@ -97,8 +104,9 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             totalTimePlaying: 0,
             bufferedTimeRanges: null
         };
-        let cursor = null;
-        let cursorBar = null;
+        let cursorBar = null,
+            cursorImage = null,
+            cursorAudio = null;
 
         /**
          * Resets the innerHTML and finishes the trial
@@ -106,35 +114,38 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         var end_trial = function() {
             clearInterval(checkImageIntervalHandle);
             clearInterval(checkAudioIntervalHandle);
-            clearInterval(cursor);
+            clearInterval(checkCursorIntervalHandle);
 
             player.pause();
-            data.bufferedTimeRanges = Array
-                .from(player.buffered)
-                .map((x,i) => ({start: player.buffered.start(i), end: player.buffered.end(i)}));
+            data.bufferedTimeRanges = Array.from(player.buffered).map((x, i) => ({
+                start: player.buffered.start(i),
+                end: player.buffered.end(i)
+            }));
 
             var src = player.currentSrc;
-            data.audioFileUsed = src && src.slice(src.lastIndexOf(".")) || src;
+            data.audioFileUsed = (src && src.slice(src.lastIndexOf("."))) || src;
 
-            var playState =  data.mediaEvents.reduce((state, event) => {
-                switch (event.event) {
-                case "playing":
-                    state.on = event.mediaPosition;
-                    break;
-                case "seeking" :
-                case "seeked":
-                    // do nothing
-                    break;
-                case "pause":
-                case "end":
-                case "stalled":
-                case "suspend":
-                    state.total += event.mediaPosition - state.on;
-                    state.on = null;
-                }
-                return state;
-            },
-            {on: false, total: 0});
+            var playState = data.mediaEvents.reduce(
+                (state, event) => {
+                    switch (event.event) {
+                    case "playing":
+                        state.on = event.mediaPosition;
+                        break;
+                    case "seeking":
+                    case "seeked":
+                        // do nothing
+                        break;
+                    case "pause":
+                    case "end":
+                    case "stalled":
+                    case "suspend":
+                        state.total += event.mediaPosition - state.on;
+                        state.on = null;
+                    }
+                    return state;
+                },
+                { on: false, total: 0 }
+            );
 
             // in this case user did not stop playing before going to next screen
             if (playState.on) {
@@ -157,22 +168,16 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             cursorBar = document.createElement("div");
             cursorBar.classList = ["cursor-bar"];
 
-            let image, audio;
-            let interval = setInterval(function() {
-                image = display_element.querySelector("#jspsych-audio-image");
-                audio = display_element.querySelector("#player");
+            checkCursorIntervalHandle = setInterval(function() {
+                cursorImage = display_element.querySelector("#jspsych-audio-image");
+                cursorAudio = display_element.querySelector("#player");
 
-                if (audio && image && image.naturalWidth > 0) {
-                    clearInterval(interval);
+                if (cursorAudio && cursorImage && cursorImage.naturalWidth > 0) {
+                    clearInterval(checkCursorIntervalHandle);
 
                     //Create cursor
                     display_element.querySelector(".annotorious-annotationlayer").appendChild(cursorBar);
                     updateCursor();
-
-                    //Refresh cursor
-                    cursor = setInterval(function() {
-                        updateCursor();
-                    }, 1000); //Update every second`;
                 }
             }, 50);
         }
@@ -181,17 +186,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          * Updates the cursor on the annotatable image
          */
         function updateCursor() {
-            let image, audio;
-
-            let interval = setInterval(function() {
-                image = display_element.querySelector("#jspsych-audio-image");
-                audio = display_element.querySelector("#player");
-
-                if (audio && image && image.naturalWidth > 0) {
-                    clearInterval(interval);
-                    cursorBar.style.width = `${image.width * (audio.currentTime / audio.duration)}px`;
-                }
-            }, 50);
+            cursorBar.style.width = `${cursorImage.width * (cursorAudio.currentTime / cursorAudio.duration)}px`;
         }
 
         /**
@@ -208,9 +203,8 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 width: annotation.shapes[0].geometry.width,
                 x: annotation.shapes[0].geometry.x,
                 y: annotation.shapes[0].geometry.y,
-                mediaPosition: player && player.getCurrentTime() || null,
+                mediaPosition: (player && player.getCurrentTime()) || null,
                 paused: player ? player.paused : null
-
             });
         };
 
@@ -244,22 +238,22 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                         player = media;
                         setAudioVolume();
 
-                        ["seeking", "seeked", "playing", "pause", "end", "stalled", "suspend", "abort"].forEach(function(eventName) {
-                            media.addEventListener(
-                                eventName,
-                                () => {
+                        ["seeking", "seeked", "playing", "pause", "end", "stalled", "suspend", "abort"].forEach(
+                            function(eventName) {
+                                media.addEventListener(eventName, () =>
                                     data.mediaEvents.push({
                                         time_elapsed: jsPsych.totalTime(),
                                         event: eventName,
                                         mediaPosition: media.currentTime
-                                    });
+                                    })
+                                );
+                            }
+                        );
 
-                                    updateCursor();
-                                });
-                        });
+                        media.addEventListener("progress", () => updateCursor());
                     },
                     alwaysShowHours: true,
-                    features: [ "playpause", "current", "progress"]
+                    features: ["playpause", "current", "progress"]
                 });
 
                 clearInterval(checkAudioIntervalHandle);
@@ -299,12 +293,12 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
 
                     var setScale = function() {
                         var rect = column.getBoundingClientRect();
-                        var scale =  (rect.width - (dimensions.left + dimensions.right)) / dimensions.imageWidth;
+                        var scale = (rect.width - (dimensions.left + dimensions.right)) / dimensions.imageWidth;
                         annoContainer.style.transform = `scale(${scale})`;
                         // Array.from(annoContainer.children).forEach(
                         //     child => child.style.transform = `scale(${scale})`
                         // );
-                        imageContainer.style.height = (dimensions.imageHeight * scale) + "px";
+                        imageContainer.style.height = dimensions.imageHeight * scale + "px";
                         //annoContainer.style.width =
                     };
                     setScale();
@@ -322,7 +316,8 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 let container = display_element.querySelector(".annotorious-annotationlayer");
                 //let dimensions = container.getBoundingClientRect();
 
-                var axes = d3.select(container)
+                var axes = d3
+                    .select(container)
                     .append("svg")
                     .attr("width", dimensions.imageWidth)
                     .attr("height", dimensions.imageHeight)
@@ -333,7 +328,8 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
 
                 let x = trial.axes.x;
                 if (x) {
-                    let xScale = d3.scaleUtc()
+                    let xScale = d3
+                        .scaleUtc()
                         .domain([new Date(x.min), new Date(x.max)])
                         .range([0, dimensions.imageWidth]);
                     let xAxis = d3.axisBottom(xScale).ticks(d3.timeHour);
@@ -343,7 +339,10 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 }
                 let y = trial.axes.y;
                 if (y) {
-                    let yScale = d3.scaleLinear().domain([y.min, y.max]).range([dimensions.imageHeight, 0]);
+                    let yScale = d3
+                        .scaleLinear()
+                        .domain([y.min, y.max])
+                        .range([dimensions.imageHeight, 0]);
                     //let ticks = d3.range(y.min, y.max, y.step || 1000);
                     let yAxis = d3.axisLeft(yScale);
                     axes.append("g")
@@ -479,7 +478,8 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         }
 
         if (trial.externalHtmlPreamble) {
-            window.fetch(trial.externalHtmlPreamble)
+            window
+                .fetch(trial.externalHtmlPreamble)
                 .then(response => response.text())
                 .then(text => generatePage(text))
                 .catch(error => console.log(error));
