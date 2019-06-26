@@ -5,7 +5,7 @@ type: blank
 
 The following experiment will introduce you to the exploration and searching of 24-hour soundscapes. 
 
-This requires that you have access to your computer's audio.
+This requires that you have access to your computer's **audio**.
 
 We recommend viewing on a laptop or PC as images will not load correctly on a smaller screen.
 

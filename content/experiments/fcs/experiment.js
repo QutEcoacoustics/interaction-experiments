@@ -46,12 +46,12 @@ function experimentInit() {
         },
 
         {
-            name: "Inala",
+            name: "Bhutan",
             images:
             {
-                fcs: "./images/FCS_Inala.png",
-                spectrogram: "./images/greyscale_Inala.png",
-                waveform: "./images/waveform_Inala.png",
+                fcs: "./images/FCS_Tshering3.png",
+                spectrogram: "./images/greyscale_Tshering3.png",
+                waveform: "./images/waveform_Tshering3.png",
                 audioOnly: "./images/whitebox1.png"
             },
             axes:
@@ -61,8 +61,9 @@ function experimentInit() {
                 waveform: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: -1.0, max: 1.0 } },
                 audioOnly: { x: { min: "2018-09-22", max: "2018-09-23" } }
             },
-            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/Inala_24hrs.mp3",
-            instructions: "task_Inala/index.html"
+            /* to be updated with correct audio
+            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/Inala_24hrs.mp3",*/
+            instructions: "task_Bhutan/index.html"
         },
 
         {
@@ -87,7 +88,7 @@ function experimentInit() {
     ];
 
     var visualizationStyles = jsPsych.randomization.sampleWithoutReplacement(availableVisualizationStyles, 1);
-    var tuteSiteName = "Inala";
+    var tuteSiteName = "TNC_Indo";
     var conditions = jsPsych
         // randomize sites and combine with visualization styles to create all conditions
         .randomization.factorial({visualizationStyle: visualizationStyles, site: sites}, 1)
