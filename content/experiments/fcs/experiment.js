@@ -88,7 +88,7 @@ function experimentInit() {
     ];
 
     var visualizationStyles = jsPsych.randomization.sampleWithoutReplacement(availableVisualizationStyles, 1);
-    var tuteSiteName = "TNC_Indo";
+    var tuteSiteName = "Bhutan";
     var conditions = jsPsych
         // randomize sites and combine with visualization styles to create all conditions
         .randomization.factorial({visualizationStyle: visualizationStyles, site: sites}, 1)

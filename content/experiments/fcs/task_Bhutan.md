@@ -2,6 +2,7 @@
 title: Find, box, & label
 type: blank
 ---
+
 Be **quick**, use the **corresponding number**, box the **entire sound**. 
 
 Click _Continue_ when you have completed the task.
