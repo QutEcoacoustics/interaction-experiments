@@ -61,8 +61,7 @@ function experimentInit() {
                 waveform: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: -1.0, max: 1.0 } },
                 audioOnly: { x: { min: "2018-09-22", max: "2018-09-23" } }
             },
-            /* to be updated with correct audio
-            audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/Inala_24hrs.mp3",*/
+            audio: "https://interaction-experiments.s3-ap-southeast-2.amazonaws.com/ADA_20170228_000006_Tshering3.mp3",
             instructions: "task_Bhutan/index.html"
         },
 
