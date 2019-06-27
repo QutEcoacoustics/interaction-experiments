@@ -86,7 +86,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
     });
 
     const dimensions = {
-        left: 110,
+        left: 105,
         right: 20,
         imageWidth: 1440,
         imageHeight: 256
@@ -187,11 +187,11 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          */
         function updateCursor() {
             let leftPadding = cursorImage.width * (cursorAudio.currentTime / cursorAudio.duration);
-            cursorBar.style['transform'] = `translateX(${leftPadding}px)`;
-            cursorBar.style['msTransform'] = `translateX(${leftPadding}px)`; //IE
-            cursorBar.style['MozTransform'] = `translateX(${leftPadding}px)`; //Firefox
-            cursorBar.style['WebkitTransform'] = `translateX(${leftPadding}px)`; //Chrome
-            cursorBar.style['OTransform'] = `translateX(${leftPadding}px)`; //Opera
+            cursorBar.style["transform"] = `translateX(${leftPadding}px)`;
+            cursorBar.style["msTransform"] = `translateX(${leftPadding}px)`; //IE
+            cursorBar.style["MozTransform"] = `translateX(${leftPadding}px)`; //Firefox
+            cursorBar.style["WebkitTransform"] = `translateX(${leftPadding}px)`; //Chrome
+            cursorBar.style["OTransform"] = `translateX(${leftPadding}px)`; //Opera
         }
 
         /**
@@ -369,7 +369,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          * @param {string} preamble HTML text to insert into document
          */
         function generatePage(preamble) {
-            let image_container = `<div style="display: inline-flex; flex-direction: row; width: 100%">
+            let image_container = `<div class="plugin-container">
           <div style="width: ${dimensions.left}px; flex-shrink: 0;"></div>
           <div class="image-container">
             <img
@@ -398,6 +398,12 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
 
             .mejs__container { width: 100% !important; }
 
+            .plugin-container {
+                display: inline-flex;
+                flex-direction: row;
+                overflow: visible;
+                width: 100%;
+            }
             .annotorious-editor, .annotorious-popup {
                 /* z-index of editor panel (value is too low) */
                 z-index: 200 !important;
@@ -442,7 +448,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 pointer-events: none;
                 position: absolute;
                 top: 0px;
-                width: 1px;
+                width: 1.5px;
                 z-index: 175; //Greater than canvas(150) but less than popup(200)
             }
             <style>`;
