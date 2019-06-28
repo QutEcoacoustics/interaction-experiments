@@ -199,8 +199,7 @@ function experimentInit() {
         data: () => ({
             trialName: "tutorial",
             condition: getCondition()
-        }),
-        tagging_options: {label: "Label Here", choices: ['Option 1', 'Option 2', 'Option 3']}
+        })
     };
 
     var exploreTask = {
