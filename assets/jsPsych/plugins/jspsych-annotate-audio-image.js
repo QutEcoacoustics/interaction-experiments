@@ -69,6 +69,12 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 pretty_name: "Continue label",
                 default: "Continue",
                 description: "The label to use for the continue button"
+            },
+            tagging_options: {
+                type: jsPsych.plugins.parameterType.OBJECT,
+                pretty_name: "Tagging Options",
+                default: {label: "Label Here"},
+                description: "The label details for the annotations editor. Inputs are 'label' (Placeholder for editor), and 'choices' (Optional list of labels to create drop down options)."
             }
         }
     };
@@ -85,18 +91,6 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
     anno.addHandler("onAnnotationRemoved", function(annotation) {
         annotationAction("AnnotationRemoved", annotation);
     });
-
-    // Setup annotorious plugin
-    annotorious.plugin.HelloWorldPlugin = function(opt_config_options) { }
-
-    annotorious.plugin.HelloWorldPlugin.prototype.onInitAnnotator = function(annotator) {
-        //To understand how plugin works, look at annotator in editor.
-        // console.log(annotator)
-        annotator.editor.element.firstElementChild.firstElementChild.placeholder = "Label Here";
-    }
-
-    // Add the plugin like so
-    anno.addPlugin('HelloWorldPlugin', {});
 
     const dimensions = {
         left: 105,
@@ -171,8 +165,79 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 display_element.removeChild(display_element.firstChild);
             }
 
+            console.debug(data);
             jsPsych.finishTrial(data);
         };
+
+        // Setup annotorious plugin
+        annotorious.plugin.CustomLabels = function(opt_config_options) {
+            this._label = opt_config_options.label
+            if (opt_config_options.choices)
+                this._choices = opt_config_options.choices;
+         }
+
+        annotorious.plugin.CustomLabels.prototype.onInitAnnotator = function(annotator) {
+            console.debug(annotator);
+            //To understand how plugin works, look at annotator in editor.
+            annotator
+                .editor
+                .element
+                .firstElementChild
+                .firstElementChild
+                .placeholder = this._label;
+
+            if (this._choices) {
+                let div = document.createElement("div");
+                div.style.paddingLeft = "2px";
+                div.style.paddingRight = "2px";
+
+                let select = document.createElement("select");
+                select.classList = ['annotorious-editor-text', 'goog-textarea'];
+                select.tabIndex = 1;
+                select.style.boxSizing = "border-box";
+                select.style.fontSize = "14px";
+                select.style.height = "auto";
+                select.style.overflow = "auto hidden";
+                select.style.paddingBottom = "4px";
+                select.style.width = "100%";
+
+                this._choices.map((opt) => {
+                    let option = document.createElement("option");
+                    option.value = opt;
+                    option.innerHTML = opt;
+
+                    select.appendChild(option)
+                })
+
+                div.appendChild(select);
+                annotator
+                    .editor
+                    .element
+                    .firstElementChild
+                    .firstElementChild
+                    .replaceWith(div);
+
+                //Updated label with latest selected option
+                annotator.popup.addField(function(annotation) {
+                    let label = annotator
+                                    .editor
+                                    .element
+                                    .firstElementChild
+                                    .firstElementChild
+                                    .firstElementChild
+                                    .selectedOptions[0]
+                                    .text;
+
+                    if (annotation.text !== label) {
+                        annotation.text = label;
+                        annotator.popup.setAnnotation(annotation);
+                    }
+                });
+            }
+        }
+
+        // Add the plugin
+        anno.addPlugin('CustomLabels', trial.tagging_options);
 
         /**
          * Create cursor on image to display the position of the audio
