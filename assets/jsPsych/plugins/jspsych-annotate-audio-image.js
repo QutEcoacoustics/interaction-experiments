@@ -1,4 +1,5 @@
 /*globals anno*/
+/*globals annotorious*/
 /*globals MediaElementPlayer*/
 /*globals d3*/
 /**
@@ -84,6 +85,18 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
     anno.addHandler("onAnnotationRemoved", function(annotation) {
         annotationAction("AnnotationRemoved", annotation);
     });
+
+    // Setup annotorious plugin
+    annotorious.plugin.HelloWorldPlugin = function(opt_config_options) { }
+
+    annotorious.plugin.HelloWorldPlugin.prototype.onInitAnnotator = function(annotator) {
+        //To understand how plugin works, look at annotator in editor.
+        // console.log(annotator)
+        annotator.editor.element.firstElementChild.firstElementChild.placeholder = "Label Here";
+    }
+
+    // Add the plugin like so
+    anno.addPlugin('HelloWorldPlugin', {});
 
     const dimensions = {
         left: 105,
