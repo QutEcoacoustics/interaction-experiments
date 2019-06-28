@@ -185,21 +185,16 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 display_element.removeChild(display_element.firstChild);
             }
 
-            console.debug(data);
             jsPsych.finishTrial(data);
         };
 
         // Setup annotorious plugin
         annotorious.plugin.CustomLabels = function(opt_config_options) {
-            console.debug("Plugin Updated");
             this._label = opt_config_options.label
             this._choices = opt_config_options.choices;
          }
 
         annotorious.plugin.CustomLabels.prototype.onInitAnnotator = function(annotator) {
-            console.debug("Plugin Loaded");
-            console.debug(this._label);
-            console.debug(this._choices);
             //To understand how plugin works, look at annotator in editor.
             let container = annotator.editor.element.firstElementChild;
 
