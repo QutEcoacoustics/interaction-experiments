@@ -180,6 +180,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             //To understand how plugin works, look at annotator in editor.
             let container = annotator.editor.element.firstElementChild;
 
+            //If no dropdown menu is required, just change the textarea placeholder
             if (!this._choices) {
                 container
                     .firstElementChild
@@ -187,32 +188,29 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 return
             }
 
+            //Add spacing around drop down menu
             let div = document.createElement("div");
-            div.style.paddingLeft = "2px";
-            div.style.paddingRight = "2px";
+            div.classList = ["annotorious-editor-container"]
 
+            //Create dropdown menu
             let select = document.createElement("select");
+            select.classList = ["annotorious-editor-select"]
             select.tabIndex = 1;
-            select.style.boxSizing = "border-box";
-            select.style.fontSize = "14px";
-            select.style.height = "auto";
-            select.style.overflow = "auto hidden";
-            select.style.paddingBottom = "4px";
-            select.style.width = "100%";
             select.onchange = (e) => {
                 //Updated hidden textarea with label. This is required as annotorious reads the state of the annotation from the textarea.
-                console.debug(e);
                 let label = e.target.selectedOptions[0].text;
                 let output = e.target.parentElement.nextSibling;
                 output.value = label;
             }
 
+            //Create header option
             let header = document.createElement("option");
             header.innerHTML = "Select Label";
             header.selected = true;
             header.disabled = true;
             select.appendChild(header);
 
+            //Create options
             this._choices.map((opt) => {
                 let option = document.createElement("option");
                 option.value = opt;
@@ -221,8 +219,8 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
 
                 select.appendChild(option)
             })
-
             div.appendChild(select);
+
             container.firstChild.style.display = "none";
             container.insertAdjacentElement('afterbegin', div);
         }
@@ -476,6 +474,18 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             .annotorious-editor, .annotorious-popup {
                 /* z-index of editor panel (value is too low) */
                 z-index: 200 !important;
+            }
+            .annotorious-editor-select {
+                box-sizing: border-box;
+                font-size: 14px;
+                height: auto;
+                overflow: auto hidden;
+                padding-bottom: 4px;
+                width: 100%;
+            }
+            .annotorious-editor-container {
+                padding-left: 2px;
+                padding-right: 2px;
             }
             .jspsych-display-element {
                 overflow: unset !important;
