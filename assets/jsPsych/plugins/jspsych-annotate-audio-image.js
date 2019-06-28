@@ -177,63 +177,54 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          }
 
         annotorious.plugin.CustomLabels.prototype.onInitAnnotator = function(annotator) {
-            console.debug(annotator);
             //To understand how plugin works, look at annotator in editor.
-            annotator
-                .editor
-                .element
-                .firstElementChild
-                .firstElementChild
-                .placeholder = this._label;
+            let container = annotator.editor.element.firstElementChild;
 
-            if (this._choices) {
-                let div = document.createElement("div");
-                div.style.paddingLeft = "2px";
-                div.style.paddingRight = "2px";
-
-                let select = document.createElement("select");
-                select.classList = ['annotorious-editor-text', 'goog-textarea'];
-                select.tabIndex = 1;
-                select.style.boxSizing = "border-box";
-                select.style.fontSize = "14px";
-                select.style.height = "auto";
-                select.style.overflow = "auto hidden";
-                select.style.paddingBottom = "4px";
-                select.style.width = "100%";
-
-                this._choices.map((opt) => {
-                    let option = document.createElement("option");
-                    option.value = opt;
-                    option.innerHTML = opt;
-
-                    select.appendChild(option)
-                })
-
-                div.appendChild(select);
-                annotator
-                    .editor
-                    .element
+            if (!this._choices) {
+                container
                     .firstElementChild
-                    .firstElementChild
-                    .replaceWith(div);
-
-                //Updated label with latest selected option
-                annotator.popup.addField(function(annotation) {
-                    let label = annotator
-                                    .editor
-                                    .element
-                                    .firstElementChild
-                                    .firstElementChild
-                                    .firstElementChild
-                                    .selectedOptions[0]
-                                    .text;
-
-                    if (annotation.text !== label) {
-                        annotation.text = label;
-                        annotator.popup.setAnnotation(annotation);
-                    }
-                });
+                    .placeholder = this._label;
+                return
             }
+
+            let div = document.createElement("div");
+            div.style.paddingLeft = "2px";
+            div.style.paddingRight = "2px";
+
+            let select = document.createElement("select");
+            select.tabIndex = 1;
+            select.style.boxSizing = "border-box";
+            select.style.fontSize = "14px";
+            select.style.height = "auto";
+            select.style.overflow = "auto hidden";
+            select.style.paddingBottom = "4px";
+            select.style.width = "100%";
+            select.onchange = (e) => {
+                //Updated hidden textarea with label. This is required as annotorious reads the state of the annotation from the textarea.
+                console.debug(e);
+                let label = e.target.selectedOptions[0].text;
+                let output = e.target.parentElement.nextSibling;
+                output.value = label;
+            }
+
+            let header = document.createElement("option");
+            header.innerHTML = "Select Label";
+            header.selected = true;
+            header.disabled = true;
+            select.appendChild(header);
+
+            this._choices.map((opt) => {
+                let option = document.createElement("option");
+                option.value = opt;
+                option.selected = false;
+                option.innerHTML = opt;
+
+                select.appendChild(option)
+            })
+
+            div.appendChild(select);
+            container.firstChild.style.display = "none";
+            container.insertAdjacentElement('afterbegin', div);
         }
 
         // Add the plugin
