@@ -82,14 +82,34 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
     // event bindings for annotorious. they have to only bound once!
     var annotationAction = null;
 
+    /**
+     * Resets the annotorious editor dropdown menu when an annotation has been updated
+     */
+    function resetEditor() {
+        let editor = document.querySelectorAll(".annotorious-editor-select")[0];
+
+        //Check if dropdown menu was created
+        if (!editor)
+            return
+
+        //Reset selection
+        editor[0].selected = true;
+        for (let option = 1; option < editor.childElementCount; option++) {
+            editor[option].selected = false;
+        }
+    }
+
     anno.addHandler("onAnnotationCreated", function(annotation) {
         annotationAction("AnnotationCreated", annotation);
+        resetEditor();
     });
     anno.addHandler("onAnnotationUpdated", function(annotation) {
         annotationAction("AnnotationUpdated", annotation);
+        resetEditor();
     });
     anno.addHandler("onAnnotationRemoved", function(annotation) {
         annotationAction("AnnotationRemoved", annotation);
+        resetEditor();
     });
 
     const dimensions = {
@@ -171,20 +191,27 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
 
         // Setup annotorious plugin
         annotorious.plugin.CustomLabels = function(opt_config_options) {
+            console.debug("Plugin Updated");
             this._label = opt_config_options.label
-            if (opt_config_options.choices)
-                this._choices = opt_config_options.choices;
+            this._choices = opt_config_options.choices;
          }
 
         annotorious.plugin.CustomLabels.prototype.onInitAnnotator = function(annotator) {
+            console.debug("Plugin Loaded");
+            console.debug(this._label);
+            console.debug(this._choices);
             //To understand how plugin works, look at annotator in editor.
             let container = annotator.editor.element.firstElementChild;
 
             //If no dropdown menu is required, just change the textarea placeholder
             if (!this._choices) {
-                container
-                    .firstElementChild
-                    .placeholder = this._label;
+                //If editor contains choices
+                if (container.firstChild.nodeName === "DIV") {
+                    container.firstChild.outerHTML = "";
+                    container.firstChild.style.display = "inherit"
+                }
+
+                container.firstChild.placeholder = this._label;
                 return
             }
 
@@ -222,6 +249,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             div.appendChild(select);
 
             container.firstChild.style.display = "none";
+
             container.insertAdjacentElement('afterbegin', div);
         }
 
