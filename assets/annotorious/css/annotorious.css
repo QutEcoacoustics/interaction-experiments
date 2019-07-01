@@ -148,12 +148,12 @@
 }
 
 .annotorious-popup-button-delete {
-  background:url(delete.png);
   width:16px;
   height:16px;
   text-indent:100px;
   overflow:hidden;
   float:right;
+    background: url(../../fontAwesome/trash-alt-solid.svg);
 }
 
 .annotorious-popup-field {

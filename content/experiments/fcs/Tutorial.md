@@ -32,7 +32,7 @@ To keep a box visible you need to **save your label**. Try it now and click _Nex
 
 ---
 
-To **delete any boxes** you saved, hover over the box and click the delete button <img src="/annotorious/css/delete.png" class="ie-inline-image" />. 
+To **delete any boxes** you saved, hover over the box and click the delete button <img src="/fontAwesome/trash-alt-solid.svg" class="ie-inline-image" />. 
 
 This will also show you the edit button <img src = "/annotorious/css/pencil.png" class="ie-inline-image"/>, which you can use to edit the labels. 
 
