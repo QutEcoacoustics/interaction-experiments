@@ -23,7 +23,9 @@ function experimentInit() {
                 audioOnly: { x: { min: "2019-05-29", max: "2019-05-30" } }
             },
             audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/SM304256_0%2B1_20151113_000000%2B1100.mp3",
-            instructions: "task_Liz/index.html"
+            instructions: "task_Liz/index.html",
+            choices: [ "Liz A", "Liz B" ] // TODO: KV
+
         },
         {
             name: "Sheryn",
@@ -42,7 +44,8 @@ function experimentInit() {
                 audioOnly: { x: { min: "2017-02-08", max: "2017-02-09" } }
             },
             audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/Sheryn_concat.mp3",
-            instructions: "task_Sheryn/index.html"
+            instructions: "task_Sheryn/index.html",
+            choices: [ "sheryn A", "sheryn B", "sheryn C" ] // TODO: KV
         },
 
         {
@@ -62,7 +65,8 @@ function experimentInit() {
                 audioOnly: { x: { min: "2018-09-22", max: "2018-09-23" } }
             },
             audio: "https://interaction-experiments.s3-ap-southeast-2.amazonaws.com/ADA_20170228_000006_Tshering3.mp3",
-            instructions: "task_Bhutan/index.html"
+            instructions: "task_Bhutan/index.html",
+            choices: [ "bhutan A", "bhutan B", "bhutan C", "bhutan D" ] // TODO: KV
         },
 
         {
@@ -81,7 +85,8 @@ function experimentInit() {
                 audioOnly: { x: { min: "2016-08-02", max: "2016-08-03" } }
             },
             audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/TNCIndo60_0-2400.mp3",
-            instructions: "task_Indo/index.html"
+            instructions: "task_Indo/index.html",
+            choices: [ "indo A", "indo B", "indo C" ] // TODO: KV
         }
 
     ];
@@ -156,6 +161,7 @@ function experimentInit() {
     var getStyle = () => jsPsych.timelineVariable("visualizationStyle", true);
     var getImage = () => getSite().images[getStyle()];
     var getAudio = () => getSite().audio;
+    var getTags = () => ({ label: "Select a label", choices: getSite().choices });
     var getAxes = () => getSite().axes[getStyle()];
     var getExternalHtmlPreamble = () => getSite().instructions;
     var getCondition = () => ({site: getSite().name, visualizationStyle: getStyle()});
@@ -254,6 +260,7 @@ function experimentInit() {
         image: getImage,
         audio: getAudio,
         axes: getAxes,
+        tagging_options: getTags,
         data: () => ({
             // checkpoint and save our experiment data
             // TODO Kellie: this is a lot of data submissions.

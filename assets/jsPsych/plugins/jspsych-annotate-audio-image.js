@@ -73,43 +73,54 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             tagging_options: {
                 type: jsPsych.plugins.parameterType.OBJECT,
                 pretty_name: "Tagging Options",
-                default: {label: "Label Here"},
+                default: { label: "Type your label here" },
                 description: "The label details for the annotations editor. Inputs are 'label' (Placeholder for editor), and 'choices' (Optional list of labels to create drop down options)."
             }
         }
     };
 
-    // event bindings for annotorious. they have to only bound once!
-    var annotationAction = null;
-
     /**
      * Resets the annotorious editor dropdown menu when an annotation has been updated
      */
-    function resetEditor() {
-        let editor = document.querySelectorAll(".annotorious-editor-select")[0];
+    function resetEditor(element) {
+        if (!element) {
+            return;
+        }
+
+        let editor = element.querySelector(".annotorious-editor-select");
+        let saveButton = element.querySelector(".annotorious-editor-button-save");
 
         //Check if dropdown menu was created
-        if (!editor)
-            return
+        if (!editor) {
+            return;
+        }
 
-        //Reset selection
+        // disable save button, because we reset to default (and invalid) option
+        // just below
+        saveButton.classList.add("annotorious-editor-save-disabled");
+
+        // Reset selection
         editor[0].selected = true;
         for (let option = 1; option < editor.childElementCount; option++) {
             editor[option].selected = false;
         }
     }
 
+
+    // event bindings for annotorious. they have to only bound once!
+    var annotationAction = null;
+    var annotationLayer = null;
     anno.addHandler("onAnnotationCreated", function(annotation) {
         annotationAction("AnnotationCreated", annotation);
-        resetEditor();
+        resetEditor(annotationLayer);
     });
     anno.addHandler("onAnnotationUpdated", function(annotation) {
         annotationAction("AnnotationUpdated", annotation);
-        resetEditor();
+        resetEditor(annotationLayer);
     });
     anno.addHandler("onAnnotationRemoved", function(annotation) {
         annotationAction("AnnotationRemoved", annotation);
-        resetEditor();
+        resetEditor(annotationLayer);
     });
 
     const dimensions = {
@@ -189,67 +200,83 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
         };
 
         // Setup annotorious plugin
-        annotorious.plugin.CustomLabels = function(opt_config_options) {
-            this._label = opt_config_options.label
-            this._choices = opt_config_options.choices;
-         }
+        annotorious.plugin.CustomLabels = function(configOptions) {
+            this._label = configOptions.label;
+            this._choices = configOptions.choices;
+        };
 
         annotorious.plugin.CustomLabels.prototype.onInitAnnotator = function(annotator) {
-            //To understand how plugin works, look at annotator in editor.
+            // To understand how plugin works, look at annotator in editor.
             let container = annotator.editor.element.firstElementChild;
+            let saveButton = container.querySelector(".annotorious-editor-button-save");
 
-            //If no dropdown menu is required, just change the textarea placeholder
+            // If no dropdown menu is required, just change the textarea placeholder
             if (!this._choices) {
-                //If editor contains choices
+                // If editor contains choices
                 if (container.firstChild.nodeName === "DIV") {
                     container.firstChild.outerHTML = "";
-                    container.firstChild.style.display = "inherit"
+                    container.firstChild.style.display = "inherit";
                 }
 
                 container.firstChild.placeholder = this._label;
-                return
+                saveButton.classList.remove("annotorious-editor-save-disabled");
+                return;
             }
 
-            //Add spacing around drop down menu
-            let div = document.createElement("div");
-            div.classList = ["annotorious-editor-container"]
+            // this plugin creation happens everytime this trial is loaded
+            // but we don't want to reuse the select/options, or have them recreated.
+            // so make sure all old ones are removed.
+            container.querySelectorAll(".annotorious-editor-container").forEach(x => x.remove());
 
-            //Create dropdown menu
+            // Add spacing around drop down menu
+            let div = document.createElement("div");
+            div.classList.add("annotorious-editor-container");
+
+            // Create dropdown menu
             let select = document.createElement("select");
-            select.classList = ["annotorious-editor-select"]
+            select.classList.add("annotorious-editor-select", );
             select.tabIndex = 1;
             select.onchange = (e) => {
-                //Updated hidden textarea with label. This is required as annotorious reads the state of the annotation from the textarea.
+                // do not allow the annotation to be saved if no option label has been selected
+                saveButton.classList.toggle("annotorious-editor-save-disabled", e.target.selectedOptions[0].value === "none");
+
+                // Updated hidden textarea with label. This is required as annotorious reads
+                // the state of the annotation from the textarea.
                 let label = e.target.selectedOptions[0].text;
                 let output = e.target.parentElement.nextSibling;
                 output.value = label;
-            }
+            };
 
-            //Create header option
+            // Create header option
             let header = document.createElement("option");
-            header.innerHTML = "Select Label";
+            header.innerHTML = this._label;
             header.selected = true;
             header.disabled = true;
+            header.value = "none";
             select.appendChild(header);
 
-            //Create options
+            // make sure save button disabled until an option other than the header (above)
+            // is chosen (see onchange above)
+            saveButton.classList.add("annotorious-editor-save-disabled");
+
+            // Create options
             this._choices.map((opt) => {
                 let option = document.createElement("option");
                 option.value = opt;
                 option.selected = false;
                 option.innerHTML = opt;
 
-                select.appendChild(option)
-            })
+                select.appendChild(option);
+            });
             div.appendChild(select);
 
             container.firstChild.style.display = "none";
 
-            container.insertAdjacentElement('afterbegin', div);
-        }
+            container.insertAdjacentElement("afterbegin", div);
+        };
 
         // Add the plugin
-        anno.addPlugin('CustomLabels', trial.tagging_options);
+        anno.addPlugin("CustomLabels", trial.tagging_options);
 
         /**
          * Create cursor on image to display the position of the audio
@@ -378,7 +405,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                     anno.reset();
 
                     anno.makeAnnotatable(image);
-                    var annoContainer = column.querySelector(".annotorious-annotationlayer");
+                    var annoContainer = annotationLayer = column.querySelector(".annotorious-annotationlayer");
 
                     // annotorious event bindings were moved to global because there is no
                     // way to reset the bindings globally and it was causing
@@ -509,6 +536,11 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             .annotorious-editor-container {
                 padding-left: 2px;
                 padding-right: 2px;
+                margin: 0.2em 0.6em;
+            }
+            .annotorious-editor-save-disabled {
+                pointer-events: none;
+                filter: brightness(0.5);
             }
             .jspsych-display-element {
                 overflow: unset !important;
