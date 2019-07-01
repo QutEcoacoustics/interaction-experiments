@@ -29,7 +29,7 @@ about the experiment in general, then you can:
 
 {{< contact-form >}}
 
-## Acknowldgements
+## Acknowledgements
 
 Lastly, we'd love to thank the many open source and freemium projects that make
 this platform possible. Special mentions go to:
@@ -46,11 +46,19 @@ For hosting this experiment on a radically simlple and powerful platform.
 
 [jsPysch](https://www.jspsych.org/about/about/) makes it easy to make browser-based experiments.
 
+
+## FontAwesome
+
+We use a few icons from Font Awesome's free web pack. Here is our attribution:
+
+> Font Awesome Free is free, open source, and GPL friendly. You can use it for
+> commercial projects, open source projects, or really almost whatever you want.
+> Full Font Awesome Free license: https://fontawesome.com/license/free.
+
 ### And more...
 
 - GitHub
 - Bootstrap
-- FontAwesome
 - Annotorious
 - MediaElement
 - D3
