@@ -92,6 +92,13 @@ function experimentInit() {
     ];
 
     var visualizationStyles = jsPsych.randomization.sampleWithoutReplacement(availableVisualizationStyles, 1);
+    // allow setting a particular visualization style for debugging
+    let overrideVisualization = jsPsych.data.getURLVariable("visualizationStyle");
+    if (overrideVisualization) {
+        console.warn("Visualization style overridden from,to:", visualizationStyles, overrideVisualization);
+        visualizationStyles = [ overrideVisualization ];
+    }
+
     var tuteSiteName = "Bhutan";
     var conditions = jsPsych
         // randomize sites and combine with visualization styles to create all conditions
@@ -99,14 +106,6 @@ function experimentInit() {
         // ensure the tute site comes first
         .reduce((result, item) => item.site.name === tuteSiteName ? [item, ...result] : [...result, item], []);
 
-
-
-    // allow setting a particular visualization style for debugging
-    let overrideVisualization = jsPsych.data.getURLVariable("visualizationStyle");
-    if (overrideVisualization) {
-        console.warn("Visualization style overridden from,to:", visualizationStyles, overrideVisualization);
-        visualizationStyles = overrideVisualization;
-    }
 
     //  subject id & likert measures
     var subject_id = jsPsych.randomization.randomID(10);
