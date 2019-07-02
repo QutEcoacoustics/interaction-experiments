@@ -8,7 +8,7 @@
         </div>
         {{ end }}
     </div>
-    <ol class="carousel-indicators">
+    <ol class="carousel-indicators disable-indicators">
         {{ range $index, $element := $sections }}
         <li data-target="#carousel" data-slide-to="{{ $index }}" class="{{ cond (eq $index 0) `active` ``}}"></li>
         {{ end }}
@@ -23,6 +23,12 @@
         <i class="fas fa-chevron-right" aria-hidden="true"></i>
       </button>
    </div>
+
+   <style>
+    .disable-indicators li {
+        pointer-events: none;
+    }
+   </style>
 </div>
 
 <script type="text/javascript">
@@ -43,6 +49,13 @@ $(document).ready(function() {
             // disable target button until we get to last slide of carousel
             // it is assumed, that if this button is supplied, it is some kind of global continue button or href
             enableButtonAtEnd.toggleAttribute("disabled", true);
+        }
+        if ({{ .Get `enableIndicatorNavigation` }}) {
+            // enable carousel indicator navigation
+            let indicators = document.querySelectorAll(".carousel-indicators");
+            indicators.forEach((indicator) => {
+                indicator.classList.remove("disable-indicators");
+            })
         }
 
         $(carousel).carousel({
