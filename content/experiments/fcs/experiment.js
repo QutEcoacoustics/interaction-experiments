@@ -117,28 +117,36 @@ function experimentInit() {
     var scale4 = ["Strongly disagree", "","","","","", "Strongly agree"];
 
 
-    var imiItemsRandom = jsPsych.randomization.repeat([
+    var imiItemsRandom1 = jsPsych.randomization.repeat([
         { id: 1, prompt: "I would describe the task as very enjoyable", labels: scale3 },
         { id: 2, prompt: "Doing the task was fun", labels: scale3 },
         { id: 3, prompt: "I thought the task was very boring.", labels: scale3 },
         { id: 4, prompt: "I found the task very interesting.", labels: scale3 },
         { id: 5, prompt: "I enjoyed doing the task very much.", labels: scale3 },
         { id: 6, prompt: "While I was working on the task, I was thinking about how much I enjoyed it.", labels: scale3 },
-        { id: 7, prompt: "I thought the task was very interesting.", labels: scale3 },
+    ], 1);
+
+    var imiItemsRandom2 = jsPsych.randomization.repeat([
+        { id: 1, prompt: "I would describe the task as very enjoyable", labels: scale3 },
+        { id: 2, prompt: "Doing the task was fun", labels: scale3 },
+        { id: 3, prompt: "I thought the task was very boring.", labels: scale3 },
+        { id: 4, prompt: "I found the task very interesting.", labels: scale3 },
+        { id: 5, prompt: "I enjoyed doing the task very much.", labels: scale3 },
+        { id: 6, prompt: "While I was working on the task, I was thinking about how much I enjoyed it.", labels: scale3 },
     ], 1);
 
     var IMI_explore = {
         preamble: "Please think about the task you just completed, and indicate how true the following statements are for you:",
         type: "survey-likert",
-        questions: imiItemsRandom,
-        data: { trialName: "IMI_explore", question_order: (imiItemsRandom.map(x => x.prompt)) },
+        questions: imiItemsRandom1,
+        data: { trialName: "IMI_explore", question_order: (imiItemsRandom1.map(x => x.prompt)) },
     };
 
     var IMI_search = {
-        preamble: "Please think about the search task you performed over three different soundscapes, and indicate how true the following statements are for you overall:",
+        preamble: "Please think about the search task you performed over three different recordings, and indicate how true the following statements are for you overall:",
         type: "survey-likert",
-        questions: imiItemsRandom,
-        data: { trialName: "IMI_search", question_order: (imiItemsRandom.map(x => x.prompt)) },
+        questions: imiItemsRandom2,
+        data: { trialName: "IMI_search", question_order: (imiItemsRandom2.map(x => x.prompt)) },
     };
 
     var challengeItemsRandom = jsPsych.randomization.repeat([
@@ -194,6 +202,13 @@ function experimentInit() {
         })
     };
     timeline.push(survey1);
+
+    var preface = {
+        type: "external-html",
+        url: "preface/index.html",
+        cont_btn: "continue"
+    };
+    timeline.push(preface);
 
     //tutorial and experimental tasks
     var tutorialAnnotation = {

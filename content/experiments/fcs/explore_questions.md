@@ -6,7 +6,7 @@ type: blank
 
 <div class = "form-group">
 <label for = "qual1_description">
-1. How would you describe this soundscape, in a few words?</label>
+1. How would you describe this recording, in a few words?</label>
 <textarea name ="qual1_description" class="form-control"></textarea>
 </div>
 <div class = "form-group">
@@ -16,7 +16,7 @@ type: blank
 </div>
 <div class = "form-group">
 <label for = "qual3_learn">
-3. What did you discover or learn about the soundscape? </label>
+3. What did you discover or learn about the recording? </label>
 <textarea name ="qual3_learn" class="form-control"></textarea>
 </div>
 
