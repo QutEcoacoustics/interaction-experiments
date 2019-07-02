@@ -585,9 +585,6 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 width: 1.5px;
                 z-index: 175; //Greater than canvas(150) but less than popup(200)
             }
-            .carousel-indicators li {
-                pointer-events: none;
-            }
             <style>`;
 
             //Create submit button
