@@ -18,7 +18,16 @@
     padding: 0 0 35px;
     width: 100%;
     list-style: none;
+    /* Ensure radio width doesn't get too wide (for our custom likert) */
+    max-width: 885px;
+    margin: 0 auto;
 }
+.jspsych-content .jspsych-survey-likert-opts {
+    /* Ensure radio width doesn't get too wide */
+    max-width: 885px;
+    margin: 0 auto;
+}
+
 .ie-isolated-content .likert li {
     display: inline-block;
     vertical-align: top;
@@ -45,6 +54,15 @@
     left: 50%;
     display: block;
     margin-left: -6px;
+    /* Make radios look bigger (for our custom likert) */
+    transform: scale(1.6);
+    margin-bottom: 1ex;
+}
+
+.jspsych-content .jspsych-survey-likert-opts li input[type="radio"] {
+    /* Make radios look bigger */
+    transform: scale(1.6);
+    margin-bottom: 1ex;
 }
 
 .ie-isolated-content .likert li label {
