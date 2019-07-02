@@ -1,9 +1,9 @@
 ---
-title: Find, box, & label one example of these 3 things
+title: Find one example of these 3 things
 type: blank
 ---
 
-Be **quick**, use the **corresponding number**, box the **entire sound**. 
+Be **quick**, box the **entire sound**, and remember to **label and save**. 
 
 Click _Continue_ when you have completed the task.
 
@@ -11,9 +11,9 @@ Click _Continue_ when you have completed the task.
 
 <table class = "table table-bordered mx-auto" style = "width:80%">
 <tr class = "text-center">
-<th scope = "col" style = "width:33%">Rain - 1</th>
-<th scope = "col" style = "width:33%">Dawn chorus - 2</th>
-<th scope = "col" style = "width:34%">A bird call - 3</th>
+<th scope = "col" style = "width:33%">Rain</th>
+<th scope = "col" style = "width:33%">A high-pitched bird call</th>
+<th scope = "col" style = "width:34%">Dawn chorus</th>
 </tr>
 </table>
 

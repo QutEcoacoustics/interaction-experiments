@@ -24,7 +24,7 @@ function experimentInit() {
             },
             audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/SM304256_0%2B1_20151113_000000%2B1100.mp3",
             instructions: "task_Liz/index.html",
-            choices: [ "Liz A", "Liz B" ] // TODO: KV
+            choices: [ "Rain", "A high-pitched bird call", "Dawn chorus" ] // TODO: KV
 
         },
         {
@@ -45,7 +45,7 @@ function experimentInit() {
             },
             audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/Sheryn_concat.mp3",
             instructions: "task_Sheryn/index.html",
-            choices: [ "sheryn A", "sheryn B", "sheryn C" ] // TODO: KV
+            choices: [ "Mechanical noise", "Frog Chorus", "Rain" ] // TODO: KV
         },
 
         {
@@ -86,7 +86,7 @@ function experimentInit() {
             },
             audio: "https://s3-ap-southeast-2.amazonaws.com/interaction-experiments/TNCIndo60_0-2400.mp3",
             instructions: "task_Indo/index.html",
-            choices: [ "indo A", "indo B", "indo C" ] // TODO: KV
+            choices: [ "Insects", "A high-pitched bird call", "Dawn chorus" ] // TODO: KV
         }
 
     ];

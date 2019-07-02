@@ -1,5 +1,5 @@
 ---
-title: Tutorial
+title: "Tutorial: Labelling Sounds"
 type: blank
 ---
 
@@ -13,30 +13,30 @@ Please click _Next_---located above the soundscape.
 
 ---
 
-Click the _Play_ <img src="play_button.png" class="ie-inline-image" /> button on the audio bar. If you cannot hear audio, please check your speakers. 
+Click the _Play_ <img src="play_button.png" class="ie-inline-image" /> button on the audio bar. Can you hear sound playing? If not, please ensure that you can.
 
-Try **clicking on the seek bar** at any point to listen to the soundscape.
+Try **clicking on the audio bar** at any point to listen to different parts of the soundscape.
 
-When you are happy that you understand how to use the audio, click _Next_.
-
-
----
-
-If you drag your cursor over the soundscape (**left click and hold**) you will see a box appear. 
-
-Next to the box is a field that you can use to make a **label** of what you think the sound is. 
-
-To keep a box visible you need to **save your label**. Try it now and click _Next_ when you understand the function. 
-
+When you are happy that you understand how to listen to different parts of the soundscape, click _Next_.
 
 
 ---
 
-To **delete any boxes** you saved, hover over the box and click the delete button <img src="/fontAwesome/trash-alt-solid.svg" class="ie-inline-image" />. 
+To label a sound, drag your mouse pointer (**left click and hold**) over where you think that a sound is located. 
+
+A box will appear and under it, you can type a **label** of what you think the sound is. 
+
+Click **save** to keep your box or click **cancel** to discard it. Experiment with creating some boxes and labels, then click _Next_. 
+
+
+
+---
+
+To **delete any boxes** you saved, hover over the box and click the delete button <img src="/fontAwesome/trash-alt-solid.svg" class="ie-inline-image" /> located in the labelling field. 
 
 This will also show you the edit button <img src = "/annotorious/css/pencil.png" class="ie-inline-image"/>, which you can use to edit the labels. 
 
-When you are happy that you understand how to box and label audio, hit _Continue_ below the soundscape.
+When you are happy that you understand how to box and label audio, click _Continue_ below the soundscape.
 
 
 {{< /carousel-maker >}}
