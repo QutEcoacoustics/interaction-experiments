@@ -304,7 +304,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          */
         function updateCursor() {
             let leftPadding = cursorImage.width * (cursorAudio.currentTime / cursorAudio.duration);
-            cursorBar.style["transform"] = `translateX(${leftPadding}px)`;
+            cursorBar.style.transform = `translateX(${leftPadding}px)`;
             cursorBar.style["msTransform"] = `translateX(${leftPadding}px)`; //IE
             cursorBar.style["MozTransform"] = `translateX(${leftPadding}px)`; //Firefox
             cursorBar.style["WebkitTransform"] = `translateX(${leftPadding}px)`; //Chrome
@@ -372,7 +372,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                             }
                         );
 
-                        media.addEventListener("progress", () => updateCursor());
+                        media.addEventListener("timeupdate", () => updateCursor());
                     },
                     alwaysShowHours: true,
                     features: ["playpause", "current", "progress"]
@@ -583,7 +583,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 position: absolute;
                 top: 0px;
                 width: 1.5px;
-                z-index: 175; //Greater than canvas(150) but less than popup(200)
+                z-index: 175; /* Greater than canvas(150) but less than popup(200) */
             }
             <style>`;
 
