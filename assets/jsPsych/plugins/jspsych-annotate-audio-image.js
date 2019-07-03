@@ -181,8 +181,6 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                         break;
                     case "seeking":
                     case "seeked":
-                        // do nothing
-                        break;
                     case "pause":
                     case "end":
                     case "stalled":
