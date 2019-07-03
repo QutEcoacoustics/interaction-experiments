@@ -34,6 +34,12 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 default: undefined,
                 description: "Audio element to display control panel for and play"
             },
+            check_fn: {
+                type: jsPsych.plugins.parameterType.FUNCTION,
+                pretty_name: 'Check function',
+                default: function() { return true; },
+                description: 'Function which determines if user can press the continue button. Inputs (display_element, data).'
+            },
             codecs: {
                 type: jsPsych.plugins.parameterType.COMPLEX,
                 array: true,
@@ -150,6 +156,10 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          * Resets the innerHTML and finishes the trial
          */
         var end_trial = function() {
+            if (trial.check_fn && !trial.check_fn(display_element, data)) {
+                return false;
+            }
+
             clearInterval(checkImageIntervalHandle);
             clearInterval(checkAudioIntervalHandle);
             clearInterval(checkCursorIntervalHandle);

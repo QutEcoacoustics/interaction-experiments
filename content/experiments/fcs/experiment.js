@@ -172,6 +172,74 @@ function experimentInit() {
     var getAxes = () => getSite().axes[getStyle()];
     var getExternalHtmlPreamble = () => getSite().instructions;
     var getCondition = () => ({site: getSite().name, visualizationStyle: getStyle()});
+    var getSearchCondition = (externalHtml, data) => {
+        const REQUIRED_NUM_UNIQUE_LABELS = 3;
+
+        // Check if enough unique labels have been set
+        let labels = data.actions
+            .filter(action => action.event === "AnnotationCreated")
+            .map(action => {
+                return { text: action.text, x: action.x.toFixed(5), y: action.y.toFixed(5) }
+            });
+
+        // Update labels
+        data.actions
+            .filter(action => action.event === "AnnotationUpdated")
+            .map(action => {
+                for (let index = 0; index < labels.length; index++) {
+                    // If match found based on x and y
+                    if (labels[index].x === action.x.toFixed(5) &&
+                        labels[index].y === action.y.toFixed(5)) {
+                            labels[index].text = action.text;
+                            break;
+                    }
+                }
+            })
+
+        // Remove labels
+        data.actions
+            .filter(action => action.event === "AnnotationRemoved")
+            .map(action => {
+                for (let index = 0; index < labels.length; index++) {
+                    // If match found
+                    if (labels[index].text === action.text) {
+                        labels.splice(index, 1);
+                        break;
+                    }
+                }
+            });
+
+        let labelsUnique = new Set(labels.map(action => action.text));
+
+        // Not enough labels
+        if (labels.length < REQUIRED_NUM_UNIQUE_LABELS) {
+            const alert = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                You must select at least ${REQUIRED_NUM_UNIQUE_LABELS} <strong>different</strong> labels.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>`
+            externalHtml.firstChild.innerHTML += alert;
+
+            return false;
+        }
+
+        // Labels are not unique
+        if (labels.length !== labelsUnique.size) {
+            const alert = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                You cannot select the same label multiple times.
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>`
+            externalHtml.firstChild.innerHTML += alert;
+
+            return false;
+        }
+
+        // Success
+        return true;
+    }
 
     // timeline
 
@@ -252,10 +320,9 @@ function experimentInit() {
             IMI_explore
         ],
         // we'll use the first condition for both tutorial and explore tasks
-        timeline_variables: conditions.slice(0, 1),
+        timeline_variables: conditions.slice(0, 1)
     };
     timeline.push(tutorialAndExplore);
-
 
     var searchInstructions = {
         type: "external-html",
@@ -275,6 +342,7 @@ function experimentInit() {
         audio: getAudio,
         axes: getAxes,
         tagging_options: getTags,
+        check_fn: getSearchCondition,
         data: () => ({
             // checkpoint and save our experiment data
             // TODO Kellie: this is a lot of data submissions.
