@@ -28,7 +28,7 @@ type: blank
 </div>
 
 <div class="form-group"> <label for = "q4_interest in ecology_qual">
-4. If you answered 'professional or non-professinoal interest' can you tell us more about it here?</label>
+4. If you answered 'professional or non-professional interest' can you tell us more about it here?</label>
 <textarea name ="q4_interest in ecology_qual" class="form-control"></textarea>
 </div>
 
