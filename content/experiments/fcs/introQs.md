@@ -21,23 +21,23 @@ type: blank
 3. What is your interest in ecology? </label>
 <select class = "form-control" name = "q3ecology">
 <option value="" selected disabled>Please select</option>
-<option id = "casual interest_ecology" name = "q3ecology"> Casual interest </option>
-<option id = "prof interest_ecology" name = "q3ecology"> Professional interest </option>
+<option id = "casual interest_ecology" name = "q3ecology"> Professional interest </option>
+<option id = "prof interest_ecology" name = "q3ecology"> Non-professional interest </option>
 <option id = "non interest ecology" name = "q3ecology"> No interest </option>
 </select>
 </div>
 
 <div class="form-group"> <label for = "q4_interest in ecology_qual">
-4. If you answered 'casual interest' or 'professional interest' can you tell us more about it here?</label>
+4. If you answered 'professional or non-professinoal interest' can you tell us more about it here?</label>
 <textarea name ="q4_interest in ecology_qual" class="form-control"></textarea>
 </div>
 
 
-<label class= "statement" for = "q5_ecoacousticsKnowledge">5. Please indicate your highest level of expertise with either soundscape ecology, ecoacoustics or bioacoustics:  </label>
+<label class= "statement" for = "q5_ecoacousticsKnowledge">5. How experienced are you with either soundscape ecology, ecoacoustics or bioacoustics:  </label>
 <ul class = "likert">
     <li>
         <input type="radio" name="q5_ecoacousticsKnowledge" value="1" >
-        <label>No expertise</label>
+        <label>Not at all experienced</label>
      </li>
       <li>
      <input type="radio" name="q5_ecoacousticsKnowledge" value="2" >
@@ -61,7 +61,7 @@ type: blank
     </li>
       <li>
      <input type="radio" name="q5_ecoacousticsKnowledge" value="7" >
-        <label>Very high expertise</label>
+        <label>Very experienced</label>
      </li>
 </ul>
 

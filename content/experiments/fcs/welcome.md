@@ -7,9 +7,11 @@ The following experiment will introduce you to the exploration and searching of 
 
 This requires that you have access to your computer's **audio**.
 
+You may need **up to 30 minutes** to complete the experiment. 
+
 Please use the latest version of either **Chrome, Firefox or Edge** or functionality may be compromised. 
 
-We recommend viewing on a laptop or PC as images will not load correctly on a smaller screen.
+We recommend viewing on a **laptop or PC** as images will not load correctly on a smaller screen.
 
 Please **do not click back** once you begin the experiment as you will exit the experiment entirely. 
 
