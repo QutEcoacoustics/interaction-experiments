@@ -36,9 +36,9 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
             },
             check_fn: {
                 type: jsPsych.plugins.parameterType.FUNCTION,
-                pretty_name: 'Check function',
+                pretty_name: "Check function",
                 default: function() { return true; },
-                description: 'Function which determines if user can press the continue button. Inputs (display_element, data).'
+                description: "Function which determines if user can press the continue button. Inputs (display_element, data)."
             },
             codecs: {
                 type: jsPsych.plugins.parameterType.COMPLEX,
@@ -313,7 +313,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          * Updates the cursor on the annotatable image
          */
         function updateCursor() {
-            let leftPadding = cursorImage.width * (cursorAudio.currentTime / cursorAudio.duration);
+            let leftPadding = cursorImage.width * ((cursorAudio.currentTime || 0) / (cursorAudio.duration || 0));
             cursorBar.style.transform = `translateX(${leftPadding}px)`;
             cursorBar.style["msTransform"] = `translateX(${leftPadding}px)`; //IE
             cursorBar.style["MozTransform"] = `translateX(${leftPadding}px)`; //Firefox
@@ -327,9 +327,12 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          * @param {object} annotation Annotation object returned by event
          */
         annotationAction = function pushAction(event, annotation) {
+            // assign a unique ID to make it easier to map actions to annotations
+            annotation.uniqueId = annotation.uniqueId || Date.now();
             data.actions.push({
                 time_elapsed: jsPsych.totalTime(),
                 event: event,
+                created: annotation.uniqueId,
                 text: annotation.text,
                 height: annotation.shapes[0].geometry.height,
                 width: annotation.shapes[0].geometry.width,

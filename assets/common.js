@@ -1,4 +1,5 @@
 /*global experimentInit*/
+/*global $*/
 (function() {
     // fetch polyfill should be included in this bundle
     // these values are templated by JSPsych
@@ -20,6 +21,28 @@
         // Chrome requires returnValue to be set even though the message is not
         // passed onto the user
         e.returnValue = "Navigating away will stop the experiment";
+    }
+
+    function alert(target, level, message) {
+        const alert = `<div class="alert alert-${level} alert-dismissible fade show" role="alert">
+            ${message}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>`;
+
+        // remove old messages
+        var old = $(".alert");
+        if (old.length > 0) {
+            old.one("closed.bs.alert", function() {
+                target.firstChild.innerHTML += alert;
+            });
+            old.alert("close");
+        }
+        else {
+            // add new one
+            target.firstChild.innerHTML += alert;
+        }
     }
 
     function submitData() {
@@ -67,12 +90,13 @@
         }
     }
 
-    let skipToTrial = jsPsych.data.getURLVariable("skip");
+    // this does not work reliably
+    //let skipToTrial = jsPsych.data.getURLVariable("skip");
     function onTrialStart(userFunction) {
         if (userFunction) {
             return userFunction.call(this, Array.prototype.slice.call(arguments, 1));
         }
-
+        /*
         if (skipToTrial) {
             var currentTrial = jsPsych.currentTimelineNodeID();
             if (skipToTrial !== currentTrial) {
@@ -86,13 +110,13 @@
         }
         else {
             console.log("Current trial is", jsPsych.currentTimelineNodeID());
-        }
+        }*/
     }
 
     function startExperiment() {
         // Handler when the DOM is fully loaded
         if (window.hasOwnProperty("experimentInit")) {
-            var configuration = experimentInit();
+            var configuration = experimentInit(alert);
 
             if (!configuration.hasOwnProperty("prepareDataForSubmit")) {
                 throw "Experiment not set up correctly, missing prepareDataForSubmit function";

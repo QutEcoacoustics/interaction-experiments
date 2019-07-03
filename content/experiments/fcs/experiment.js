@@ -1,7 +1,7 @@
 // test
 
 /* exported experimentInit */
-function experimentInit() {
+function experimentInit(triggerAlert) {
     const enterKeyPress = 13;
 
     // site visualization combos
@@ -172,74 +172,54 @@ function experimentInit() {
     var getAxes = () => getSite().axes[getStyle()];
     var getExternalHtmlPreamble = () => getSite().instructions;
     var getCondition = () => ({site: getSite().name, visualizationStyle: getStyle()});
-    var getSearchCondition = (externalHtml, data) => {
-        const REQUIRED_NUM_UNIQUE_LABELS = 3;
+    var ensureRequiredAnnotations = (displayElement, data) => {
+        const requiredUniqueLabels = 3,
+            requiredAnnotations = 3;
+
+        // reduce annotation actions to only annotations that have been kept
+        let annotations = data.actions.reduce(
+            (finalCollection, current) => {
+                if (current.event === "AnnotationCreated" ||  current.event === "AnnotationUpdated") {
+                    finalCollection.set(current.created, current);
+                }
+                else {
+                    finalCollection.delete(current.created);
+                }
+
+                return finalCollection;
+            },
+            new Map()
+        );
 
         // Check if enough unique labels have been set
-        let labels = data.actions
-            .filter(action => action.event === "AnnotationCreated")
-            .map(action => {
-                return { text: action.text, x: action.x.toFixed(5), y: action.y.toFixed(5) }
-            });
+        let labelsUnique = new Set(Array.from(annotations).map(([_, value]) => value.text));
 
-        // Update labels
-        data.actions
-            .filter(action => action.event === "AnnotationUpdated")
-            .map(action => {
-                for (let index = 0; index < labels.length; index++) {
-                    // If match found based on x and y
-                    if (labels[index].x === action.x.toFixed(5) &&
-                        labels[index].y === action.y.toFixed(5)) {
-                            labels[index].text = action.text;
-                            break;
-                    }
-                }
-            })
-
-        // Remove labels
-        data.actions
-            .filter(action => action.event === "AnnotationRemoved")
-            .map(action => {
-                for (let index = 0; index < labels.length; index++) {
-                    // If match found
-                    if (labels[index].text === action.text) {
-                        labels.splice(index, 1);
-                        break;
-                    }
-                }
-            });
-
-        let labelsUnique = new Set(labels.map(action => action.text));
-
-        // Not enough labels
-        if (labels.length < REQUIRED_NUM_UNIQUE_LABELS) {
-            const alert = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                You must select at least ${REQUIRED_NUM_UNIQUE_LABELS} <strong>different</strong> labels.
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>`
-            externalHtml.firstChild.innerHTML += alert;
-
+        // Not enough annotations
+        if (annotations.size != requiredAnnotations) {
+            triggerAlert(
+                displayElement,
+                "warning",
+                `You must create exactly ${requiredAnnotations} boxes, but you have ${annotations.size}.`);
             return false;
         }
 
         // Labels are not unique
-        if (labels.length !== labelsUnique.size) {
-            const alert = `<div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                You cannot select the same label multiple times.
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>`
-            externalHtml.firstChild.innerHTML += alert;
-
+        if (labelsUnique.size !== requiredUniqueLabels) {
+            let delimitter = (index, src) => index === src.length - 1 ? "" :  (index === src.length - 2) ? " & "  : ", " ;
+            let foundLabels = Array
+                .from(annotations)
+                .map(([_, value]) => value.text)
+                .reduce((str, label, index, src) => str + `'${label}'` + delimitter(index, src), "");
+            triggerAlert(
+                displayElement,
+                "warning",
+                `Your boxes must have ${requiredUniqueLabels} <strong>different</strong> labels. We found ${foundLabels}.`);
             return false;
         }
 
         // Success
         return true;
-    }
+    };
 
     // timeline
 
@@ -342,7 +322,7 @@ function experimentInit() {
         audio: getAudio,
         axes: getAxes,
         tagging_options: getTags,
-        check_fn: getSearchCondition,
+        check_fn: ensureRequiredAnnotations,
         data: () => ({
             // checkpoint and save our experiment data
             // TODO Kellie: this is a lot of data submissions.
