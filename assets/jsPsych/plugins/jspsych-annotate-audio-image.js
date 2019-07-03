@@ -427,19 +427,29 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                     addAxes();
 
                     var setScale = function() {
+                        // shortcut quit if column is removed from DOM. Will probably happen between
+                        // repeated uses of this plugin
+                        if (!column.parentElement) {
+                            return;
+                        }
+
                         var rect = column.getBoundingClientRect();
                         var scale = (rect.width - (dimensions.left + dimensions.right)) / dimensions.imageWidth;
                         annoContainer.style.transform = `scale(${scale})`;
-                        // Array.from(annoContainer.children).forEach(
-                        //     child => child.style.transform = `scale(${scale})`
-                        // );
                         imageContainer.style.height = dimensions.imageHeight * scale + "px";
-                        //annoContainer.style.width =
                     };
                     setScale();
                     window.addEventListener("resize", setScale);
+                    // So it seems FF sometimes does not trigger resize events at the right time,
+                    // particularly when a  window is maximised or restored from maximum.
+                    // The below isn't really a fix so much as a double binding to the same event.
+                    // What I suspect is happening is that one event is triggered before the other,
+                    // and the first affects DOM layout, and forces a layout update.
+                    // By the time the second event happens, the layout has updated and the sizing
+                    // of everything works.
+                    window.onresize = setScale;
                 }
-            }, 50); //Wait 50ms for image to load
+            }, 50); // Wait 50ms for image to load
         }
 
         /**
