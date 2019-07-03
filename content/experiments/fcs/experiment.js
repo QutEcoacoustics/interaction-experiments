@@ -196,10 +196,11 @@ function experimentInit(triggerAlert) {
 
         // Not enough annotations
         if (annotations.size != requiredAnnotations) {
+            let resolution = requiredAnnotations > annotations.size ? "add the missing" : "remove the extra";
             triggerAlert(
                 displayElement,
                 "warning",
-                `You must create exactly ${requiredAnnotations} boxes, but you have ${annotations.size}.`);
+                `You must create exactly ${requiredAnnotations} boxes, but you have ${annotations.size}. Please ${resolution} boxes.`);
             return false;
         }
 
@@ -213,7 +214,7 @@ function experimentInit(triggerAlert) {
             triggerAlert(
                 displayElement,
                 "warning",
-                `Your boxes must have ${requiredUniqueLabels} <strong>different</strong> labels. We found ${foundLabels}.`);
+                `Your boxes must have ${requiredUniqueLabels} <strong>different</strong> labels. There should be no repeated labels. We found ${foundLabels}.`);
             return false;
         }
 
