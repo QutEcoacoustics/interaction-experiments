@@ -284,7 +284,7 @@ function experimentInit(triggerAlert) {
     };
 
     var exploreQs = {
-        type: "external-html",
+        type: "survey-html-form",
         url: "explore_questions/index.html",
         cont_key: enterKeyPress,
         cont_btn: "continue",

@@ -20,6 +20,3 @@ type: blank
 <textarea name ="qual3_learn" class="form-control"></textarea>
 </div>
 
-
-
-{{< continue-button >}}
