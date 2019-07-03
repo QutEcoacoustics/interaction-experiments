@@ -10,6 +10,12 @@ exports.handler = async function (event, context) {
         let experimentName = queryStrings["experimentName"];
         let experimentType = experimentName.replace(/[^a-z0-9_]/gi, '').toUpperCase();
 
+        // augment body with IP address and user agent
+        let body = JSON.parse(event.body);
+        body.ip = event['requestContext']['identity']['sourceIp'];
+        body.userAgent = event['requestContext']['identity']['userAgent'];
+        let bodyPayload = JSON.stringify(body);
+
         // send results to post url
         let url = process.env["SUBMIT_URL_" + experimentType];
         console.log("Uploading experiment results to", url);
@@ -18,7 +24,7 @@ exports.handler = async function (event, context) {
             url,
             {
                 method: "post",
-                body: event.body,
+                body: bodyPayload,
                 headers: {
                     'Content-Type': 'application/json',
                     Accept: "application/json"
@@ -50,7 +56,7 @@ exports.handler = async function (event, context) {
             ],
             attachments: [
                 {
-                    content: Buffer.from(event.body).toString('base64'),
+                    content: Buffer.from(bodyPayload).toString('base64'),
                     type: "application/json",
                     filename: experimentName + "_result_" + Date.now().toString() + ".json",
                     disposition: "attachment"
