@@ -27,6 +27,16 @@ but will be prevented from storing any of the collected data.
 4. Commit and and Push your changes
 5. Wait about 30 seconds and they will be live in production
 
+## Testing data submission
+
+0. Ensure a revent version of Node is installed, perferrably the same version as is in `netlify.toml` 
+1. Install netlify-cli: `npm install -g netlify-cli`
+2. Link netlify-cli to Netlify: `netlify link`
+3. Ensure the expected environment variables are set **in the Netlify site settings** not inthe `netlify.toml` config file
+    - these settings are managed by the repository admin
+4. Run `netlify dev` to simulate a netlify deploy
+5. Submit data from an experiment and change code as needed
+
 ## Editing code
 
 Please use Visual Studio Code to make changes to these files.

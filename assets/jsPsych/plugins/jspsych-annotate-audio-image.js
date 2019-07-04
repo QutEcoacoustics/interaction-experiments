@@ -311,7 +311,8 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          * Updates the cursor on the annotatable image
          */
         function updateCursor() {
-            let leftPadding = cursorImage.width * ((cursorAudio.currentTime || 0) / (cursorAudio.duration || 0));
+            let width = cursorImage && cursorImage.width || dimensions.width;
+            let leftPadding = width * ((cursorAudio.currentTime || 0) / (cursorAudio.duration || 1));
             cursorBar.style.transform = `translateX(${leftPadding}px)`;
             cursorBar.style["msTransform"] = `translateX(${leftPadding}px)`; //IE
             cursorBar.style["MozTransform"] = `translateX(${leftPadding}px)`; //Firefox
