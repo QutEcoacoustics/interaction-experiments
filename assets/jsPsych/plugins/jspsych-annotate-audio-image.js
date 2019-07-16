@@ -177,7 +177,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                 (state, event) => {
                     switch (event.event) {
                     case "playing":
-                        state.on = event.mediaPosition;
+                        state.on = event.timeStamp;
                         break;
                     case "seeking":
                     case "seeked":
@@ -185,7 +185,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                     case "end":
                     case "stalled":
                     case "suspend":
-                        state.total += event.mediaPosition - state.on;
+                        state.total += state.on - event.timeStamp;
                         state.on = null;
                     }
                     return state;
@@ -327,9 +327,10 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
          */
         annotationAction = function pushAction(event, annotation) {
             // assign a unique ID to make it easier to map actions to annotations
-            annotation.uniqueId = annotation.uniqueId || Date.now();
+            let now = Date.now();
+            annotation.uniqueId = annotation.uniqueId || now;
             data.actions.push({
-                time_elapsed: jsPsych.totalTime(),
+                timeStamp: now,
                 event: event,
                 created: annotation.uniqueId,
                 text: annotation.text,
@@ -376,7 +377,7 @@ jsPsych.plugins["annotate-audio-image"] = (function() {
                             function(eventName) {
                                 media.addEventListener(eventName, () =>
                                     data.mediaEvents.push({
-                                        time_elapsed: jsPsych.totalTime(),
+                                        timeStamp: Date.now(),
                                         event: eventName,
                                         mediaPosition: media.currentTime
                                     })

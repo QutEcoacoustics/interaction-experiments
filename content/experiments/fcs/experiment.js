@@ -1,7 +1,7 @@
 // test
 
 /* exported experimentInit */
-function experimentInit(triggerAlert) {
+function experimentInit(triggerAlert, getTimeStamp) {
     const enterKeyPress = 13;
 
     // site visualization combos
@@ -206,11 +206,11 @@ function experimentInit(triggerAlert) {
 
         // Labels are not unique
         if (labelsUnique.size !== requiredUniqueLabels) {
-            let delimitter = (index, src) => index === src.length - 1 ? "" :  (index === src.length - 2) ? " & "  : ", " ;
+            let delimiter = (index, src) => index === src.length - 1 ? "" :  (index === src.length - 2) ? " & "  : ", " ;
             let foundLabels = Array
                 .from(annotations)
                 .map(([_, value]) => value.text)
-                .reduce((str, label, index, src) => str + `'${label}'` + delimitter(index, src), "");
+                .reduce((str, label, index, src) => str + `'${label}'` + delimiter(index, src), "");
             triggerAlert(
                 displayElement,
                 "warning",

@@ -9,6 +9,8 @@
 
     var prepareDataForSubmit = null;
     var experimentName = null;
+    var experimentStartDate = null;
+    var experimentStartUtcOffset = null;
 
     function warnIfLeaving(e) {
         if (window.LiveReload && window.LiveReload.isReloading)  {
@@ -22,6 +24,8 @@
         // passed onto the user
         e.returnValue = "Navigating away will stop the experiment";
     }
+
+    var getTimeStamp = Date.now;
 
     function alert(target, level, message) {
         const alert = `<div class="alert alert-${level} alert-dismissible fade show" role="alert">
@@ -51,7 +55,11 @@
             {
                 buildCommit: buildCommit,
                 buildDate: buildDate,
-                experimentName: experimentName
+                experimentName: experimentName,
+                experimentStartTimeStamp: experimentStartDate,
+                experimentStartUtcOffset: experimentStartUtcOffset,
+                submitTimeStamp: getTimeStamp(),
+                submitUtcOffset: (new Date()).getTimezoneOffset()
             });
 
         console.log("Saving data to server", data);
@@ -71,6 +79,7 @@
     }
 
     function endExperiment(userFunction/*, data*/) {
+        experimentEndDate = getTimeStamp();
         submitData();
 
         window.removeEventListener("beforeunload", warnIfLeaving);
@@ -80,7 +89,15 @@
         }
     }
 
+    function onInteractionDataUpdate(userFunction, data) {
+        data.timeStamp = getTimeStamp();
+        if (userFunction) {
+            return userFunction.call(this, Array.prototype.slice.call(arguments, 1));
+        }
+    }
+
     function onTrialFinish(userFunction, data) {
+        data.finishTimeStamp = getTimeStamp();
         if (userFunction) {
             return userFunction.call(this, Array.prototype.slice.call(arguments, 1));
         }
@@ -90,33 +107,19 @@
         }
     }
 
-    // this does not work reliably
-    //let skipToTrial = jsPsych.data.getURLVariable("skip");
-    function onTrialStart(userFunction) {
+    function onTrialStart(userFunction, trial) {
+        // if data was a function, it has been evaluated already
+        trial.data = trial.data || {};
+        trial.data.startTimeStamp = getTimeStamp();
         if (userFunction) {
             return userFunction.call(this, Array.prototype.slice.call(arguments, 1));
         }
-        /*
-        if (skipToTrial) {
-            var currentTrial = jsPsych.currentTimelineNodeID();
-            if (skipToTrial !== currentTrial) {
-                console.warn(`Debug skipping trial ${currentTrial} because trial id is not ${skipToTrial}`);
-                jsPsych.finishTrial({ skipped: true });
-            }
-            else {
-                // reset
-                skipToTrial = null;
-            }
-        }
-        else {
-            console.log("Current trial is", jsPsych.currentTimelineNodeID());
-        }*/
     }
 
     function startExperiment() {
         // Handler when the DOM is fully loaded
         if (window.hasOwnProperty("experimentInit")) {
-            var configuration = experimentInit(alert);
+            var configuration = experimentInit(alert, getTimeStamp);
 
             if (!configuration.hasOwnProperty("prepareDataForSubmit")) {
                 throw "Experiment not set up correctly, missing prepareDataForSubmit function";
@@ -134,11 +137,13 @@
                 display_element: "experimentBody",
                 on_finish: endExperiment.bind(null, configuration.on_finish),
                 on_trial_start: onTrialStart.bind(null, configuration.on_trial_start),
-                on_trial_finish: onTrialFinish.bind(null, configuration.on_trial_finish)
+                on_trial_finish: onTrialFinish.bind(null, configuration.on_trial_finish),
+                on_interaction_data_update: onInteractionDataUpdate.bind(null, configuration.on_interaction_data_update)
             });
 
             jsPsych.init(configuration);
-            jsPsych.data.get().addToLast({start_date: jsPsych.startTime()});
+            experimentStartDate = getTimeStamp();
+            experimentStartUtcOffset = (new Date()).getTimezoneOffset();
 
             // stop accidental navigation
             if (window.LiveReload) {

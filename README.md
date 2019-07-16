@@ -29,10 +29,10 @@ but will be prevented from storing any of the collected data.
 
 ## Testing data submission
 
-0. Ensure a revent version of Node is installed, perferrably the same version as is in `netlify.toml` 
+0. Ensure a recent version of Node is installed, preferably the same version as is in `netlify.toml` 
 1. Install netlify-cli: `npm install -g netlify-cli`
 2. Link netlify-cli to Netlify: `netlify link`
-3. Ensure the expected environment variables are set **in the Netlify site settings** not inthe `netlify.toml` config file
+3. Ensure the expected environment variables are set **in the Netlify site settings** not in the `netlify.toml` config file
     - these settings are managed by the repository admin
 4. Run `netlify dev` to simulate a netlify deploy
 5. Submit data from an experiment and change code as needed

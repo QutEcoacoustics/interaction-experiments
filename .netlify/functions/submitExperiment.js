@@ -12,9 +12,10 @@ exports.handler = async function (event, context) {
 
         // augment body with IP address and user agent
         let body = JSON.parse(event.body);
-        // ip address not supported
+
+        // ip address *should* be supported
         // https://community.netlify.com/t/include-request-ip-address-on-event-object/1820
-        body.ip = "<not available>";
+        body.ip = event && event['headers'] && event['headers']['client-ip'] || "<not available>";
         body.userAgent = event && event['headers'] && event['headers']['user-agent'];
         let bodyPayload = JSON.stringify(body);
 
