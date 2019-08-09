@@ -378,7 +378,8 @@ function experimentInit(triggerAlert, getTimeStamp) {
         auto_update_progress_bar: true,
         exclusions: {
             audio: true,
-            min_width: 1366
+            min_width: 1366,
+            min_height:600
         },
         // this is used by common.js and not a psychJS setting
         prepareDataForSubmit: function() {
