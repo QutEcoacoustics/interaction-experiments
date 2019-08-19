@@ -5,7 +5,7 @@ function experimentInit(triggerAlert, getTimeStamp) {
     const enterKeyPress = 13;
 
     // site visualization combos
-    var availableVisualizationStyles = ["fcs", "spectrogram", "waveform", "audioOnly"];
+    var availableVisualizationStyles = ["fcs", /*"spectrogram", */ "waveform" /*, "audioOnly"*/];
     var sites = [
         {
             name: "Liz Tasmania",
