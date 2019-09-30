@@ -359,10 +359,13 @@ function experimentInit(triggerAlert, getTimeStamp) {
         type: "external-html",
         url: "TheEnd/index.html",
         on_load: function() {
-            window.setTimeout(function() {
-            let subjectSpan = document.querySelector("#mturk #subject_id");
-            subjectSpan.innerHTML = subject_id;
-            }, 500);
+            const existChecker = window.setInterval(function() {
+                let subjectSpan = document.querySelector("#mturk #subject_id");
+                if (subjectSpan) {
+                    window.clearInterval(existChecker);
+                    subjectSpan.innerHTML = subject_id;
+                }
+            }, 100);
         },
         on_start: function() {
             jsPsych.endExperiment();
