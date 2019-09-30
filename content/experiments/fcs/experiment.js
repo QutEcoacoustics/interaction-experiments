@@ -5,7 +5,7 @@ function experimentInit(triggerAlert, getTimeStamp) {
     const enterKeyPress = 13;
 
     // site visualization combos
-    var availableVisualizationStyles = ["fcs", /*"spectrogram", */ "waveform" /*, "audioOnly"*/];
+    var availableVisualizationStyles = ["fcs", "spectrogram", "waveform", "audioOnly"];
     var sites = [
         {
             name: "Liz Tasmania",
@@ -15,8 +15,7 @@ function experimentInit(triggerAlert, getTimeStamp) {
                 waveform: "./images/waveform_Liz.png",
                 audioOnly: "./images/whitebox1.png"
             },
-            axes:
-            {
+            axes: {
                 fcs: { x: { min: "2019-05-29", max: "2019-05-30" }, y: { min: 0, max: 11025 } },
                 spectrogram: { x: { min: "2019-05-29", max: "2019-05-30" }, y: { min: 0, max: 11025 } },
                 waveform: { x: { min: "2019-05-29", max: "2019-05-30" }, y: { min: -1.0, max: 1.0 } },
@@ -29,15 +28,13 @@ function experimentInit(triggerAlert, getTimeStamp) {
         },
         {
             name: "Sheryn",
-            images:
-            {
+            images: {
                 fcs: "./images/FCS_Sheryn.png",
                 spectrogram: "./images/greyscale_Sheryn.png",
                 waveform: "./images/waveform_Sheryn.png",
                 audioOnly: "./images/whitebox1.png"
             },
-            axes:
-            {
+            axes: {
                 fcs: { x: { min: "2017-02-08", max: "2017-02-09" }, y: { min: 0, max: 11025 } },
                 spectrogram: { x: { min: "2017-02-08", max: "2017-02-09" }, y: { min: 0, max: 11025 } },
                 waveform: { x: { min: "2017-02-08", max: "2017-02-09" }, y: { min: -1.0, max: 1.0 } },
@@ -50,15 +47,13 @@ function experimentInit(triggerAlert, getTimeStamp) {
 
         {
             name: "Bhutan",
-            images:
-            {
+            images: {
                 fcs: "./images/FCS_Tshering3.png",
                 spectrogram: "./images/greyscale_Tshering3.png",
                 waveform: "./images/waveform_Tshering3.png",
                 audioOnly: "./images/whitebox1.png"
             },
-            axes:
-            {
+            axes: {
                 fcs: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: 0, max: 11025 } },
                 spectrogram: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: 0, max: 11025 } },
                 waveform: { x: { min: "2018-09-22", max: "2018-09-23" }, y: { min: -1.0, max: 1.0 } },
@@ -71,8 +66,7 @@ function experimentInit(triggerAlert, getTimeStamp) {
 
         {
             name: "TNC_Indo",
-            images:
-            {
+            images: {
                 fcs: "./images/FCS_TNC_Indo.png",
                 spectrogram: "./images/greyscale_TNC_Indo.png",
                 waveform: "./images/waveform_TNC_Indo.png",
@@ -88,7 +82,6 @@ function experimentInit(triggerAlert, getTimeStamp) {
             instructions: "task_Indo/index.html",
             choices: [ "Insects", "A high-pitched bird call", "Dawn chorus" ] // TODO: KV
         }
-
     ];
 
     var visualizationStyles = jsPsych.randomization.sampleWithoutReplacement(availableVisualizationStyles, 1);
@@ -365,6 +358,15 @@ function experimentInit(triggerAlert, getTimeStamp) {
     var end = {
         type: "external-html",
         url: "TheEnd/index.html",
+        on_load: function() {
+            const existChecker = window.setInterval(function() {
+                let subjectSpan = document.querySelector("#mturk #subject_id");
+                if (subjectSpan) {
+                    window.clearInterval(existChecker);
+                    subjectSpan.innerHTML = subject_id;
+                }
+            }, 100);
+        },
         on_start: function() {
             jsPsych.endExperiment();
         }

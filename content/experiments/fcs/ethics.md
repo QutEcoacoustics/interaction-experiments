@@ -4,7 +4,7 @@ type: blank
 ---
 
 
-# Visualising Long-Duration Environmental Recordings
+# Searching and Exploring Long-Duration Environmental Acoustic Recordings
 
 
 QUT Ethics Approval Number 1900000178
@@ -29,15 +29,16 @@ QUT Ethics Approval Number 1900000178
 
 ## Why is the study being conducted?
 
-This research project is being undertaken by the QUT Ecoacoustics Group in order to better understand the strengths and weaknesses of using different visualisations of long-duration acoustic recordings of the environment. In particular it seeks to better understand how people use these visualisations to search and explore this kind of data.
+This research project is being undertaken by the QUT Ecoacoustics Group in order to better understand how people search and explore different long-duration acoustic recordings of the environment.
 
 You are invited to participate in this research project because you are aged 18 years or older and have an interest in ecology or the environment.
 
-
 ## What does participation involve?
 
-Participation will involve completing several tasks to the best of your ability and answering questions about your experience. It should take you between 30-40 minutes to complete.
+Participation will involve completing several tasks to the best of your ability and answering questions about your experience. You will need to have:
 
+* Uninterrupted time to complete the tasks, as some of them are timed. It should take approximately **30 minutes** of your time
+* You will also need access to **audio and a full sized screen** (laptop, mac or PC will be fine - iPad or smartphone will not). If the window you are using to view the experiment is too small you will be asked to resize it.
 
 Example questions include:
 
@@ -53,7 +54,7 @@ Your participation in this research project is entirely voluntary. If you agree 
 It is expected that this research project will not directly benefit you. The outcomes of the research, however, may benefit ecologists as it will help us develop better ways of analyzing long-duration environmental recordings.
 
 
-To recognise your contribution should you choose to participate, the research team is offering you the chance to enter a prize draw to win an AU$100 Amazon gift card. Alternatively, if you win, you may choose to nominate an environmental conservation charity for us to donate AU$100 to.
+To recognise your contribution should you choose to participate, Amazon Mechanical Turk workers will be compensated for their time according to the terms laid out by Amazon Mechanical Turk. Participants who are not Amazon Mechanical Turk workers will be offered the chance to enter a prize draw to win an AU$100 Amazon gift card. Alternatively, if you win, you may choose to nominate an environmental conservation charity for us to donate AU$100 to.
 
 
 Please note the closing date for entries is 30 December, 2019.
